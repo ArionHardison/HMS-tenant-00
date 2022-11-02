@@ -1,0 +1,93 @@
+<template>
+  <div id="services">
+    <Loading />
+
+    <Header logoColor="dark" />
+
+    <main id="main" class="site-main">
+      <template v-if="servicesPage">
+        <PageTitle :name="servicesPage.entity_name" />
+        <div id="page-content" class="spacer p-top-xl">
+          <div class="wrapper">
+            <div class="content">
+              <div class="row gutter-width-sm with-pb-sm services-items">
+                <div
+                  v-for="serviceItem in servicesPage.service"
+                  :key="serviceItem.id"
+                  class="col-xl-6 col-lg-6 col-md-6 col-sm-12"
+                >
+                  <nuxt-link
+                    :title="serviceItem.title"
+                    class="services-item"
+                    :to="{ path: '/service', query: { id: serviceItem.id } }"
+                  >
+                    <div class="services-item-content">
+                      <h3 class="services-item-t-head">
+                        {{ serviceItem.serviceName }}
+                      </h3>
+                      <span
+                        class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto link-no-space"
+                        >Read more</span
+                      >
+                    </div>
+
+                    <div class="img object-fit">
+                      <div class="object-fit-cover">
+                        <img
+                          :src="'https://codify.solutions/public/files?path='+tenantId+'/xl/'+serviceItem.serviceImage+'.webp'"
+                          :alt="serviceItem.serviceName"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="img-bg-color"></div>
+                  </nuxt-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </main>
+
+    <Footer />
+  </div>
+</template>
+
+<script>
+import Loading from "~/components/Loading/Loading";
+import Header from "~/components/blocks/header/Header";
+import Footer from "~/components/blocks/footer/Footer";
+import PageTitle from "~/components/blocks/services/PageTitle";
+
+export default {
+  components: {
+    Loading,
+    Header,
+    PageTitle,
+    Footer,
+  },
+  data() {
+    return {
+      servicesPage: null,
+    };
+  },
+  async created() {
+    this.servicesPage = await this.get("public/get-entity/services");
+  },
+  mounted: function () {
+    if (process.client) {
+      document.body.classList.add("archive");
+    }
+  },
+  beforeDestroy() {
+    if (process.client) {
+      document.body.classList.remove("archive");
+    }
+  },
+  metaInfo: {
+    title: "Services | Bona - Health & Medical Vue JS Template",
+    titleTemplate: "%s",
+  },
+};
+</script>

@@ -1,0 +1,91 @@
+<template>
+  <div :style="{ '--primary-color': primaryColor }">
+    <nuxt />
+  </div>
+</template>
+<script>
+export default {
+
+};
+</script>
+
+<style>
+.notify-error {
+  z-index: 1000;
+}
+.multiselect__tag,
+.multiselect__option--highlight,
+.multiselect__option--highlight:after {
+  background: var(--primary-color) !important;
+}
+
+.multiselect__spinner:after,
+.multiselect__spinner:before {
+  border-top-color: var(--primary-color) !important;
+}
+
+.site-header .header-content .actions .actions-items .actions-item:hover,
+.modal-header .header-content .actions .actions-items .actions-item:hover {
+  background-color: var(--primary-color) !important;
+}
+.btn-primary,
+.widget-area .tagcloud .tag-cloud-link,
+[class*="widget-container"] .tagcloud .tag-cloud-link,
+#single .single-content .description [class*="tag-cloud"] .tag-cloud-link,
+#single .single-content .tags p a {
+  color: #ffffff;
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+.btn-primary:not(:disabled):not(.disabled):active,
+.widget-area .tagcloud .tag-cloud-link:not(:disabled):not(.disabled):active,
+[class*="widget-container"]
+  .tagcloud
+  .tag-cloud-link:not(:disabled):not(.disabled):active,
+#single
+  .single-content
+  .description
+  [class*="tag-cloud"]
+  .tag-cloud-link:not(:disabled):not(.disabled):active,
+#single .single-content .tags p a:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.widget-area .tagcloud .tag-cloud-link:not(:disabled):not(.disabled).active,
+[class*="widget-container"]
+  .tagcloud
+  .tag-cloud-link:not(:disabled):not(.disabled).active,
+#single
+  .single-content
+  .description
+  [class*="tag-cloud"]
+  .tag-cloud-link:not(:disabled):not(.disabled).active,
+#single .single-content .tags p a:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle,
+.widget-area .tagcloud .show > .dropdown-toggle.tag-cloud-link,
+[class*="widget-container"] .tagcloud .show > .dropdown-toggle.tag-cloud-link,
+#single
+  .single-content
+  .description
+  [class*="tag-cloud"]
+  .show
+  > .dropdown-toggle.tag-cloud-link,
+#single .single-content .tags p .show > a.dropdown-toggle {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+.site-header .header-content .actions .actions-items .actions-item:before,
+.modal-header .header-content .actions .actions-items .actions-item:before {
+  background-color: var(--primary-color) !important;
+}
+.site-header .header-content .actions .actions-items .actions-item:after,
+.modal-header .header-content .actions .actions-items .actions-item:after {
+  background-color: var(--primary-color) !important;
+}
+.site-header .header-content .actions .actions-items .actions-item,
+.modal-header .header-content .actions .actions-items .actions-item {
+  background-color: var(--primary-color) !important;
+}
+.btn-outline-secondary:hover {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+</style>
