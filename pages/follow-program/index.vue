@@ -55,33 +55,34 @@
                 The selected {{ currentStep.role }} will be invited to help you
               </p>
               <div class="card-container">
-                <template v-for="user in currentStep.users.system">
+
+             <template v-for="user in currentStep.users.system">
                   <div class="card">
-                    <div class="d-flex aligen-items-center flex-column">
-                      <AppAvatar
-                        :userInfo="user"
-                        width="60px"
-                        height="60px"
-                        alt="Avatar"
-                        imageSizeType="tb"
-                      />
-                      <h5 data-v-ab34384e="" class="mb-0 font-montserrat">
-                        <nuxt-link
-                          :to="`/${user.username}`"
-                          class="active nuxt-link-active"
-                        >
-                          {{ user.full_name }}
-                        </nuxt-link>
-                      </h5>
-                    </div>
-                    <div>{{ user.state }} {{ user.city }}</div>
-                    <button
-                      class="invite-btn"
-                      @click="inviteUser(user.id, true)"
-                    >
-                      Invite
-                    </button>
-                  </div>
+                  <div class="d-flex aligen-items-center flex-column">
+                   <AppAvatar
+                         :userInfo="user"
+                         width="60px"
+                         height="60px"
+                         alt="Avatar"
+                         imageSizeType="tb"
+                       />
+                       <h5 data-v-ab34384e="" class="mb-0 font-montserrat">
+                         <nuxt-link
+                           :to="`/${user.username}`"
+                           class="active nuxt-link-active"
+                         >
+                           {{ user.full_name }}
+                         </nuxt-link>
+                       </h5>
+                     </div>
+                   <div>{{ user.state }} {{ user.city }}</div>
+                       <button
+                         class="invite-btn"
+                         @click="inviteUser(user.id, true)"
+                       >
+                         Invite
+                       </button>
+               </div>
                 </template>
                 <template v-for="user in currentStep.users.invite">
                   <div class="card">

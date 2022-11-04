@@ -72,9 +72,11 @@ export default {
     },
   },
   mounted() {
-    const [latterUsername] = this.userInfo.name;
-    const [latterFullName] = this.userInfo.full_name;
-    this.firstLetter =  latterUsername.toUpperCase() || latterFullName.toUpperCase();
+    let  name = this.userInfo.full_name;
+    if(this.userInfo.name){
+        name = this.userInfo.name;
+    }
+    this.firstLetter = name.charAt(0);
   },
   methods: {
     replaceByDefault(e) {
