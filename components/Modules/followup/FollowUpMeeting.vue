@@ -160,35 +160,20 @@ export default {
     async finalizeSpeech(speechId) {
       await this.post(
         `follow-up/voice-finalize`,
-        serialize(
           {
             speech_id: speechId,
             follow_up_id: this.followUp.id,
-          },
-          {
-            booleansAsIntegers: true,
-            indices: true,
-            nullsAsUndefineds: true,
           }
-        )
       );
     },
     async storeAudio(audio, speechId) {
       await this.post(
-        `follow-up/voice-record`,
-        serialize(
-          {
+        `follow-up/voice-record`,{
             speech_id: speechId,
             voice: audio,
             chain_id: this.followUp.chain_id,
             follow_up_id: this.followUp.id,
-          },
-          {
-            booleansAsIntegers: true,
-            indices: true,
-            nullsAsUndefineds: true,
           }
-        )
       );
     },
     changeVideoState() {
@@ -214,6 +199,7 @@ export default {
       });
     },
     async finishFollowUp() {
+
       if (process.browser) {
         this.followUpFinished = true;
         await this.stop();

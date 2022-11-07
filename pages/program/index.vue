@@ -187,7 +187,7 @@ export default {
         program_id: this.$route.query.id,
       });
       if (program) {
-        if (this.productInfo.access_type === 1) {
+        if (this.program.access_type === 1) {
           await this.$router.push({ name: "programs" });
         } else {
           if (process.client) {

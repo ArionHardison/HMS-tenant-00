@@ -1,73 +1,103 @@
 import MediaStreamRecorder from "msr";
-import { watchStreamAudioLevel } from 'stream-audio-level'
+import hark from "hark";
 
 export default {
-    data(){
+    computed: {
+        requestsRunning() {
+            return this.$store.state.api.requestsRunning;
+        },
+    },
+    data() {
         return {
+            audioLevelStream: null,
             mediaRecorder: null,
-            minimalSoundLevel: 15,
-            avgAudioLevel: [],
             previousAudio: null,
             firstStorage: true,
             wasStored: false,
             speechId: null,
             stream: null,
-        }
+            finalized: false,
+            finalizeTimeout: null,
+            shouldStore: false,
+        };
+    },
+    async beforeDestroy() {
+        await this.finalizeSpeechOnceAllDataWasSent();
     },
     methods: {
-        async start(){
-            navigator.getUserMedia({audio: true}, this.mediaRecord, this.mediaError);
+        async start() {
+            this.finalized = false;
+            this.$store.commit("api/SET_LOADER_STATE", false);
+            navigator.getUserMedia(
+                { audio: true },
+                this.mediaRecord,
+                this.mediaError
+            );
         },
-        async stop(){
+        async stop() {
+            this.finalized = true;
+            this.$store.commit("api/SET_LOADER_STATE", true);
             await this.mediaRecorder.stop();
-            this.stream.getTracks().forEach(function(track) {
+            this.stream.getTracks().forEach((track) => {
                 track.stop();
-            })
+            });
         },
-        mediaRecord(stream){
+        mediaRecord(stream) {
+            if (this.audioLevelStream) {
+                this.audioLevelStream();
+            }
             this.stream = stream;
             this.mediaRecorder = new MediaStreamRecorder(this.stream);
             this.mediaRecorder.bufferSize = 0;
-            this.mediaRecorder.mimeType = 'audio/wav';
-            watchStreamAudioLevel(this.stream, (v) => this.avgAudioLevel.push(v))
+            this.mediaRecorder.mimeType = "audio/wav";
 
-            this.mediaRecorder.ondataavailable =  async (blob) => {
+            const speechEvents = hark(this.stream, {});
 
-                if(this.shouldStore()){
-                    if(this.firstStorage){
+            speechEvents.on("speaking", () => {
+                this.shouldStore = true;
+                this.finalized = false;
+            });
+
+            speechEvents.on("stopped_speaking", () => {
+                setTimeout(async () => {
+                    this.shouldStore = false;
+                }, 2000);
+            });
+
+            this.mediaRecorder.ondataavailable = async (blob) => {
+                if (this.shouldStore && !this.finalized) {
+                    if (this.firstStorage) {
                         this.firstStorage = false;
                         this.speechId = this.getId();
-                        if(this.previousAudio) {
-                            await this.storeAudio(this.previousAudio, this.speechId);
-                        }
                     }
                     await this.storeAudio(blob, this.speechId);
-                    this.wasStored = true;
-
-                }else{
-
-                    if(this.wasStored){
-                        await this.storeAudio(blob, this.speechId, true);
-                    }
-                    this.wasStored = false;
-                    this.firstStorage = true;
+                } else {
+                    await this.finalizeSpeechOnceAllDataWasSent();
                 }
-                this.avgAudioLevel = [];
+
                 this.previousAudio = blob;
             };
             this.mediaRecorder.start(3000);
         },
-        shouldStore(){
-            const sumLevels = this.avgAudioLevel.reduce(
-                (previousValue, currentValue) => previousValue + currentValue,
-            );
-            return (sumLevels/this.avgAudioLevel.length)>this.minimalSoundLevel;
+        async finalizeSpeechOnceAllDataWasSent() {
+            this.firstStorage = true;
+            if (this.requestsRunning) {
+                clearTimeout(this.finalizeTimeout);
+                this.finalizeTimeout = setTimeout(async () => {
+                    await this.finalizeSpeechOnceAllDataWasSent();
+                }, 300);
+            } else {
+                if (this.speechId) {
+                    await this.finalizeSpeech(this.speechId);
+                    this.speechId = null;
+                }
+            }
         },
-        mediaError(e){
-            console.error('media error', e);
+        mediaError(e) {
+            console.error("media error", e);
         },
         getId() {
             return Math.random().toString(36).substring(2, 12);
         },
-    }
+    },
 };
