@@ -18,10 +18,9 @@
                   >
                     <div class="img object-fit">
                       <div class="object-fit-cover">
-                        <img
-                          v-src="program.program_image"
-                          alt="Program image"
-                        />
+
+                        <ImageContent :src="program.program_image" size="md" />
+
                       </div>
                     </div>
 
@@ -140,9 +139,11 @@ import Tags from "~/components/blocks/news-single-post/Tags";
 import Comments from "~/components/blocks/news-single-post/Comments";
 import Sidebar from "~/components/blocks/news/Sidebar";
 import AppAvatar from "../../components/ui/app-avatar.vue";
+import ImageContent from "@/components/blocks/ImageContent";
 
 export default {
   components: {
+    ImageContent,
     Loading,
     Header,
     PageTitle,

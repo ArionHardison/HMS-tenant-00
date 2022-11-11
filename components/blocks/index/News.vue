@@ -19,11 +19,7 @@
               >
                 <div class="img object-fit overflow-hidden">
                   <div class="object-fit-cover transform-scale-h">
-                    <img
-                      class="card-top-img"
-                      :src="program.program_image"
-                      :alt="program.name"
-                    />
+                    <ImageContent :src="program.program_image" size="sm" class="card-top-img"/>
                   </div>
                 </div>
               </nuxt-link>
@@ -60,8 +56,10 @@
 </template>
 
 <script>
+import ImageContent from "@/components/blocks/ImageContent";
 export default {
   name: "News",
+  components: {ImageContent},
   data() {
     return {
       programs: null,

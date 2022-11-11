@@ -165,6 +165,7 @@ import AppAvatar from "~/components/ui/app-avatar.vue";
 
 export default {
   mixins: [api, globalEvents],
+  layout:"default",
   components: {
     CountDown,
     Assessment,
