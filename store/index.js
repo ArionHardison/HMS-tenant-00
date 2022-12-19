@@ -100,8 +100,8 @@ const actions = {
     const url = req.headers.host.split(":")[0];
     const absoluteUrl = process.env.NODE_ENV === "development"
       ? process.env.CORE_URL_DEV
-      : "https://codify.solutions/api/"
-    const tenant = await this.$axios.$get(`${absoluteUrl}tenant/initialize/lausd.health`);
+      : "https://codify.solutions/api"
+    const tenant = await this.$axios.$get(`${absoluteUrl}/tenant/initialize/${url}`);
 
     commit("setTenant", tenant.data);
   }

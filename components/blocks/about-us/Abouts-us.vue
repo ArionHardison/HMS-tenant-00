@@ -13,9 +13,10 @@
 
           <div class="signature spacer m-top-lg">
             <div class="signature-img">
-              <img
-                :src="`https://codify.solutions/public/files/tb/${aboutUs.sign}.webp/${tenantId}`"
-                alt="Signature"/>
+              <object :data="`https://codify.solutions/public/files/tb/${aboutUs.sign}.webp/${tenantId}`"
+                      type="image/webp">
+                <img src="~/assets/placeholder.jpg" alt="Signature">
+              </object>
             </div>
 
             <div class="signature-content">
