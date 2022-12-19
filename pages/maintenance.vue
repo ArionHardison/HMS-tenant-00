@@ -2,14 +2,6 @@
   <div  :style="{ '--primary-color': primaryColor }" class="maintenance-page">
     <div class="maintenance-content">
       <img class="animated zoomIn maintenance-logo" :src="logo" alt="Logo"><br/>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 offset-lg-3  col-md-6 offset-md-3 col-12 offset-0">
-            <input-field v-model="donation.amount" label="Amount"/>
-          </div>
-        </div>
-      </div>
-      <button  type="submit" class="btn btn-primary mt-3" @click="supportTenant">Support</button>
     </div>
   </div>
 </template>
