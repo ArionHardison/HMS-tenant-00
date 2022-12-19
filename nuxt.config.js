@@ -1,21 +1,17 @@
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
-  server: {
-    port: 3001,
-  },
   head: {
     title: 'nuxt',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: ''},
+      {name: 'format-detection', content: 'telephone=no'}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
     ]
   },
 
@@ -53,14 +49,14 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/axios' },
-    { src: '~/plugins/vuex-persistence.js', ssr: false },
-    { src: '~/plugins/main.js', ssr: false },
-    { src: '~/plugins/root-mixins.js' },
-    { src: '~/plugins/img-directive.js' },
-    { src: '~/plugins/global-event.js' , ssr: false },
-    { src: '~/plugins/laravel-echo.js' , ssr: false  },
-    { src: '~/plugins/root-directive.js' }
+    {src: '~/plugins/axios'},
+    {src: '~/plugins/vuex-persistence.js', ssr: false},
+    {src: '~/plugins/main.js', ssr: false},
+    {src: '~/plugins/root-mixins.js'},
+    {src: '~/plugins/img-directive.js'},
+    {src: '~/plugins/global-event.js', ssr: false},
+    {src: '~/plugins/laravel-echo.js', ssr: false},
+    {src: '~/plugins/root-directive.js'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
