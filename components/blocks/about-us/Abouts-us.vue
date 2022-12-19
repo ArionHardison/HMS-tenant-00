@@ -13,7 +13,9 @@
 
           <div class="signature spacer m-top-lg">
             <div class="signature-img">
-              <img :src="'https://codify.solutions/public/files?path='+tenantId+'/tb/'+aboutUs.sign+'.webp'" alt="Signature" />
+              <img
+                :src="`https://codify.solutions/public/files/tb/${aboutUs.sign}.webp/${tenantId}`"
+                alt="Signature"/>
             </div>
 
             <div class="signature-content">
@@ -34,8 +36,8 @@
             <div class="icon-list-item" :key="index">
               <p>
                 <span class="d-flex"
-                  ><i class="fas fa-check"></i
-                  ><span>{{ item.advantage }}</span></span
+                ><i class="fas fa-check"></i
+                ><span>{{ item.advantage }}</span></span
                 >
               </p>
             </div>
