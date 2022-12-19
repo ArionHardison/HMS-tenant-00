@@ -43,7 +43,7 @@ export default {
 </script>
 <style scoped>
 .maintenance-logo {
-  max-width: 200px;
+  max-width: 300px;
 }
 .maintenance-content {
   position: absolute;
@@ -53,6 +53,6 @@ export default {
   bottom: 0;
   margin: auto;
   text-align: center;
-  height: 200px;
+  height: 300px;
 }
 </style>
