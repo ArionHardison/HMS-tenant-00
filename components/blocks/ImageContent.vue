@@ -15,15 +15,15 @@ export default {
       return this.$store.state.initializedId;
     },
   },
-  data(){
+  data() {
     return {
       webpSrc: null,
       jpgSrc: null
     }
   },
   beforeMount() {
-    this.webpSrc = `https://codify.solutions/public/files?path=${this.tenant ? this.tenantId+'/' : ''}${this.size}/${this.src}.webp`
-    this.jpgSrc = `https://codify.solutions/public/files?path=${this.tenant ? this.tenantId+'/' : ''}${this.size}/${this.src}.jpg`
+    this.webpSrc = `https://codify.solutions/public/files/${this.size}/${this.src}.webp/${this.tenant ? this.tenantId + '/' : ''}`
+    this.jpgSrc = `https://codify.solutions/public/files/${this.size}/${this.src}.jpg /${this.tenant ? this.tenantId + '/' : ''}`
   }
 }
 </script>
