@@ -5,6 +5,8 @@
     id="sign-up-form"
     class="comment-form"
   >
+
+
     <input-field
       name="full_name"
       type="text"
@@ -33,12 +35,13 @@
       :options="genderOptions"
     />
 
-    <phone-field
+    <input-field
       name="phone"
-      country-field-name="country_id"
-      v-model="countryAndPhone"
+      type="text"
+      v-model="registrationForm.phone"
+      :mask="true"
+      mask-data="+1 (###) ###-####"
       label="Phone"
-      @input="setPhoneAndCountry"
     />
 
     <input-field
@@ -64,19 +67,19 @@
 <script>
 import InputField from "./Fields/InputField";
 import SelectField from "./Fields/SelectField.vue";
-import PhoneField from "./Fields/PhoneField.vue";
-import { serialize } from "object-to-formdata";
 import api from "~/mixins/api";
+import cloneDeep from 'lodash.clonedeep';
+
 export default {
   mixins: [api],
   name: "SignUpForm",
-  components: { InputField, SelectField, PhoneField },
+  components: {InputField, SelectField},
   data() {
     return {
       genderOptions: [
-        { id: "male", name: "Male" },
-        { id: "female", name: "Female" },
-        { id: "other", name: "Other" },
+        {id: "male", name: "Male"},
+        {id: "female", name: "Female"},
+        {id: "other", name: "Other"},
       ],
       countryAndPhone: null,
       registrationForm: {
@@ -87,7 +90,6 @@ export default {
         phone: "",
         password: "",
         password_confirmation: "",
-        country_id: null,
         token: null,
         referral: null,
       },
@@ -116,12 +118,15 @@ export default {
       this.registrationForm.country_id = data.country;
     },
     async onSubmit() {
+      const registration = cloneDeep(this.registrationForm);
+      registration.phone = `+1${registration.phone}`
       const response = await this.post(
         "public/auth/sign-up",
         this.registrationForm
       );
       if (response) {
-        await this.$router.push({ name: "sign-in" });
+        this.$store.commit("setAuthData", response);
+        await this.$router.push("/verification")
       }
     },
   },

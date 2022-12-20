@@ -1,12 +1,12 @@
 <template>
   <div id="news-single-post">
-    <Loading />
+    <Loading/>
 
-    <Header logoColor="dark" />
+    <Header logoColor="dark"/>
 
     <main id="main" class="site-main">
       <template v-if="program">
-        <PageTitle />
+        <PageTitle/>
 
         <div id="page-content" class="spacer p-top-xl">
           <div class="wrapper">
@@ -19,7 +19,7 @@
                     <div class="img object-fit">
                       <div class="object-fit-cover">
 
-                        <ImageContent :src="program.program_image" size="md" />
+                        <ImageContent :src="program.program_image" size="md"/>
 
                       </div>
                     </div>
@@ -36,7 +36,7 @@
                       <h2>{{ program.name }}</h2>
                     </div>
 
-                    <Description :desc="program.description" />
+                    <Description :desc="program.description"/>
 
                     <!-- <Comments /> -->
                   </div>
@@ -64,7 +64,7 @@
                                           btn-block
                                           margin-zero
                                         "
-                                        >May 22, 2022</small
+                                      >May 22, 2022</small
                                       >
                                     </div>
                                   </div>
@@ -123,7 +123,7 @@
       </template>
     </main>
 
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
@@ -189,7 +189,7 @@ export default {
       });
       if (program) {
         if (this.program.access_type === 1) {
-          await this.$router.push({ name: "programs" });
+          await this.$router.push({name: "account"});
         } else {
           if (process.client) {
             window.location.href = program.url;

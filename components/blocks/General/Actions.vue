@@ -13,8 +13,8 @@
         </nuxt-link>
       </template>
       <template v-else>
-        <nuxt-link class="actions-item" :to="{ name: 'programs' }">
-          <span>My Programs</span>
+        <nuxt-link class="actions-item" :to="{ name: 'account' }">
+          <span>My Account</span>
         </nuxt-link>
         <a href="javascript:void(0)" class="actions-item" @click="signOut">
           <span>Sign out</span>
@@ -48,7 +48,7 @@ export default {
   methods: {
     async signOut() {
       this.$store.commit("signOut");
-      await this.get(`public/auth/sign-out/${this.userId}`);
+      await this.get(`public/auth/sign-out`);
     },
   },
 };

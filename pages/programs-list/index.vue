@@ -1,8 +1,8 @@
 <template>
   <div id="search-results">
-    <Loading />
+    <Loading/>
 
-    <Header logoColor="dark" />
+    <Header logoColor="dark"/>
 
     <main id="main" class="site-main">
       <PageTitle
@@ -23,38 +23,34 @@
                       :title="program.name"
                       :to="{
                         name: 'program',
-                        query: { id: program.program_id },
+                        query: { id: program.id },
                       }"
                     >
                       <div class="img object-fit overflow-hidden">
                         <div class="object-fit-cover transform-scale-h">
-                          <img
-                            class="card-top-img"
-                            v-src="program.program_image"
-                            :alt="program.name"
-                          />
+                          <ImageContent :src="program.program_image" size="lg" class="card-top-img"/>
                         </div>
                       </div>
                     </nuxt-link>
                   </div>
                   <div class="card-body">
-                    <!-- <div class="card-meta">
+                    <div class="card-meta">
                       <p>
                         <span
-                          ><nuxt-link
-                            class="
+                        ><nuxt-link
+                          class="
                               btn btn-lg btn-before-horbar btn-link
                               border-0
                               p-0
                               min-w-auto
                               link-no-space
                             "
-                            :to="{ name: 'program', query: { id: program.program_id } }"
-                            >{{ program.full_name }}</nuxt-link
-                          ></span
+                          :to="{ name: 'program', query: { id: program.id } }"
+                        >{{ program.name }}</nuxt-link
+                        ></span
                         >
                       </p>
-                    </div> -->
+                    </div>
 
                     <h4 class="card-title">
                       <nuxt-link
@@ -63,7 +59,8 @@
                           name: 'program',
                           query: { id: program.program_id },
                         }"
-                        >{{ program.program_name }}</nuxt-link
+                      >{{ program.program_name }}
+                      </nuxt-link
                       >
                     </h4>
 
@@ -88,7 +85,7 @@
       </div>
     </main>
 
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
@@ -99,6 +96,7 @@ import Footer from "~/components/blocks/footer/Footer";
 
 import PageTitle from "~/components/blocks/search-results/PageTitle";
 import Loadmore from "~/components/Loadmore/Loadmore";
+import ImageContent from "@/components/blocks/ImageContent";
 
 export default {
   data() {
@@ -109,6 +107,7 @@ export default {
     };
   },
   components: {
+    ImageContent,
     Loadmore,
     Loading,
     Header,
@@ -125,7 +124,7 @@ export default {
   methods: {
     async getPrograms(page = 1) {
       const programs = await this.get(
-        `program-sale/list?page=${page}&&sort=newest`
+        `program-sale/list?page=${page}`
       );
       this.currentPage = programs.meta.current_page;
       this.lastPage = programs.meta.last_page;

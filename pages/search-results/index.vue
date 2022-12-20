@@ -1,13 +1,11 @@
 <template>
   <div id="search-results">
-    <Loading />
+    <Loading/>
 
-    <Header logoColor="dark" />
+    <Header logoColor="dark"/>
 
     <main id="main" class="site-main">
-      <PageTitle
-        :search-query="$route.query.tag ? $route.query.tag : $route.query.s"
-      />
+      <PageTitle/>
       <div id="page-content" class="spacer p-top-xl">
         <div class="wrapper">
           <div class="content">
@@ -25,11 +23,7 @@
                     >
                       <div class="img object-fit overflow-hidden">
                         <div class="object-fit-cover transform-scale-h">
-                          <img
-                            class="card-top-img"
-                            :src="program.program_image"
-                            :alt="program.name"
-                          />
+                          <ImageContent :src="program.program_image" size="lg" class="card-top-img"/>
                         </div>
                       </div>
                     </nuxt-link>
@@ -38,11 +32,11 @@
                     <div class="card-meta">
                       <p>
                         <span
-                          ><nuxt-link
-                            class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto link-no-space"
-                            :to="{ name: 'program', query: { id: program.id } }"
-                            >{{ program.category }}</nuxt-link
-                          ></span
+                        ><nuxt-link
+                          class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto link-no-space"
+                          :to="{ name: 'program', query: { id: program.id } }"
+                        >{{ program.category }}</nuxt-link
+                        ></span
                         >
                       </p>
                     </div>
@@ -51,7 +45,8 @@
                       <nuxt-link
                         title="Which Diagnostic Should I Choose?"
                         :to="{ name: 'program', query: { id: program.id } }"
-                        >{{ program.name }}</nuxt-link
+                      >{{ program.name }}
+                      </nuxt-link
                       >
                     </h4>
 
@@ -65,7 +60,7 @@
       </div>
     </main>
 
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
@@ -75,6 +70,7 @@ import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
 
 import PageTitle from "~/components/blocks/search-results/PageTitle";
+import ImageContent from "@/components/blocks/ImageContent";
 
 export default {
   data() {
@@ -83,6 +79,7 @@ export default {
     };
   },
   components: {
+    ImageContent,
     Loading,
     Header,
     PageTitle,
@@ -102,13 +99,10 @@ export default {
     title: "Search results",
     titleTemplate: "%s",
   },
-  async created() {
-    const queryParams = Object.keys(this.$route.query);
-    this.searchItems = await this.get(
-      `public/find-program-by-${queryParams[queryParams.length - 1]}/${
-        this.$route.query[queryParams[queryParams.length - 1]]
-      }`
-    );
+  async beforeMount() {
+    this.searchItems = await this.post("find-program", {
+      search: this.$route.query.query
+    });
   },
 };
 </script>

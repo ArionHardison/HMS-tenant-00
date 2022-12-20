@@ -12,6 +12,7 @@ const initialState = () => ({
   errorFields: [],
   authData: {
     accessToken: null,
+    email_verified_at: null,
     id: 0
   },
   initializedId: null,
@@ -42,6 +43,9 @@ const mutations = {
         state.errorFields.splice(index, 1);
       }
     }
+  },
+  setAccountVerified(state, verificationDate) {
+    state.authData.email_verified_at = verificationDate;
   },
   setPreloaderState(state, show) {
     state.showPreloaderOnRequest = show;

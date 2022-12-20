@@ -54,7 +54,7 @@
                         blockClass: 'notify-error'
                     });
                 }else{
-                   await this.$router.push({ name: "programs" })
+                   await this.$router.push({ name: "account" })
                 }
 
             }

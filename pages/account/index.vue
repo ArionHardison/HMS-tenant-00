@@ -1,26 +1,32 @@
 <template>
   <div id="news">
-    <Loading />
+    <Loading/>
 
-    <Header logoColor="dark" />
+    <Header logoColor="dark"/>
 
     <main id="main" class="site-main">
-      <PageTitle />
+      <PageTitle/>
 
       <div id="page-content" class="spacer p-top-xl">
         <div class="wrapper">
           <div class="content">
             <div id="blog">
               <div class="row">
+                <div class="col-12 mt-3 mb-3">
+                  <template v-if="userData">
+                    User: <b>{{ userData.full_name }}</b><br>
+                    Email: <b>{{ userData.email }}</b>
+                  </template>
+                </div>
                 <div class="col-3">
-                    <h4>Daily tasks</h4>
+                  <h4>Daily tasks</h4>
                   <template v-if="tasks.length">
                     <template v-for="task in tasks">
-                      <assigned-task :task="task" />
+                      <assigned-task :task="task"/>
                     </template>
                   </template>
                   <template v-else>
-                    No tasks
+                    <p class="mt-3">No tasks</p>
                   </template>
                 </div>
                 <div class="col-9">
@@ -42,7 +48,7 @@
                             <div class="img object-fit overflow-hidden">
                               <div class="object-fit-cover transform-scale-h">
 
-                                <ImageContent :src="program.program_image" size="sm" />
+                                <ImageContent :src="program.program_image" size="sm"/>
 
                               </div>
                             </div>
@@ -56,7 +62,8 @@
                             name: 'follow-program',
                             query: { id: program.id },
                           }"
-                            >{{ program.name }}</nuxt-link
+                            >{{ program.name }}
+                            </nuxt-link
                             >
                           </h4>
                           <nuxt-link
@@ -83,7 +90,7 @@
       </div>
     </main>
 
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
@@ -126,16 +133,18 @@ export default {
   data() {
     return {
       programs: [],
+      userData: null,
       tasks: [],
-    };
+    }
   },
   async created() {
     this.programs = await this.get("personal-chain");
+    this.userData = await this.get("user/get-data");
     await this.getTasks();
   },
   methods: {
     async getTasks() {
-      const { data } = await this.get("personal-chain/tasks");
+      const {data} = await this.get("personal-chain/tasks");
       this.tasks = data;
     },
   }

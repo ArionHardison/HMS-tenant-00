@@ -5,10 +5,10 @@
 
       <template v-if="currentStep.error">
 
-          Sorry but you can't continue or use this program due to protocol. To
-          fix this a soon as possible please write message to program author
-          {{ currentStep.author.full_name }}
-          {{ currentStep.author.profile_picture }}
+        Sorry but you can't continue or use this program due to protocol. To
+        fix this a soon as possible please write message to program author
+        {{ currentStep.author.full_name }}
+        {{ currentStep.author.profile_picture }}
 
         <button class="btn btn-success">
           Write message ({{ currentStep.author.username }})
@@ -27,23 +27,24 @@
         <template v-if="currentStep.status === 1">
           <template v-if="currentStep.is_attached">
 
-              Congratulations! Daily task for program was successfully finished!
+            Congratulations! Daily task for program was successfully finished!
 
             <nuxt-link :to="`/follow-program?id=${currentStep.is_attached_to}`"
-              >Back to Main Program</nuxt-link
+            >Back to Main Program
+            </nuxt-link
             >
           </template>
           <template v-else>
 
-              Congratulations! Program was successfully finished!
+            Congratulations! Program was successfully finished!
 
-            <nuxt-link to="/my-purchases">Back to Purchases</nuxt-link>
+            <nuxt-link to="/account">Back to My Account</nuxt-link>
           </template>
         </template>
         <template v-else-if="currentStep.status === 2">
 
-            Program was failed! Sorry but current program was failed, you should
-            start this program again!
+          Program was failed! Sorry but current program was failed, you should
+          start this program again!
 
           <nuxt-link to="/shop">To Shop</nuxt-link>
         </template>
@@ -56,33 +57,33 @@
               </p>
               <div class="card-container">
 
-             <template v-for="user in currentStep.users.system">
+                <template v-for="user in currentStep.users.system">
                   <div class="card">
-                  <div class="d-flex aligen-items-center flex-column">
-                   <AppAvatar
-                         :userInfo="user"
-                         width="60px"
-                         height="60px"
-                         alt="Avatar"
-                         imageSizeType="tb"
-                       />
-                       <h5 data-v-ab34384e="" class="mb-0 font-montserrat">
-                         <nuxt-link
-                           :to="`/${user.username}`"
-                           class="active nuxt-link-active"
-                         >
-                           {{ user.full_name }}
-                         </nuxt-link>
-                       </h5>
-                     </div>
-                   <div>{{ user.state }} {{ user.city }}</div>
-                       <button
-                         class="invite-btn"
-                         @click="inviteUser(user.id, true)"
-                       >
-                         Invite
-                       </button>
-               </div>
+                    <div class="d-flex aligen-items-center flex-column">
+                      <AppAvatar
+                        :userInfo="user"
+                        width="60px"
+                        height="60px"
+                        alt="Avatar"
+                        imageSizeType="tb"
+                      />
+                      <h5 data-v-ab34384e="" class="mb-0 font-montserrat">
+                        <nuxt-link
+                          :to="`/${user.username}`"
+                          class="active nuxt-link-active"
+                        >
+                          {{ user.full_name }}
+                        </nuxt-link>
+                      </h5>
+                    </div>
+                    <div>{{ user.state }} {{ user.city }}</div>
+                    <button
+                      class="invite-btn"
+                      @click="inviteUser(user.id, true)"
+                    >
+                      Invite
+                    </button>
+                  </div>
                 </template>
                 <template v-for="user in currentStep.users.invite">
                   <div class="card">
@@ -115,13 +116,13 @@
                 {{ currentStep.invited }}
               </h2>
 
-                Module Can't be used! Congratulations! You invited
-                {{ currentStep.name }}
-                to be your personal {{ currentStep.setup_started.role.name }}!
-                {{ currentStep.name }}
-                has 1 hour to accept your invite, in case if
-                {{ currentStep.name }}
-                will not accept it, you should choose someone else!
+              Module Can't be used! Congratulations! You invited
+              {{ currentStep.name }}
+              to be your personal {{ currentStep.setup_started.role.name }}!
+              {{ currentStep.name }}
+              has 1 hour to accept your invite, in case if
+              {{ currentStep.name }}
+              will not accept it, you should choose someone else!
 
               <h2 class="mt-4 text-center">Time left to accept</h2>
               <CountDown
@@ -159,13 +160,13 @@ import Wait from "~/components/Modules/Wait";
 import globalEvents from "@/mixins/globalEvents";
 import api from "~/mixins/api";
 import CountDown from "@/components/Modules/followup/CountDown";
-import { serialize } from "object-to-formdata";
+import {serialize} from "object-to-formdata";
 import AppAvatar from "~/components/ui/app-avatar.vue";
 
 
 export default {
   mixins: [api, globalEvents],
-  layout:"default",
+  layout: "default",
   components: {
     CountDown,
     Assessment,
@@ -217,8 +218,8 @@ export default {
       }
     },
     async inviteUser(userId, system = false) {
-      console.log("INVITE : "+userId);
-      console.log(  serialize(
+      console.log("INVITE : " + userId);
+      console.log(serialize(
         {
           invite_id: system ? null : userId,
           user_id: system ? userId : null,
@@ -233,18 +234,19 @@ export default {
       ));
       const invite = await this.post(
         "personal-chain/invite",
-          {
-            invite_id: system ? null : userId,
-            user_id: system ? userId : null,
-            personal_chain_id: this.$route.query.id,
-            system,
-          }
+        {
+          invite_id: system ? null : userId,
+          user_id: system ? userId : null,
+          personal_chain_id: this.$route.query.id,
+          system,
+        }
       )
       if (invite) {
         await this.continueProgram();
       }
     },
-    formatingData() {},
+    formatingData() {
+    },
   },
 };
 </script>
@@ -260,6 +262,7 @@ export default {
   align-items: center;
   justify-content: space-evenly;
 }
+
 .invite-btn {
   background-color: #1a2853;
   color: white;
@@ -267,11 +270,13 @@ export default {
   margin-top: 10px;
   border-radius: 15px;
 }
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
 .aligen-items-center {
   align-items: center;
 }

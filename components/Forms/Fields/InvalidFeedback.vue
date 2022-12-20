@@ -1,5 +1,5 @@
 <template>
-  <div class="error">
+  <div class="error mt-2">
     <slot></slot>
   </div>
 </template>
@@ -13,6 +13,6 @@ export default {
 <style scoped>
 .error {
   color: #fb6340;
-  font-size: 80%;
+  font-size: 12px;
 }
 </style>

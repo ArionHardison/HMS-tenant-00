@@ -18,6 +18,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'assets/sass/style.scss',
+    'assets/style.css',
     'animate.css'
   ],
 
@@ -51,6 +52,7 @@ export default {
   plugins: [
     {src: '~/plugins/axios'},
     {src: '~/plugins/vuex-persistence.js', ssr: false},
+    {src: '~plugins/vue-the-mask.js', ssr: false},
     {src: '~/plugins/main.js', ssr: false},
     {src: '~/plugins/root-mixins.js'},
     {src: '~/plugins/img-directive.js'},
