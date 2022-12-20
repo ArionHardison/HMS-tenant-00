@@ -2,14 +2,6 @@
   <div  :style="{ '--primary-color': primaryColor }" class="maintenance-page">
     <div class="maintenance-content">
       <img class="animated zoomIn maintenance-logo" :src="logo" alt="Logo"><br/>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 offset-lg-3  col-md-6 offset-md-3 col-12 offset-0">
-            <input-field v-model="donation.amount" label="Amount"/>
-          </div>
-        </div>
-      </div>
-      <button  type="submit" class="btn btn-primary mt-3" @click="supportTenant">Support</button>
     </div>
   </div>
 </template>
@@ -51,7 +43,7 @@ export default {
 </script>
 <style scoped>
 .maintenance-logo {
-  max-width: 200px;
+  max-width: 500px;
 }
 .maintenance-content {
   position: absolute;
@@ -61,6 +53,6 @@ export default {
   bottom: 0;
   margin: auto;
   text-align: center;
-  height: 200px;
+  height: 500px;
 }
 </style>
