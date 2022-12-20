@@ -33,14 +33,6 @@
       :options="genderOptions"
     />
 
-    <phone-field
-      name="phone"
-      country-field-name="country_id"
-      v-model="countryAndPhone"
-      label="Phone"
-      @input="setPhoneAndCountry"
-    />
-
     <input-field
       name="password"
       type="password"
