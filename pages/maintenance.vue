@@ -32,12 +32,6 @@ export default {
         return this.$router.push("/")
       }
     },
-    async supportTenant(){
-      const support = await this.post("public/support-tenant", this.donation);
-      if(support){
-          window.location.href = support.url;
-      }
-    }
   }
 }
 </script>
