@@ -40,7 +40,7 @@
       type="text"
       v-model="registrationForm.phone"
       :mask="true"
-      mask-data="+1 (###) ###-####"
+      mask-data="##########"
       label="Phone"
     />
 
@@ -74,6 +74,11 @@ export default {
   mixins: [api],
   name: "SignUpForm",
   components: {InputField, SelectField},
+  computed: {
+    invite() {
+      return this.$store.state.invite;
+    },
+  },
   data() {
     return {
       genderOptions: [
@@ -82,6 +87,7 @@ export default {
         {id: "other", name: "Other"},
       ],
       countryAndPhone: null,
+      program: null,
       registrationForm: {
         full_name: "",
         username: "",
@@ -92,6 +98,7 @@ export default {
         password_confirmation: "",
         token: null,
         referral: null,
+        invite: null
       },
     };
   },
@@ -101,6 +108,10 @@ export default {
     }
     if (this.$route.query.ref) {
       this.registrationForm.referral = this.$route.query.ref;
+    }
+    if(this.invite){
+      this.registrationForm.invite = this.invite;
+      this.fillFieldsFromInvite();
     }
   },
   methods: {
@@ -113,9 +124,12 @@ export default {
         this.registrationForm[k] = baseUserData[k];
       }
     },
-    setPhoneAndCountry(data) {
-      this.registrationForm.phone = data.phone;
-      this.registrationForm.country_id = data.country;
+    async fillFieldsFromInvite() {
+      const fieldsData = await this.get(`public/auth/invite-data/${this.invite}`);
+      this.program = fieldsData.program;
+      for (let key in fieldsData) {
+        this.registrationForm[key] = fieldsData[key];
+      }
     },
     async onSubmit() {
       const registration = cloneDeep(this.registrationForm);
@@ -125,8 +139,14 @@ export default {
         this.registrationForm
       );
       if (response) {
-        this.$store.commit("setAuthData", response);
-        await this.$router.push("/verification")
+        if(this.invite){
+          this.$store.commit("setInviteId", null);
+          this.$store.commit("setAuthData", response);
+          await this.$router.push(`/program?id=${this.program}`);
+        }else {
+          this.$store.commit("setAuthData", response);
+          await this.$router.push("/verification")
+        }
       }
     },
   },

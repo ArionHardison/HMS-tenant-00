@@ -10,6 +10,7 @@ const initialState = () => ({
   maintenance: true,
   errors: {},
   errorFields: [],
+  invite: null,
   authData: {
     accessToken: null,
     email_verified_at: null,
@@ -43,6 +44,9 @@ const mutations = {
         state.errorFields.splice(index, 1);
       }
     }
+  },
+  setInviteId(state, invite){
+    state.invite = invite;
   },
   setAccountVerified(state, verificationDate) {
     state.authData.email_verified_at = verificationDate;

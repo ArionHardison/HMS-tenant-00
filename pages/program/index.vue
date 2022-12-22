@@ -110,7 +110,9 @@
                           </template>
                         </template>
                         <template v-else>
-                          You should authenticate to start program
+                          You should have account to start program
+                          <nuxt-link to="/sign-up" class="btn btn-1 btn-primary btn-block mt-2 mb-2">Sign Up</nuxt-link>
+                          <nuxt-link to="/sign-in" class="btn btn-1 btn-primary btn-block mt-2 mb-2">Sign In</nuxt-link>
                         </template>
                       </div>
                     </div>
@@ -159,6 +161,9 @@ export default {
     accessToken() {
       return this.$store.state.authData.accessToken;
     },
+    invite() {
+      return this.$store.state.invite;
+    },
   },
   mounted: function () {
     if (process.client) {
@@ -169,6 +174,11 @@ export default {
     return {
       program: null,
     };
+  },
+  beforeMount() {
+    if(this.$route.query.invite && this.invite===null){
+      this.$store.commit("setInviteId", this.$route.query.invite);
+    }
   },
   beforeDestroy() {
     if (process.client) {
