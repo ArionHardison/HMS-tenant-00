@@ -2,24 +2,8 @@
   <div class="actions">
     <div class="actions-items">
       <a class="actions-item" :href="url">
-        <span>Clinic</span>
+        <span>Admin</span>
       </a>
-      <template v-if="isGuest">
-        <nuxt-link class="actions-item" :to="{ name: 'sign-in' }">
-          <span>Sign In</span>
-        </nuxt-link>
-        <nuxt-link class="actions-item" :to="{ name: 'sign-up' }">
-          <span>Sign up</span>
-        </nuxt-link>
-      </template>
-      <template v-else>
-        <nuxt-link class="actions-item" :to="{ name: 'account' }">
-          <span>My Account</span>
-        </nuxt-link>
-        <a href="javascript:void(0)" class="actions-item" @click="signOut">
-          <span>Sign out</span>
-        </a>
-      </template>
     </div>
   </div>
 </template>
@@ -42,7 +26,7 @@ export default {
   },
   created() {
     if (process.client) {
-      this.url = `https://clinic.codify.health`;
+      this.url = `admin.` + location.host;
     }
   },
   methods: {

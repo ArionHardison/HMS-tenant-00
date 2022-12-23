@@ -1,8 +1,5 @@
 <template>
   <div :class="{ 'mt-2': label }">
-    <label v-if="label" :for="`${name}-input`" class="form-control-label">{{
-        label
-                                                                          }}</label>
     <div class="input-group">
       <slot></slot>
 
