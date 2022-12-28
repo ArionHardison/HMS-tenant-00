@@ -45,7 +45,7 @@ const mutations = {
       }
     }
   },
-  setInviteId(state, invite){
+  setInviteId(state, invite) {
     state.invite = invite;
   },
   setAccountVerified(state, verificationDate) {

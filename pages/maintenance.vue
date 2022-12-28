@@ -1,7 +1,7 @@
 <template>
-  <div  :style="{ '--primary-color': primaryColor }" class="maintenance-page">
+  <div :style="{ '--primary-color': primaryColor }" class="maintenance-page">
     <div class="maintenance-content">
-      <img class="animated zoomIn maintenance-logo" :src="logo" alt="Logo"><br/>
+      <img :src="logo" alt="Logo" class="animated zoomIn maintenance-logo"><br/>
     </div>
   </div>
 </template>
@@ -9,12 +9,13 @@
 <script>
 import api from "@/mixins/api";
 import InputField from "../components/Forms/Fields/InputField";
+
 export default {
   components: {InputField},
   mixins: [api],
   name: "maintenance",
   layout: "maintenance",
-  data(){
+  data() {
     return {
       mode: null,
       donation: {
@@ -22,13 +23,13 @@ export default {
       }
     }
   },
-  created() {
+  beforeMount() {
     this.getMaintenancePage();
   },
   methods: {
-    async getMaintenancePage(){
+    async getMaintenancePage() {
       this.mode = await this.get("maintenance");
-      if(!this.mode.maintenance){
+      if (!this.mode.maintenance) {
         return this.$router.push("/")
       }
     },
@@ -39,6 +40,7 @@ export default {
 .maintenance-logo {
   max-width: 500px;
 }
+
 .maintenance-content {
   position: absolute;
   left: 0;

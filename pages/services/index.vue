@@ -1,12 +1,12 @@
 <template>
   <div id="services">
-    <Loading />
+    <Loading/>
 
-    <Header logoColor="dark" />
+    <Header logoColor="dark"/>
 
     <main id="main" class="site-main">
       <template v-if="servicesPage">
-        <PageTitle :name="servicesPage.entity_name" />
+        <PageTitle :name="servicesPage.entity_name"/>
         <div id="page-content" class="spacer p-top-xl">
           <div class="wrapper">
             <div class="content">
@@ -18,8 +18,8 @@
                 >
                   <nuxt-link
                     :title="serviceItem.title"
-                    class="services-item"
                     :to="{ path: '/service', query: { id: serviceItem.id } }"
+                    class="services-item"
                   >
                     <div class="services-item-content">
                       <h3 class="services-item-t-head">
@@ -27,15 +27,15 @@
                       </h3>
                       <span
                         class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto link-no-space"
-                        >Read more</span
+                      >Read more</span
                       >
                     </div>
 
                     <div class="img object-fit">
                       <div class="object-fit-cover">
                         <img
-                          :src="'https://codify.solutions/public/files?path='+tenantId+'/xl/'+serviceItem.serviceImage+'.webp'"
                           :alt="serviceItem.serviceName"
+                          :src="'https://codify.solutions/public/files/xl/'+serviceItem.serviceImage+'.webp/xl/'+tenantId"
                         />
                       </div>
                     </div>
@@ -50,7 +50,7 @@
       </template>
     </main>
 
-    <Footer />
+    <Footer/>
   </div>
 </template>
 

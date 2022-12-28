@@ -1,20 +1,20 @@
-export default ({ $axios, store, app}) => {
+export default ({$axios, store, app}) => {
   $axios.onRequest(request => {
-     if(process.client) {
-       store.commit("api/startAxiosCall");
-     }
+    if (process.client) {
+      store.commit("api/startAxiosCall");
+    }
     return request;
   })
 
   $axios.onResponse(response => {
-    if(process.client) {
+    if (process.client) {
       store.commit("api/stopAxiosCall")
     }
     return response
   })
 
-  $axios.onError(error => {
-    if(process.client) {
+  $axios.onError(async error => {
+    if (process.client) {
       store.commit("api/stopAxiosCall")
     }
     if (error.response?.status === 422) {
@@ -26,7 +26,16 @@ export default ({ $axios, store, app}) => {
     }
 
     if (error.response.status === 503) {
-      app.router.push("/maintenance");
+      const maintenance = await $axios.get("maintenance");
+      const redirectURL = maintenance.data.data.redirect;
+      const urlReg = new RegExp('^(?:[a-z+]+:)?//', 'i');
+
+      if (urlReg.test(redirectURL) && process.client) {
+        window.location.href = redirectURL;
+      } else {
+        await app.router.push(redirectURL);
+      }
+
 
     }
 
