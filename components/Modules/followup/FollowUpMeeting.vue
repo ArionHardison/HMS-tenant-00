@@ -1,91 +1,279 @@
+<style>
+.description-list li {
+  list-style-type: none;
+}
+
+.followup-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.profile-avatar img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+
+#remoteTrack video {
+  width: 100%;
+}
+
+#remoteTrack.hide-video video {
+  visibility: hidden;
+}
+
+#remoteTrack.hide-video {
+  background-color: #777777;
+}
+
+#remoteTrack {
+  height: auto;
+  min-height: 425px;
+  background-color: #777777;
+}
+
+.local-video-muted, .local-audio-muted {
+  background-color: #f06060;
+  border-radius: 13px;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  color: #fff;
+}
+
+.local-audio-muted {
+  position: absolute;
+  z-index: 99;
+  left: 5px;
+  top: 5px;
+}
+
+.local-video-muted {
+  position: absolute;
+  z-index: 99;
+  right: 5px;
+  top: 5px;
+}
+
+.remote-video-muted, .remote-audio-muted {
+  background-color: #f06060;
+  border-radius: 25px;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  color: #fff;
+}
+
+.remote-video-muted {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.remote-audio-muted {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+}
+
+#localTrack {
+  position: absolute;
+  bottom: 40px;
+  width: 100px;
+  height: 75px;
+  overflow: hidden;
+  right: 40px;
+  background-color: #fff;
+  border: 1px solid #918f8f;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+
+#localTrack video {
+  width: 100%;
+  border-radius: 6px;
+  position: absolute;
+  left: 0;
+  padding: 3px;
+  top: -1px;
+}
+
+.call-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  border: 1px solid #777777;
+  background-color: #fff;
+  color: #777777;
+}
+
+.end-call-btn {
+  border-radius: 20px;
+  background-color: #f06060;
+  padding: 8px 25px;
+  border: 0;
+  color: #fff;
+}
+
+.ln-50 {
+  line-height: 50px;
+}
+
+.muted-video video {
+  display: none;
+}
+
+.muted-video {
+  background-color: #777777 !important;
+}
+
+.muted-track {
+  background-color: #f06060;
+  color: #ffffff;
+  border: 0;
+}
+</style>
 <template>
   <div class="call-page w-100">
     <!-- Page Content -->
     <div class="content">
       <div class="container-fluid">
         <!-- Call Wrapper -->
-        <div class="call-wrapper">
-          <div class="call-main-row">
-            <div class="call-main-wrapper">
-              <div class="call-view">
-                <div class="call-window">
-                  <!-- Call Contents -->
-                  <div class="call-contents">
-                    <div class="call-content-wrap">
-                      <div class="user-video" id="remoteTrack"></div>
-                      <div class="my-video" id="localTrack"></div>
-                    </div>
+        <div class="row">
+          <template v-if="participant">
+
+            <div class="col-3">
+              <h3>Recomendations</h3>
+            </div>
+            <div class="col-6  text-left mb-3 mt-3">
+              <ImageContent :src="participant.profile_picture" class="followup-avatar" size="sm"/>
+              {{ participant.full_name }}
+            </div>
+            <div class="col-3">
+              <h3>Profile</h3>
+            </div>
+
+          </template>
+          <div class="col-3">
+
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <div class="col-12">
+                <div id="remoteTrack"
+                     :class="{'hide-video': remoteVideoMuted}">
+                  <div v-if="remoteVideoMuted" class="remote-video-muted">
+                    <VideoOffOutline :size="25"/>
                   </div>
-                  <!-- Call Contents -->
-                  <div class="call-footer">
-                    <div class="call-icons">
-                      <span class="call-duration"
-                        >{{ callDurationMinutes }}:{{
-                          callDurationSeconds
-                        }}</span
-                      >
-                      <ul class="call-items">
-                        <li class="call-item">
-                          <a
-                            :class="videoMuted ? 'muted-track' : ''"
-                            title="Enable Video"
-                            data-placement="top"
-                            @click="changeVideoState"
-                            data-bs-toggle="tooltip"
-                          >
-                            <VideoOutline :size="16" />
-                          </a>
-                        </li>
-                        <li class="call-item">
-                          <a
-                            :class="audioMuted ? 'muted-track' : ''"
-                            title="Mute Audio"
-                            data-placement="top"
-                            @click="changeAudioState"
-                            data-bs-toggle="tooltip"
-                          >
-                            <MicrophoneOutline :size="16" />
-                          </a>
-                        </li>
-                      </ul>
-                      <div class="end-call">
-                        <button @click="finishFollowUp">
-                          <i class="material-icons">call_end</i>
-                        </button>
-                      </div>
-                    </div>
+                  <div v-if="remoteAudioMuted" class="remote-audio-muted">
+                    <MicrophoneOff :size="25"/>
                   </div>
-                  <!-- /Call Footer -->
                 </div>
+                <div id="localTrack" :class="{'muted-video': videoMuted}">
+                  <div v-if="videoMuted" class="local-video-muted">
+                    <VideoOffOutline :size="13"/>
+                  </div>
+                  <div v-if="audioMuted" class="local-audio-muted">
+                    <MicrophoneOff :size="13"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-3">
+                <div class="row">
+                  <div class="col-4 ln-50 text-left">
+                    {{ callDurationMinutes }}:{{
+                      callDurationSeconds
+                    }}
+                  </div>
+                  <div class="col-4">
+                    <button
+                      :class="videoMuted ? 'muted-track' : ''"
+                      class="call-btn"
+                      data-bs-toggle="tooltip"
+                      data-placement="top"
+                      title="Enable Video"
+                      @click="changeVideoState"
+                    >
+                      <VideoOutline :size="25"/>
+                    </button>
+
+                    <button
+                      :class="audioMuted ? 'muted-track' : ''"
+                      class="call-btn"
+                      data-bs-toggle="tooltip"
+                      data-placement="top"
+                      title="Mute Audio"
+                      @click="changeAudioState"
+                    >
+                      <MicrophoneOutline :size="25"/>
+                    </button>
+                  </div>
+                  <div class="col-4 mt-2">
+                    <button class="end-call-btn float-right" @click="finishFollowUp">
+                      <i class="material-icons">END CALL</i>
+                    </button>
+                  </div>
+                </div>
+
+
               </div>
             </div>
           </div>
+
+
+          <div class="col-3 text-center">
+            <template v-if="participant">
+
+              <ImageContent :src="participant.profile_picture" class="profile-avatar" size="sm"/>
+
+              <h4 class="mt-2">{{ participant.full_name }}</h4>
+
+              <span class="small">{{ participant.profession }}</span>
+
+              <ul class="text-left mt-3 description-list">
+                <li>Username <span class="float-right">@{{ participant.username }}</span></li>
+                <li>Birthday <span class="float-right">{{ participant.birth_date }}</span></li>
+                <li>Email <span class="float-right">{{ participant.email }}</span></li>
+                <li>Phone <span class="float-right">+{{ participant.phone }}</span></li>
+              </ul>
+
+            </template>
+          </div>
+          <!-- /Call Wrapper -->
         </div>
-        <!-- /Call Wrapper -->
       </div>
     </div>
   </div>
 </template>
 <script>
-import { connect, createLocalVideoTrack } from "twilio-video";
+import {connect, createLocalVideoTrack} from "twilio-video";
 import serverEvents from "@/mixins/serverEvents";
 import audioRecorder from "@/mixins/audioRecorder";
 import time from "@/mixins/time";
 import api from "@/mixins/api";
 import VideoOutline from "vue-material-design-icons/VideoOutline.vue";
+import VideoOffOutline from "vue-material-design-icons/VideoOffOutline.vue";
 import MicrophoneOutline from "vue-material-design-icons/MicrophoneOutline.vue";
-import { serialize } from "object-to-formdata";
+import MicrophoneOff from "vue-material-design-icons/MicrophoneOff.vue";
 import globalEvents from "@/mixins/globalEvents";
+import ImageContent from "@/components/blocks/ImageContent";
 
 export default {
   layout: "VideoCall",
   mixins: [time, serverEvents, audioRecorder, api, globalEvents],
   components: {
+    ImageContent,
     VideoOutline,
+    VideoOffOutline,
     MicrophoneOutline,
+    MicrophoneOff
   },
   data() {
     return {
+      participant: null,
       loading: false,
       data: {},
       remoteTrack: "",
@@ -99,6 +287,8 @@ export default {
       durationInteval: null,
       audioMuted: false,
       videoMuted: false,
+      remoteVideoMuted: false,
+      remoteAudioMuted: false,
       localTrack: null,
       followUpFinished: false,
       multipartFormData: true,
@@ -151,7 +341,6 @@ export default {
   },
   async beforeDestroy() {
     clearInterval(this.durationInteval);
-    this.$store.commit("api/SET_LOADER_STATE", true);
     if (!this.followUpFinished) {
       await this.finishFollowUp();
     }
@@ -160,20 +349,20 @@ export default {
     async finalizeSpeech(speechId) {
       await this.post(
         `follow-up/voice-finalize`,
-          {
-            speech_id: speechId,
-            follow_up_id: this.followUp.id,
-          }
+        {
+          speech_id: speechId,
+          follow_up_id: this.followUp.id,
+        }
       );
     },
     async storeAudio(audio, speechId) {
       await this.post(
-        `follow-up/voice-record`,{
-            speech_id: speechId,
-            voice: audio,
-            chain_id: this.followUp.chain_id,
-            follow_up_id: this.followUp.id,
-          }
+        `follow-up/voice-record`, {
+          speech_id: speechId,
+          voice: audio,
+          chain_id: this.followUp.chain_id,
+          follow_up_id: this.followUp.id,
+        }
       );
     },
     changeVideoState() {
@@ -199,15 +388,13 @@ export default {
       });
     },
     async finishFollowUp() {
-
+      return;
       if (process.browser) {
         this.followUpFinished = true;
         await this.stop();
         try {
           this.localTrack.stop();
           this.activeRoom.disconnect();
-          const localChatWindow = document.getElementById("localTrack");
-          localChatWindow.innerHTML = "";
         } catch (e) {
           console.log(e);
         }
@@ -220,18 +407,16 @@ export default {
         const followUp = await this.get(
           `follow-up/get-data/${this.followUp.chain_id}`
         );
+        this.participant = followUp.participant;
+        const {connect, createLocalVideoTrack} = require("twilio-video");
 
-        const { connect, createLocalVideoTrack } = require("twilio-video");
-
-        connect(followUp.token, { name: followUp.room }).then(
+        connect(followUp.token, {name: followUp.room}).then(
           async (room) => {
             if (process.browser) {
               this.activeRoom = room;
 
               const localChatWindow = document.getElementById("localTrack");
               const remoteChatWindow = document.getElementById("remoteTrack");
-              localChatWindow.innerHTML = "";
-              remoteChatWindow.innerHTML = "";
 
               this.localTrack = await createLocalVideoTrack();
               localChatWindow.appendChild(this.localTrack.attach());
@@ -246,16 +431,32 @@ export default {
                 participant.on("trackSubscribed", (track) => {
                   remoteChatWindow.appendChild(track.attach());
                 });
+                participant.on("trackDisabled", (publication) => {
+                  if (publication.track.kind === "video") {
+                    this.remoteVideoMuted = true;
+                  } else {
+                    this.remoteAudioMuted = true;
+                  }
+                });
+                participant.on("trackEnabled", (publication) => {
+                  if (publication.track.kind === "video") {
+                    this.remoteVideoMuted = false;
+                  } else {
+                    this.remoteAudioMuted = false;
+                  }
+                });
+
               });
 
               this.activeRoom.on("participantDisconnected", (participant) => {
+                document.querySelector("#remoteTrack audio").remove();
+                document.querySelector("#remoteTrack video").remove();
                 participant.tracks.forEach((publication) => {
                   if (publication.isSubscribed) {
                     const track = publication.track;
                     track.detach();
                   }
                 });
-                remoteChatWindow.innerHTML = "";
               });
 
               this.activeRoom.on("participantConnected", (participant) => {
@@ -280,258 +481,4 @@ export default {
   },
 };
 </script>
-<style>
-.muted-track {
-  background-color: red;
-}
-.muted-track i {
-  color: #ffffff;
-}
-#remoteTrack video {
-  width: 100% !important;
-}
-#localTrack video {
-  width: 200px !important;
-}
-</style>
-<style scoped>
-ul {
-  padding-left: 2rem;
-}
-ul {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-a {
-  color: #0d6efd;
-  text-decoration: underline;
-}
-a:hover {
-  color: #0a58ca;
-}
-img,
-svg {
-  vertical-align: middle;
-}
-::-moz-focus-inner {
-  padding: 0;
-  border-style: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .nav-link {
-    transition: none;
-  }
-}
-li:before {
-  content: none;
-}
-.container-fluid {
-  padding-left: 30px;
-  padding-right: 30px;
-}
-.content {
-  min-height: 200px;
-  padding: 30px 0 0;
-}
-.call-main-row {
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  padding-bottom: inherit;
-  padding-top: inherit;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-.call-main-wrapper {
-  display: table;
-  height: 100%;
-  table-layout: fixed;
-  width: 100%;
-}
-.call-view {
-  display: table-cell;
-  height: 100%;
-  float: none;
-  padding: 0;
-  position: static;
-  vertical-align: top;
-  width: 75%;
-}
-.call-window {
-  display: table;
-  height: 100%;
-  table-layout: fixed;
-  width: 100%;
-  background-color: #fff;
-  border: 1px solid #f0f0f0;
-}
-.fixed-header .user-info a {
-  color: #272b41;
-  font-weight: 500;
-}
-.custom-menu.nav > li > a {
-  color: #bbb;
-  font-size: 26px;
-  line-height: 32px;
-  margin-left: 15px;
-  padding: 0;
-}
-.call-contents {
-  display: table-row;
-  height: 100%;
-}
-.call-content-wrap {
-  height: 100%;
-  position: relative;
-  width: 100%;
-}
-.call-duration {
-  display: inline-block;
-  font-size: 30px;
-  margin-top: 4px;
-  position: absolute;
-  left: 0;
-}
-.call-footer {
-  background-color: #fff;
-  border-top: 1px solid #f0f0f0;
-  padding: 15px;
-}
-.call-icons {
-  text-align: center;
-  position: relative;
-}
-.call-icons .call-items {
-  border-radius: 5px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: inline-block;
-}
-.call-icons .call-items .call-item {
-  display: inline-block;
-  text-align: center;
-  margin-right: 5px;
-}
-.call-icons .call-items .call-item:last-child {
-  margin-right: 0;
-}
-.call-icons .call-items .call-item a {
-  color: #777;
-  border: 1px solid #ddd;
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  border-radius: 50px;
-  display: inline-block;
-  font-size: 20px;
-}
-.call-icons .call-items .call-item a i {
-  width: 18px;
-  height: 18px;
-}
-.user-video {
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 10;
-}
-.user-video img {
-  width: auto;
-  max-width: 100%;
-  height: auto;
-  max-height: 100%;
-  display: block;
-  margin: 0 auto;
-}
-.my-video {
-  position: absolute;
-  z-index: 99;
-  bottom: 20px;
-  right: 20px;
-}
-.my-video ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.my-video ul li {
-  float: left;
-  width: 120px;
-  margin-right: 10px;
-}
-.my-video ul li img {
-  border: 3px solid #fff;
-  border-radius: 6px;
-}
-.end-call {
-  position: absolute;
-  top: 7px;
-  right: 0;
-}
-.end-call button {
-  background-color: #f06060;
-  border-radius: 50px;
-  color: #fff;
-  display: inline-block;
-  line-height: 10px;
-  padding: 8px 25px;
-  text-transform: uppercase;
-  border: none;
-}
-.call-wrapper {
-  position: relative;
-  height: calc(100vh - 145px);
-}
-@media only screen and (max-width: 1199px) {
-  .container-fluid {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-@media only screen and (max-width: 991.98px) {
-  .call-wrapper {
-    height: calc(100vh - 140px);
-  }
-}
-@media only screen and (max-width: 767.98px) {
-  body {
-    font-size: 0.875rem;
-  }
-  .content {
-    padding: 15px 0 0;
-  }
-  .container-fluid {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  .my-video ul li {
-    width: 50px;
-  }
-  .call-duration {
-    font-size: 24px;
-  }
-  .call-wrapper {
-    height: calc(100vh - 115px);
-  }
-}
-@media only screen and (max-width: 575.98px) {
-  body {
-    font-size: 0.8125rem;
-  }
-  .call-duration {
-    display: block;
-    margin-top: 0;
-    margin-bottom: 10px;
-    position: inherit;
-  }
-  .end-call {
-    margin-top: 10px;
-    position: inherit;
-  }
-}
-</style>
+
