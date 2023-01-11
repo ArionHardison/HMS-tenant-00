@@ -29,7 +29,7 @@
 
 #remoteTrack {
   height: auto;
-  min-height: 425px;
+  min-height: 125px;
   background-color: #777777;
 }
 
@@ -146,19 +146,21 @@
           <template v-if="participant">
 
             <div class="col-3">
-              <h3>Recomendations</h3>
+              <h3>Timeline</h3>
             </div>
             <div class="col-6  text-left mb-3 mt-3">
               <ImageContent :src="participant.profile_picture" class="followup-avatar" size="sm"/>
               {{ participant.full_name }}
             </div>
             <div class="col-3">
-              <h3>Profile</h3>
+              <h3>Profile/OpenAI</h3>
             </div>
 
           </template>
           <div class="col-3">
-
+            <client-only>
+              <TimelineComponent :timeline="timeline"/>
+            </client-only>
           </div>
           <div class="col-6">
             <div class="row">
@@ -256,8 +258,8 @@ import time from "@/mixins/time";
 import api from "@/mixins/api";
 import VideoOutline from "vue-material-design-icons/VideoOutline.vue";
 import VideoOffOutline from "vue-material-design-icons/VideoOffOutline.vue";
-import MicrophoneOutline from "vue-material-design-icons/MicrophoneOutline.vue";
 import MicrophoneOff from "vue-material-design-icons/MicrophoneOff.vue";
+import MicrophoneOutline from "vue-material-design-icons/MicrophoneOutline.vue";
 import globalEvents from "@/mixins/globalEvents";
 import ImageContent from "@/components/blocks/ImageContent";
 
@@ -265,6 +267,8 @@ export default {
   layout: "VideoCall",
   mixins: [time, serverEvents, audioRecorder, api, globalEvents],
   components: {
+    [process.client && "TimelineComponent"]: () =>
+      import("@/components/Modules/followup/TimelineComponent"),
     ImageContent,
     VideoOutline,
     VideoOffOutline,
@@ -277,6 +281,7 @@ export default {
       loading: false,
       data: {},
       remoteTrack: "",
+      timeline: null,
       activeRoom: "",
       previewTracks: "",
       identity: "",
@@ -301,6 +306,7 @@ export default {
     },
   },
   mounted() {
+    this.getTimeline();
     this.listenFor("follow-up", (data) => {
       if (data.finished) {
         this.finishFollowUp();
@@ -346,6 +352,9 @@ export default {
     }
   },
   methods: {
+    async getTimeline() {
+      this.timeline = await this.get(`follow-up/get-timeline/${this.followUp.chain_id}`);
+    },
     async finalizeSpeech(speechId) {
       await this.post(
         `follow-up/voice-finalize`,

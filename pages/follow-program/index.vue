@@ -1,155 +1,159 @@
 <template>
-  <main id="main" class="site-main">
+  <div id="index">
 
-    <template v-if="currentStep">
 
-      <template v-if="currentStep.error">
+    <Header logoColor="light"/>
+    <main id="main" class="site-main">
+      <template v-if="currentStep">
 
-        Sorry but you can't continue or use this program due to protocol. To
-        fix this a soon as possible please write message to program author
-        {{ currentStep.author.full_name }}
-        {{ currentStep.author.profile_picture }}
+        <template v-if="currentStep.error">
 
-        <button class="btn btn-success">
-          Write message ({{ currentStep.author.username }})
-        </button>
-      </template>
-      <template v-else-if="currentStep.wait">
+          Sorry but you can't continue or use this program due to protocol. To
+          fix this a soon as possible please write message to program author
+          {{ currentStep.author.full_name }}
+          {{ currentStep.author.profile_picture }}
 
-        <h1 class="text-center mt-3 mb-3">Next step will be available soon</h1>
-        <CountDown
-          :end-date="currentStep.next_step_in"
-          class="mt-4"
-          @timerStopped="triggerProgramChanges"
-        />
-      </template>
-      <template v-else>
-        <template v-if="currentStep.status === 1">
-          <template v-if="currentStep.is_attached">
-
-            Congratulations! Daily task for program was successfully finished!
-
-            <nuxt-link :to="`/follow-program?id=${currentStep.is_attached_to}`"
-            >Back to Main Program
-            </nuxt-link
-            >
-          </template>
-          <template v-else>
-
-            Congratulations! Program was successfully finished!
-
-            <nuxt-link to="/account">Back to My Account</nuxt-link>
-          </template>
+          <button class="btn btn-success">
+            Write message ({{ currentStep.author.username }})
+          </button>
         </template>
-        <template v-else-if="currentStep.status === 2">
+        <template v-else-if="currentStep.wait">
 
-          Program was failed! Sorry but current program was failed, you should
-          start this program again!
-
-          <nuxt-link to="/shop">To Shop</nuxt-link>
+          <h1 class="text-center mt-3 mb-3">Next step will be available soon</h1>
+          <CountDown
+            :end-date="currentStep.next_step_in"
+            class="mt-4"
+            @timerStopped="triggerProgramChanges"
+          />
         </template>
         <template v-else>
-          <template v-if="currentStep.require_setup">
-            <template v-if="currentStep.setup_started === null">
-              <h2>Please choose one of {{ currentStep.role }}'s</h2>
-              <p>
-                The selected {{ currentStep.role }} will be invited to help you
-              </p>
-              <div class="card-container">
+          <template v-if="currentStep.status === 1">
+            <template v-if="currentStep.is_attached">
 
-                <template v-for="user in currentStep.users.system">
-                  <div class="card">
-                    <div class="d-flex aligen-items-center flex-column">
-                      <AppAvatar
-                        :userInfo="user"
-                        width="60px"
-                        height="60px"
-                        alt="Avatar"
-                        imageSizeType="tb"
-                      />
-                      <h5 data-v-ab34384e="" class="mb-0 font-montserrat">
-                        <nuxt-link
-                          :to="`/${user.username}`"
-                          class="active nuxt-link-active"
-                        >
-                          {{ user.full_name }}
-                        </nuxt-link>
-                      </h5>
+              Congratulations! Daily task for program was successfully finished!
+
+              <nuxt-link :to="`/follow-program?id=${currentStep.is_attached_to}`"
+              >Back to Main Program
+              </nuxt-link
+              >
+            </template>
+            <template v-else>
+
+              Congratulations! Program was successfully finished!
+
+              <nuxt-link to="/account">Back to My Account</nuxt-link>
+            </template>
+          </template>
+          <template v-else-if="currentStep.status === 2">
+
+            Program was failed! Sorry but current program was failed, you should
+            start this program again!
+
+            <nuxt-link to="/shop">To Shop</nuxt-link>
+          </template>
+          <template v-else>
+            <template v-if="currentStep.require_setup">
+              <template v-if="currentStep.setup_started === null">
+                <h2>Please choose one of {{ currentStep.role }}'s</h2>
+                <p>
+                  The selected {{ currentStep.role }} will be invited to help you
+                </p>
+                <div class="card-container">
+
+                  <template v-for="user in currentStep.users.system">
+                    <div class="card">
+                      <div class="d-flex aligen-items-center flex-column">
+                        <AppAvatar
+                          :userInfo="user"
+                          alt="Avatar"
+                          height="60px"
+                          imageSizeType="tb"
+                          width="60px"
+                        />
+                        <h5 class="mb-0 font-montserrat" data-v-ab34384e="">
+                          <nuxt-link
+                            :to="`/${user.username}`"
+                            class="active nuxt-link-active"
+                          >
+                            {{ user.full_name }}
+                          </nuxt-link>
+                        </h5>
+                      </div>
+                      <div>{{ user.state }} {{ user.city }}</div>
+                      <button
+                        class="invite-btn"
+                        @click="inviteUser(user.id, true)"
+                      >
+                        Invite
+                      </button>
                     </div>
-                    <div>{{ user.state }} {{ user.city }}</div>
-                    <button
-                      class="invite-btn"
-                      @click="inviteUser(user.id, true)"
-                    >
-                      Invite
-                    </button>
-                  </div>
-                </template>
-                <template v-for="user in currentStep.users.invite">
-                  <div class="card">
-                    <AppAvatar
-                      :userInfo="{
+                  </template>
+                  <template v-for="user in currentStep.users.invite">
+                    <div class="card">
+                      <AppAvatar
+                        :userInfo="{
                         ...user,
                         username: '',
                         full_name: user.name,
                       }"
-                      width="60px"
-                      height="60px"
-                      alt="Avatar"
-                      imageSizeType="tb"
-                    />
-                    <h5 data-v-ab34384e="" class="mb-0 font-montserrat">
-                      <div class="active nuxt-link-active">
-                        {{ user.name }}
-                      </div>
-                    </h5>
-                    {{ user.state }} {{ user.city }}
-                    <button class="invite-btn" @click="inviteUser(user.id)">
-                      Invite
-                    </button>
-                  </div>
-                </template>
-              </div>
-            </template>
-            <template v-else>
-              <h2>
-                {{ currentStep.invited }}
-              </h2>
+                        alt="Avatar"
+                        height="60px"
+                        imageSizeType="tb"
+                        width="60px"
+                      />
+                      <h5 class="mb-0 font-montserrat" data-v-ab34384e="">
+                        <div class="active nuxt-link-active">
+                          {{ user.name }}
+                        </div>
+                      </h5>
+                      {{ user.state }} {{ user.city }}
+                      <button class="invite-btn" @click="inviteUser(user.id)">
+                        Invite
+                      </button>
+                    </div>
+                  </template>
+                </div>
+              </template>
+              <template v-else>
+                <h2>
+                  {{ currentStep.invited }}
+                </h2>
 
-              Module Can't be used! Congratulations! You invited
-              {{ currentStep.name }}
-              to be your personal {{ currentStep.setup_started.role.name }}!
-              {{ currentStep.name }}
-              has 1 hour to accept your invite, in case if
-              {{ currentStep.name }}
-              will not accept it, you should choose someone else!
+                Module Can't be used! Congratulations! You invited
+                {{ currentStep.name }}
+                to be your personal {{ currentStep.setup_started.role.name }}!
+                {{ currentStep.name }}
+                has 1 hour to accept your invite, in case if
+                {{ currentStep.name }}
+                will not accept it, you should choose someone else!
 
-              <h2 class="mt-4 text-center">Time left to accept</h2>
-              <CountDown
-                :end-date="currentStep.setup_started.endTime"
-                class="mt-4"
-                @timerStopped="continueProgram"
-              />
+                <h2 class="mt-4 text-center">Time left to accept</h2>
+                <CountDown
+                  :end-date="currentStep.setup_started.endTime"
+                  class="mt-4"
+                  @timerStopped="continueProgram"
+                />
+              </template>
             </template>
-          </template>
-          <template v-else-if="currentStep.type === 'module'">
-            <client-only>
-              <component
-                @continueProgram="continueProgram"
-                :is="currentStep.module"
-                :item="
+            <template v-else-if="currentStep.type === 'module'">
+              <client-only>
+                <component
+                  :is="currentStep.module"
+                  :item="
                   currentStep.module_item_id
                     ? currentStep.module_item_id
                     : currentStep.target
                 "
-                :resource="currentStep.module"
-              ></component>
-            </client-only>
+                  :resource="currentStep.module"
+                  @continueProgram="continueProgram"
+                ></component>
+              </client-only>
+            </template>
           </template>
         </template>
       </template>
-    </template>
-  </main>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -162,12 +166,13 @@ import api from "~/mixins/api";
 import CountDown from "@/components/Modules/followup/CountDown";
 import {serialize} from "object-to-formdata";
 import AppAvatar from "~/components/ui/app-avatar.vue";
+import Header from "@/components/blocks/header/Header";
 
 
 export default {
   mixins: [api, globalEvents],
-  layout: "default",
   components: {
+    Header,
     CountDown,
     Assessment,
     FollowUp,
