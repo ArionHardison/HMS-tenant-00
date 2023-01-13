@@ -153,7 +153,7 @@
               {{ participant.full_name }}
             </div>
             <div class="col-3">
-              <h3>Profile/OpenAI</h3>
+              <h3>Information</h3>
             </div>
 
           </template>
@@ -227,22 +227,28 @@
 
 
           <div class="col-3 text-center">
-            <template v-if="participant">
+            <b-tabs content-class="mt-3">
+              <b-tab active title="Profile">
+                <template v-if="participant">
 
-              <ImageContent :src="participant.profile_picture" class="profile-avatar" size="sm"/>
+                  <ImageContent :src="participant.profile_picture" class="profile-avatar" size="sm"/>
 
-              <h4 class="mt-2">{{ participant.full_name }}</h4>
+                  <h4 class="mt-2">{{ participant.full_name }}</h4>
 
-              <span class="small">{{ participant.profession }}</span>
+                  <span class="small">{{ participant.profession }}</span>
 
-              <ul class="text-left mt-3 description-list">
-                <li>Username <span class="float-right">@{{ participant.username }}</span></li>
-                <li>Birthday <span class="float-right">{{ participant.birth_date }}</span></li>
-                <li>Email <span class="float-right">{{ participant.email }}</span></li>
-                <li>Phone <span class="float-right">+{{ participant.phone }}</span></li>
-              </ul>
+                  <ul class="text-left mt-3 description-list">
+                    <li>Username <span class="float-right">@{{ participant.username }}</span></li>
+                    <li>Birthday <span class="float-right">{{ participant.birth_date }}</span></li>
+                    <li>Email <span class="float-right">{{ participant.email }}</span></li>
+                    <li>Phone <span class="float-right">+{{ participant.phone }}</span></li>
+                  </ul>
 
-            </template>
+                </template>
+              </b-tab>
+              <b-tab title="Recommendations"><p>I'm the second tab</p></b-tab>
+            </b-tabs>
+
           </div>
           <!-- /Call Wrapper -->
         </div>
@@ -312,15 +318,12 @@ export default {
         this.finishFollowUp();
       }
     });
-    if (process.browser) {
-      this.listen(
-        `followup.${this.followUp.id}.${this.followUp.author_id}`,
-        "finished",
-        () => {
-          this.finishFollowUp();
-        }
-      );
+    this.listenFor("finished", (data) => {
+      console.log(data);
+    });
 
+
+    if (process.browser) {
       this.connectToTwilio();
       this.start();
       const duration = Math.max(

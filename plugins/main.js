@@ -5,9 +5,13 @@ import VueEcho from 'vue-echo-laravel';
 import FlashMessage from '@smartweb/vue-flash-message';
 
 Vue.use(VueEcho, {
-    broadcaster: 'socket.io',
-    host: 'https://app.codify.solutions',
-    client: require("socket.io-client")
+  broadcaster: 'socket.io',
+  host: `${
+    process.env.NODE_ENV === "development"
+      ? process.env.SOCKET_URL_DEV
+      : "https://app.codify.solutions"
+  }`,
+  client: require("socket.io-client")
 });
 
 Vue.use(VAnimateCss);

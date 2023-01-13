@@ -23,7 +23,7 @@
       >
         <multiselect
           v-model="selectedValue"
-          :options="question.choice"
+          :options="question.choices"
           :multiple="true"
           track-by="id"
           label="choice"
@@ -37,7 +37,7 @@
       >
         <select v-model="selectedValue">
           <option
-            v-for="(option, index) in question.choice"
+            v-for="(option, index) in question.choices"
             :key="index"
             :value="option.choice"
           >
@@ -73,7 +73,7 @@
       <template v-if="question.type === 'yesOrNo'">
         <div>
           <span
-            v-for="(choice, index) in question.choice"
+            v-for="(choice, index) in question.choices"
             :key="`label_${index}`"
           >
             <label

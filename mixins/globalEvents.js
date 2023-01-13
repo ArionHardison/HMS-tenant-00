@@ -9,5 +9,8 @@ export default {
     stopListening(event) {
       this.$bus.$off(event);
     },
+    pushEvent(eventName, eventData = null) {
+      this.$bus.$emit(eventName, eventData);
+    },
   },
 };

@@ -1,7 +1,8 @@
 import Echo from "laravel-echo";
+
 window.io = require("socket.io-client");
 
-export default ({ store }) => {
+export default ({store}) => {
   window.Echo = new Echo({
     broadcaster: "socket.io",
     host: `${
@@ -13,7 +14,7 @@ export default ({ store }) => {
       process.env.NODE_ENV === "development"
         ? process.env.CORE_URL_DEV
         : "https://codify.solutions"
-    }/broadcasting/auth`,
+    }/broadcasting/tenant`,
     auth: {
       headers: {
         Authorization: `Bearer ${store.state.authData.accessToken}`,
