@@ -8,12 +8,16 @@ export default {
       multipartFormData: false
     }
   },
+
   beforeMount() {
     if (this.userId) {
       this.listen();
     }
   },
   computed: {
+    listening() {
+      return this.$store.state.listening;
+    },
     evenChanelPrefix() {
       return this.$store.state.initializedId;
     },
@@ -24,9 +28,11 @@ export default {
   methods: {
     listen() {
       if (process.client && !this.listening) {
+        this.$store.commit("setEventListening", true);
         window.Echo.private(`${this.evenChanelPrefix}-user-${this.userId}`).listen(
           ".NewEvent",
           (event) => {
+            console.log("NEW EVENT!");
             this.$bus.$emit(event.component, event.data);
           }
         );

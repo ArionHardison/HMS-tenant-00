@@ -246,7 +246,13 @@
 
                 </template>
               </b-tab>
-              <b-tab title="Recommendations"><p>I'm the second tab</p></b-tab>
+              <b-tab title="Recommendations">
+                <div class="row">
+                  <template v-for="recommendation in readyRecommendations">
+                    <div class="col-12" v-html="recommendation"></div>
+                  </template>
+                </div>
+              </b-tab>
             </b-tabs>
 
           </div>
@@ -284,6 +290,7 @@ export default {
   data() {
     return {
       participant: null,
+      readyRecommendations: [],
       loading: false,
       data: {},
       remoteTrack: "",
@@ -317,12 +324,10 @@ export default {
       if (data.finished) {
         this.finishFollowUp();
       }
+      if (data.recommendation) {
+        this.readyRecommendations.push(data.recommendation);
+      }
     });
-    this.listenFor("finished", (data) => {
-      console.log(data);
-    });
-
-
     if (process.browser) {
       this.connectToTwilio();
       this.start();

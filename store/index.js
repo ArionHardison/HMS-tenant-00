@@ -8,6 +8,7 @@ const initialState = () => ({
   showSwipeBox: false,
   swipeBoxIndex: 1,
   maintenance: true,
+  listening: false,
   errors: {},
   errorFields: [],
   invite: null,
@@ -44,6 +45,9 @@ const mutations = {
         state.errorFields.splice(index, 1);
       }
     }
+  },
+  setEventListening(state, status) {
+    state.listening = status;
   },
   setInviteId(state, invite) {
     state.invite = invite;
