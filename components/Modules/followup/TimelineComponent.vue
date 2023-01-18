@@ -5,7 +5,7 @@
         'is-previos': timelineItem.current===0,
         'is-current': timelineItem.current===1,
         'is-next': timelineItem.current===2,
-      }" class="btn btn-default">{{ timelineItem.step_name }}</span>
+      }" class="btn btn-default w-100 mb-2">{{ timelineItem.step_name }}</span>
     </template>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
 
 <style scoped>
 .is-previos {
-  background-color: #aec1fc;
+  background-color: #929292;
   color: #fff;
 }
 
@@ -37,7 +37,7 @@ export default {
 }
 
 .is-next {
-  background-color: #929292;
+  background-color: #508ff6;
   color: #fff;
 }
 </style>
