@@ -405,7 +405,6 @@ export default {
       });
     },
     async finishFollowUp() {
-      return;
       if (process.browser) {
         this.followUpFinished = true;
         await this.stop();
