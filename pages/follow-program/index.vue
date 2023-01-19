@@ -160,6 +160,7 @@
 import Assessment from "~/components/Modules/Assessment";
 import FollowUp from "~/components/Modules/FollowUp";
 import Wait from "~/components/Modules/Wait";
+import Challenge from "@/components/Modules/Challenge";
 
 import globalEvents from "@/mixins/globalEvents";
 import api from "~/mixins/api";
@@ -167,15 +168,16 @@ import CountDown from "@/components/Modules/followup/CountDown";
 import {serialize} from "object-to-formdata";
 import AppAvatar from "~/components/ui/app-avatar.vue";
 import Header from "@/components/blocks/header/Header";
-
+import time from "@/mixins/time";
 
 export default {
-  mixins: [api, globalEvents],
+  mixins: [api, globalEvents, time],
   components: {
     Header,
     CountDown,
     Assessment,
     FollowUp,
+    Challenge,
     Wait,
     AppAvatar,
   },
