@@ -12,7 +12,7 @@
               <PageTitle
                 :title="homePage.pageTop.homeTitle"
                 :desc="homePage.pageTop.homePageDesc"
-                :background="`https://codify.solutions/public/files/lg/${homePage.pageTop.imageOrVideo}.webp/${tenantId}`"
+                :background="homePage.pageTop.imageOrVideo.length > 11 ? `https://codify.solutions/public/files/lg/${homePage.pageTop.imageOrVideo}.webp/${tenantId}` : homePage.pageTop.imageOrVideo"
               />
 
               <template v-if="homePage.secondContainer">
@@ -96,6 +96,7 @@ export default {
       homePage: null,
     };
   },
+
 
 };
 </script>

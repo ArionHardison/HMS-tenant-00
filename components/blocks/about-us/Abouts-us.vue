@@ -14,8 +14,8 @@
           <div class="signature spacer m-top-lg">
             <div class="signature-img">
               <object :data="`https://codify.solutions/public/files/tb/${aboutUs.sign}.webp/${tenantId}`"
-                      type="image/webp">
-                <img src="~/assets/placeholder.jpg" alt="Signature">
+                      type="image/webp" class="sign-image">
+                <img src="~/assets/placeholder.jpg" class="sign-image" alt="Signature">
               </object>
             </div>
 
@@ -68,3 +68,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+  .sign-image {
+    max-width: 100px;
+  }
+</style>
