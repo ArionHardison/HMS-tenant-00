@@ -5,35 +5,35 @@
     <Header logoColor="light"/>
 
     <main id="main" class="site-main content-no-spacing">
-      <div class="content">
+      <div class="content mb-4">
         <div class="clearfix">
           <template v-if="homePage">
             <template v-if="homePage.pageTop">
-              <PageTitle
-                :title="homePage.pageTop.homeTitle"
-                :desc="homePage.pageTop.homePageDesc"
-                :background="homePage.pageTop.imageOrVideo.length > 11 ? `https://codify.solutions/public/files/lg/${homePage.pageTop.imageOrVideo}.webp/${tenantId}` : homePage.pageTop.imageOrVideo"
-              />
-
+                <PageTitle
+                  :title="homePage.pageTop.homeTitle"
+                  :desc="homePage.pageTop.homePageDesc"
+                  :background="homePage.pageTop.imageOrVideo.length > 11 ? `https://codify.solutions/public/files/lg/${homePage.pageTop.imageOrVideo}.webp/${tenantId}` : homePage.pageTop.imageOrVideo"
+                />
+              </template>
               <template v-if="homePage.secondContainer">
                 <AboutUs :about-us="homePage.secondContainer"/>
               </template>
-              <div id="img" class="block spacer p-top-xl">
-                <div class="img-no-wrap-1">
-                  <div class="img object-fit">
-                    <div class="object-fit-cover">
-                      <template v-if="homePage.lastContainer">
-                        <img
-                          :src="`https://codify.solutions/public/files/lg/${homePage.lastContainer.videoOrImage}.webp/${tenantId}`"
-                          alt="Medical Center"
-                        />
-                      </template>
+              <template v-if="homePage.lastContainer">
+                <div id="img" class="block spacer p-top-xl">
+                  <div class="img-no-wrap-1">
+                    <div class="img object-fit">
+                      <div class="object-fit-cover">
+                          <img
+                            :src="`https://codify.solutions/public/files/lg/${homePage.lastContainer.videoOrImage}.webp/${tenantId}`"
+                            alt="Medical Center"
+                          />
+                      </div>
                     </div>
+                    <div class="img-no-wrap-bg-color"></div>
                   </div>
-                  <div class="img-no-wrap-bg-color"></div>
                 </div>
-              </div>
-            </template>
+              </template>
+
             <News/>
           </template>
         </div>

@@ -1,11 +1,13 @@
 <template>
   <div class="actions">
     <div class="actions-items">
-      <a class="actions-item" :href="url">
+
+      <a class="actions-item" :href="`https://clinic.${host}`">
         <span>Clinic</span>
       </a>
-      <template v-if="isGuest">
-        <nuxt-link class="actions-item" :to="{ name: 'sign-in' }">
+
+   <!--   <template v-if="isGuest">
+        <nuxt-link class="actions-item" >
           <span>Sign In</span>
         </nuxt-link>
         <nuxt-link class="actions-item" :to="{ name: 'sign-up' }">
@@ -13,13 +15,13 @@
         </nuxt-link>
       </template>
       <template v-else>
-        <nuxt-link class="actions-item" :to="{ name: 'account' }">
+        <nuxt-link class="actions-item" >
           <span>My Account</span>
         </nuxt-link>
-        <a href="javascript:void(0)" class="actions-item" @click="signOut">
+        <a href="javascript:void(0)" class="actions-item">
           <span>Sign out</span>
         </a>
-      </template>
+      </template> -->
     </div>
   </div>
 </template>
@@ -28,28 +30,22 @@
 export default {
   name: "Actions",
   computed: {
-    isGuest() {
-      return this.$store.state.authData.accessToken === null;
-    },
     userId() {
       return this.$store.state.authData.id;
     },
   },
   data() {
     return {
-      url: "",
+      host: '',
     };
   },
   created() {
-    if (process.client) {
-      this.url = `https://clinic.codify.health`;
+    if (process.browser) {
+     this.host = window.location.hostname;
     }
   },
   methods: {
-    async signOut() {
-      this.$store.commit("signOut");
-      await this.get(`public/auth/sign-out`);
-    },
+
   },
 };
 </script>

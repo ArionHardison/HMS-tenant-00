@@ -6,15 +6,13 @@
                     <div class="links">
                         <div class="links-items">
                             <div class="links-item">
-                                <nuxt-link class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto" to="/services">Services</nuxt-link>
+                                <nuxt-link class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto" to="/programs-list">All Programs</nuxt-link>
                             </div>
                             <div class="links-item">
-                                <nuxt-link class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto" to="/programs-list">All Programs</nuxt-link>
+                              <SearchModalButton />
                             </div>
                         </div>
                     </div>
-
-                    <SearchModalButton />
                 </div>
 
                 <div class="header-center align-self-center">
@@ -23,10 +21,17 @@
 
                 <div class="header-right d-flex justify-content-end">
                     <div class="d-flex align-items-center">
-                        <SearchModalButton />
-                        <MenuModalButton />
-                    </div>
 
+
+                        <template v-if="isGuest">
+                          <SignInButton/>
+                          <SignUpButton/>
+                        </template>
+                        <template v-else>
+                          <MyAccountButton/>
+                          <SignOutButton/>
+                        </template>
+                    </div>
                     <Actions />
                 </div>
             </div>
@@ -37,6 +42,10 @@
 <script>
     import HeaderLogo from './HeaderLogo';
     import SearchModalButton from '~/components/Button/SearchModalButton';
+    import MyAccountButton from '~/components/Button/MyAccountButton';
+    import SignOutButton from '~/components/Button/SignOutButton';
+    import SignUpButton from '~/components/Button/SignUpButton';
+    import SignInButton from '~/components/Button/SignInButton';
     import MenuModalButton from '~/components/Button/MenuModalButton';
     import Actions from '../General/Actions';
 
@@ -47,8 +56,17 @@
             HeaderLogo,
             SearchModalButton,
             MenuModalButton,
-            Actions
-        }
+            Actions,
+            SignUpButton,
+            MyAccountButton,
+            SignOutButton,
+            SignInButton
+        },
+      computed: {
+        isGuest() {
+          return this.$store.state.authData.accessToken === null;
+        },
+      },
     };
 </script>
 <style scoped>

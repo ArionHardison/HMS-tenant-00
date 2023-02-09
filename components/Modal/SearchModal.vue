@@ -26,13 +26,7 @@
                   <div class="header-left align-self-center">
                     <div class="links">
                       <div class="links-items">
-                        <div class="links-item">
-                          <nuxt-link
-                            to="/services"
-                            class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto"
-                            >Services</nuxt-link
-                          >
-                        </div>
+
                       </div>
                     </div>
                   </div>
