@@ -33,10 +33,16 @@
 
                     <div class="img object-fit">
                       <div class="object-fit-cover">
-                        <img
-                          :alt="serviceItem.serviceName"
-                          :src="'https://codify.solutions/public/files/xl/'+serviceItem.serviceImage+'.webp/xl/'+tenantId"
-                        />
+                        <template v-if="serviceItem.serviceImage.length===11">
+                          <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Yj2iELI6OeI?autoplay=1&mute=1&loop=1&&rel=0controls=0&showinfo=0&playlist=Yj2iELI6OeI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </template>
+                        <template v-else>
+                          <img
+                            :alt="serviceItem.serviceName"
+                            :src="'https://codify.solutions/public/files/xl/'+serviceItem.serviceImage+'.webp/'+tenantId"
+                          />
+                        </template>
+
                       </div>
                     </div>
 
@@ -91,3 +97,13 @@ export default {
   },
 };
 </script>
+<style scoped>
+iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+}
+</style>
