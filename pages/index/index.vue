@@ -6,7 +6,7 @@
 
     <main id="main" class="site-main content-no-spacing">
       <div class="content mb-4">
-        <div class="clearfix">
+
           <template v-if="homePage">
             <template v-if="homePage.pageTop">
                 <PageTitle
@@ -33,10 +33,13 @@
                   </div>
                 </div>
               </template>
-
+              <Services/>
+              <template v-if="team.length">
+                <OurDoctors :team="team"/>
+              </template>
             <News/>
           </template>
-        </div>
+
       </div>
     </main>
 
@@ -79,6 +82,7 @@ export default {
       document.body.classList.add("header-absolute-true");
     }
     this.homePage = await this.get("public/get-entity/home");
+    this.team = await this.get("public/get-team");
   },
   beforeDestroy() {
     if (process.client) {
@@ -94,6 +98,7 @@ export default {
   data() {
     return {
       homePage: null,
+      team: [],
     };
   },
 

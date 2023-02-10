@@ -33,6 +33,9 @@ export default {
 };
 </script>
 <style scoped>
+#page-title {
+  overflow: hidden;
+}
 .video-container{
     width: 100vw;
     height: 100vh;

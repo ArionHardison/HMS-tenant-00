@@ -1,17 +1,18 @@
 <template>
   <section id="services" class="block spacer p-top-xl">
+
     <div class="adv-slider-services">
       <div class="adv-swiper-container">
         <div class="adv-swiper-wrapper services-items clearfix">
           <nuxt-link
-            v-for="serviceItem in serviceItems"
-            :key="serviceItem.id"
+            v-for="program in programs.data"
+            :key="program.id"
             title="Cardiology"
             class="adv-swiper-slide services-item"
-            :to="serviceItem.link"
+            :to="`/program?id=${program.id}`"
           >
             <div class="services-item-content">
-              <h3 class="services-item-t-head">{{ serviceItem.title }}</h3>
+              <h3 class="services-item-t-head">{{ program.name }}</h3>
               <span
                 class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto link-no-space"
                 >Read more</span
@@ -20,7 +21,7 @@
 
             <div class="img object-fit">
               <div class="object-fit-cover">
-                <img :src="serviceItem.imgSrc" :alt="serviceItem.title" />
+                <ImageContent :src="program.program_image" size="md" />
               </div>
             </div>
 
@@ -51,44 +52,22 @@
 </template>
 
 <script>
-import Swiper from "swiper";
+import ImageContent from "@/components/blocks/ImageContent";
 
 export default {
   name: "services",
-  data() {
-    return {
-      serviceItems: ServicesData.servicesData,
-    };
+  components: {
+    ImageContent,
   },
-  mounted() {
-    const swiperAdvServices = new Swiper(
-      ".adv-slider-services .adv-swiper-container",
-      {
-        // ADV swiper
-        noSwipingClass: "adv-swiper-no-swiping",
-        containerModifierClass: "adv-swiper-container-",
-        slideClass: "adv-swiper-slide",
-        slideBlankClass: "adv-swiper-slide-invisible-blank",
-        slideActiveClass: "adv-swiper-slide-active",
-        slideDuplicateActiveClass: "adv-swiper-slide-duplicate-active",
-        slideVisibleClass: "adv-swiper-slide-visible",
-        slideDuplicateClass: "adv-swiper-slide-duplicate",
-        slideNextClass: "adv-swiper-slide-next",
-        slideDuplicateNextClass: "adv-swiper-slide-duplicate-next",
-        slidePrevClass: "adv-swiper-slide-prev",
-        slideDuplicatePrevClass: "adv-swiper-slide-duplicate-prev",
-        wrapperClass: "adv-swiper-wrapper",
-        navigation: {
-          disabledClass: "adv-swiper-button-disabled",
-          hiddenClass: "adv-swiper-button-hidden",
-          lockClass: "adv-swiper-button-lock",
-          nextEl: ".adv-2-swiper-button-next",
-          prevEl: ".adv-2-swiper-button-prev",
-        },
-        spaceBetween: 0,
-        slidesPerView: "auto",
-      }
-    );
+  data(){
+    return {
+      programs: {
+        data: []
+      },
+    }
+  },
+  async mounted() {
+    this.programs = await this.get("public/get-recent-programs");
   },
 };
 </script>
