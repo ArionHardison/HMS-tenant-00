@@ -109,7 +109,7 @@ const mutations = {
 }
 const actions = {
   async nuxtServerInit({commit}, {req}) {
-     const url = "lausd.health";//req.headers.host.split(":")[0];
+     const url = req.headers.host.split(":")[0];
     const absoluteUrl = process.env.NODE_ENV === "development"
       ? process.env.CORE_URL_DEV
       : "https://codify.solutions/api"
