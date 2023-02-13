@@ -34,6 +34,7 @@
                 </div>
               </template>
               <Services/>
+              <Testimonials/>
               <template v-if="team.length">
                 <OurDoctors :team="team"/>
               </template>

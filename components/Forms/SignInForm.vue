@@ -36,7 +36,11 @@ export default {
       const signIn = await this.post("public/auth/sign-in", this.signInForm);
       if (signIn) {
         this.$store.commit("setAuthData", signIn);
-        await this.$router.push({name: "index"});
+        if(signIn.email_verified_at) {
+          await this.$router.push({name: "index"});
+        }else{
+          await this.$router.push({name: "verification"});
+        }
       }
     }
   }

@@ -20,6 +20,7 @@
         </div>
       </div>
       <button type="submit" class="btn btn-primary mt-3" @click="verifyAccount">Verify account</button>
+      <button type="submit" class="btn btn-primary mt-3" @click="signOut">Sign Out</button>
     </div>
   </div>
 </template>
@@ -51,6 +52,11 @@ export default {
         }, 60000)
       }
     },
+      async signOut() {
+        this.$store.commit("signOut");
+        await this.get(`public/auth/sign-out`);
+        this.$router.push("/");
+      },
     async verifyAccount() {
       const accountVerified = await this.post("code/verify", this.verification);
       if (accountVerified) {

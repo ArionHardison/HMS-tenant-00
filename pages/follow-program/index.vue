@@ -38,10 +38,11 @@
               >
             </template>
             <template v-else>
-
-              Congratulations! Program was successfully finished!
-
-              <nuxt-link to="/account">Back to My Account</nuxt-link>
+              <div class="col-12 text-center">
+                <div>Congratulations! Program was successfully finished!</div>
+                <Testimonial :program="currentStep.program_id"/>
+                <nuxt-link to="/account" class="mt-4 btn btn-primary">Back to My Account</nuxt-link>
+              </div>
             </template>
           </template>
           <template v-else-if="currentStep.status === 2">
@@ -161,6 +162,7 @@ import Assessment from "~/components/Modules/Assessment";
 import FollowUp from "~/components/Modules/FollowUp";
 import Wait from "~/components/Modules/Wait";
 import Challenge from "@/components/Modules/Challenge";
+import Testimonial from "@/components/Modules/Testimonial.vue";
 
 import globalEvents from "@/mixins/globalEvents";
 import api from "~/mixins/api";
@@ -173,6 +175,7 @@ import time from "@/mixins/time";
 export default {
   mixins: [api, globalEvents, time],
   components: {
+    Testimonial,
     Header,
     CountDown,
     Assessment,
