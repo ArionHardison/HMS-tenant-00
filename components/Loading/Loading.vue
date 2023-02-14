@@ -1,6 +1,6 @@
 <template>
     <transition appear leave-active-class="animated slideOutRight">
-        <div class="loading" ref="loading" v-show="showPreloader && requestRunning || logo===null">
+        <div class="loading" ref="loading" v-show="showPreloader && requestRunning">
             <div class="wrapper h-100">
                 <template v-if="logo">
                     <div class="d-flex justify-content-center align-items-center h-100">

@@ -33,12 +33,12 @@
                   </div>
                 </div>
               </template>
+
+
               <Services/>
               <Testimonials/>
-              <template v-if="team.length">
-                <OurDoctors :team="team"/>
-              </template>
-            <News/>
+              <OurDoctors/>
+              <News/>
           </template>
 
       </div>
@@ -83,7 +83,6 @@ export default {
       document.body.classList.add("header-absolute-true");
     }
     this.homePage = await this.get("public/get-entity/home");
-    this.team = await this.get("public/get-team");
   },
   beforeDestroy() {
     if (process.client) {

@@ -4,12 +4,24 @@
       <div class="title">
         <h2 class="hr">News</h2>
       </div>
+      <b-overlay
+        :show="slidesLoad"
+        rounded
+        opacity="1"
+        spinner-small
+        spinner-variant="primary"
+        class="d-block"
+      >
+      <div class="with-pb-lg">
+        <template v-if="news.data.length">
+        <button @click="prevSlide" class="prev-btn"> <ChevronLeft :size="40"/> </button>
+        <button @click="nextSlide" class="next-btn"> <ChevronRight :size="40"/> </button>
 
-      <div class="row gutter-width-sm with-pb-lg">
+        <agile :options="sliderOptions" ref="news">
         <div
           v-for="article in news.data"
           :key="article.id"
-          class="col-xl-4 col-lg-4 col-md-4 col-sm-12"
+          class="news-slide"
         >
           <div class="card card-post">
 
@@ -49,29 +61,102 @@
             </div>
           </div>
         </div>
+        </agile>
+        </template>
       </div>
+      </b-overlay>
     </div>
   </section>
 </template>
 
 <script>
 import ImageContent from "@/components/blocks/ImageContent";
+import ChevronRight from 'vue-material-design-icons/ChevronRight.vue';
+import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue';
+import cloneDeep from "lodash.clonedeep";
 export default {
   name: "News",
-  components: {ImageContent},
+  components: {ImageContent, ChevronRight, ChevronLeft},
   data() {
     return {
+      slidesLoad: false,
+      sliderOptions: {
+        autoplay: false,
+        centerMode: true,
+        dots: false,
+        navButtons: false,
+        infinite: false,
+        initialSlide: 1,
+        slidesToShow: 3,
+        responsive: [
+          {
+            breakpoint: 200,
+            settings: {
+              slidesToShow: 1,
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+            }
+          },
+
+          {
+            breakpoint: 900,
+            settings: {
+              slidesToShow: 3,
+            }
+          }
+        ]
+      },
       news: {
         data: []
       },
-    };
+    }
   },
   async mounted() {
     this.news = await this.get("public/get-news");
   },
+  methods: {
+    async nextSlide(){
+      this.$store.commit("setPreloaderState", false);
+      const currentSlide = this.$refs.news.currentSlide;
+      const slidesLeft = this.$refs.news.countSlides - currentSlide;
+      if(slidesLeft===2){
+        if(this.news.meta.current_page<this.news.meta.last_page){
+          this.slidesLoad = true;
+          const loadedPrograms = cloneDeep(this.news.data);
+          this.news.data = [];
+          const nextPage = this.news.meta.current_page+1;
+          const newSlides = await this.get(`public/get-news?page=${nextPage}`);
+          this.sliderOptions.initialSlide = currentSlide+1;
+          this.news.meta = newSlides.meta;
+          this.news.data = loadedPrograms.concat(newSlides.data);
+          setTimeout(()=>{
+            this.slidesLoad = false;
+          }, 300)
+        }
+        this.$store.commit("setPreloaderState", true);
+      }else{
+        this.$refs.news.goToNext()
+      }
+    },
+    prevSlide(){
+      if(this.isSlideExists()){
+        this.$refs.news.goToPrev()
+      }
+    },
+    isSlideExists(){
+      return !(this.$refs.news.currentBreakpoint===900 && this.$refs.news.currentSlide===1);
+    },
+  }
 };
 </script>
 <style scoped>
+.news-slide {
+  padding: 20px;
+}
 .cut-news-text {
   display: -webkit-box;
   width: 100%;
@@ -80,5 +165,24 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   padding-bottom: 5px;
+}
+.next-btn, .prev-btn {
+  border: 0;
+  outline: 0;
+  font-size: 3rem;
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  margin-top: -100px;
+  bottom: 0;
+  z-index: 999;
+  height: 40px;
+  color:#446ccd;
+}
+.next-btn {
+  right: -20px;
+}
+.prev-btn {
+  left: -20px;
 }
 </style>

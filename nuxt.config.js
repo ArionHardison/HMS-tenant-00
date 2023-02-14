@@ -54,6 +54,7 @@ export default {
     {src: '~/plugins/vuex-persistence.js', ssr: false},
     {src: '~plugins/vue-the-mask.js', ssr: false},
     {src: '~/plugins/main.js', ssr: false},
+    {src: '~/plugins/vue-agile.js', ssr: false},
     {src: '~/plugins/youtube.js', ssr: false},
     {src: '~/plugins/root-mixins.js'},
     {src: '~/plugins/img-directive.js'},
