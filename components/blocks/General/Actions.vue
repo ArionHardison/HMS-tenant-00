@@ -2,32 +2,17 @@
   <div class="actions">
     <div class="actions-items">
 
-      <a class="actions-item" :href="`https://clinic.${host}`">
+      <button class="actions-item" @click="getClinicLink">
         <span>Clinic</span>
-      </a>
-
-   <!--   <template v-if="isGuest">
-        <nuxt-link class="actions-item" >
-          <span>Sign In</span>
-        </nuxt-link>
-        <nuxt-link class="actions-item" :to="{ name: 'sign-up' }">
-          <span>Sign up</span>
-        </nuxt-link>
-      </template>
-      <template v-else>
-        <nuxt-link class="actions-item" >
-          <span>My Account</span>
-        </nuxt-link>
-        <a href="javascript:void(0)" class="actions-item">
-          <span>Sign out</span>
-        </a>
-      </template> -->
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import api from "@/mixins/api";
 export default {
+  mixins:[api],
   name: "Actions",
   computed: {
     userId() {
@@ -39,13 +24,23 @@ export default {
       host: '',
     };
   },
-  created() {
-    if (process.browser) {
-     this.host = window.location.hostname;
-    }
-  },
   methods: {
-
+    async getClinicLink(){
+      if (process.browser) {
+        if (this.userId) {
+          const tokenData = await this.get("user/get-token");
+          window.location.href = `https://clinic.${window.location.hostname}?token=${tokenData.token}`;
+        } else {
+          window.location.href = `https://clinic.${window.location.hostname}`;
+        }
+      }
+    }
   },
 };
 </script>
+<style scoped>
+  .actions-item {
+    border:0;
+    outline: 0;
+  }
+</style>

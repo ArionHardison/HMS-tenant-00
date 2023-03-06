@@ -51,7 +51,8 @@
             }
         },
       async created() {
-        this.testimonialsItem = await this.get("public/testimonials/get-random");
+          const testimonials = await this.get("public/testimonials/get-random");
+        this.testimonialsItem = [...testimonials].shift();
       }
 
     };
