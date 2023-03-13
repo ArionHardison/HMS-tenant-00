@@ -60,7 +60,34 @@
                   The selected {{ currentStep.role }} will be invited to help you
                 </p>
                 <div class="card-container">
-
+                  <template v-for="user in currentStep.users.doctors">
+                    <div class="card">
+                      <div class="d-flex aligen-items-center flex-column">
+                        <AppAvatar
+                          :userInfo="user"
+                          alt="Avatar"
+                          height="60px"
+                          imageSizeType="tb"
+                          width="60px"
+                        />
+                        <h5 class="mb-0 font-montserrat" data-v-ab34384e="">
+                          <nuxt-link
+                            :to="`/${user.username}`"
+                            class="active nuxt-link-active"
+                          >
+                            {{ user.full_name }}
+                          </nuxt-link>
+                        </h5>
+                      </div>
+                      <div>{{ user.state }} {{ user.city }}</div>
+                      <button
+                        class="invite-btn"
+                        @click="inviteUser(user.id, true, true)"
+                      >
+                        Invite
+                      </button>
+                    </div>
+                  </template>
                   <template v-for="user in currentStep.users.system">
                     <div class="card">
                       <div class="d-flex aligen-items-center flex-column">
@@ -227,21 +254,7 @@ export default {
           : null;
       }
     },
-    async inviteUser(userId, system = false) {
-      console.log("INVITE : " + userId);
-      console.log(serialize(
-        {
-          invite_id: system ? null : userId,
-          user_id: system ? userId : null,
-          personal_chain_id: this.$route.query.id,
-          system,
-        },
-        {
-          booleansAsIntegers: true,
-          indices: true,
-          nullsAsUndefineds: true,
-        }
-      ));
+    async inviteUser(userId, system = false, doctor=false) {
       const invite = await this.post(
         "personal-chain/invite",
         {
@@ -249,13 +262,12 @@ export default {
           user_id: system ? userId : null,
           personal_chain_id: this.$route.query.id,
           system,
+          doctor
         }
       )
       if (invite) {
         await this.continueProgram();
       }
-    },
-    formatingData() {
     },
   },
 };
