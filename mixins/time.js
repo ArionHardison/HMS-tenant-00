@@ -17,6 +17,12 @@ export default {
     sameDay(firstDate, secondDate) {
       return firstDate.toLocaleString(DateTime.DATE_SHORT) === secondDate.toLocaleString(DateTime.DATE_SHORT);
     },
+    differenceDown(date, minutes) {
+      const now = this.now();
+      const end = DateTime.fromISO(date).plus({ minutes: minutes });
+      const diff = end.diff(now, ["days", "hours", "minutes", "seconds"]);
+      return diff.toObject();
+    },
     difference(date) {
       const now = this.now();
       const start = DateTime.fromISO(date);

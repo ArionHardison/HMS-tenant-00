@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="col-12">
     <template v-if="assessment">
       <div class="col-12">
         <h2 class="text-center">{{ assessment.title }}</h2>
@@ -11,6 +11,8 @@
         class="col-12"
         :style="{ backgroundColor: assessment.background_color }"
       >
+
+        <client-only>
         <template v-for="question in assessment.questions">
           <template v-if="currentQuestion.id === question.id">
             <Question
@@ -23,6 +25,7 @@
             />
           </template>
         </template>
+        </client-only>
       </div>
     </template>
   </div>
@@ -30,16 +33,19 @@
 
 <script>
 import api from "@/mixins/api";
-
+import Question from "@/components/Modules/assessment/Question";
 export default {
   mixins: [api],
   name: "Assessment",
 
   components: {
-    [process.client && "Question"]: () =>
-      import("@/components/Modules/assessment/Question"),
+    Question,
   },
   props: {
+    recurring: {
+      type: Boolean,
+      default: false,
+    },
     item: {
       type: Number,
       default: 0,
@@ -57,7 +63,7 @@ export default {
   },
   async mounted() {
     this.assessment = await this.get(
-      `${this.resource}/run/${this.item}/${this.$route.query.id}`
+      `${this.resource}/${this.recurring ? "run-global" : "run"}/${this.item}/${this.recurring ? this.$route.params.id : this.$route.query.id}`
     );
     this.currentQuestion = [...this.assessment.questions].shift();
   },

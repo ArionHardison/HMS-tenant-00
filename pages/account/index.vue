@@ -18,6 +18,8 @@
                     Email: <b>{{ userData.email }}</b>
                   </template>
                 </div>
+                <GlobalModuleTasksListComponent/>
+
                 <div class="col-3">
                   <h4>Daily tasks</h4>
                   <template v-if="tasks.length">
@@ -104,7 +106,7 @@ import NewsBlog from "~/components/blocks/news/Blog";
 import Sidebar from "~/components/blocks/news/Sidebar";
 import AssignedTask from "@/components/AssignedTask";
 import ImageContent from "@/components/blocks/ImageContent";
-
+import GlobalModuleTasksListComponent from "@/components/Modules/GlobalModuleTasksListComponent.vue";
 export default {
   components: {
     ImageContent,
@@ -115,6 +117,7 @@ export default {
     NewsBlog,
     Sidebar,
     Footer,
+    GlobalModuleTasksListComponent
   },
   mounted: function () {
     if (process.client) {

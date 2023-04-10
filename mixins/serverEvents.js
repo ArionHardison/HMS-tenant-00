@@ -32,7 +32,6 @@ export default {
         window.Echo.private(`${this.evenChanelPrefix}-user-${this.userId}`).listen(
           ".NewEvent",
           (event) => {
-            console.log("NEW EVENT!");
             this.$bus.$emit(event.component, event.data);
           }
         );
