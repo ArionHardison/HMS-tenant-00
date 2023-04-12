@@ -147,8 +147,10 @@ export default {
   },
   methods: {
     async getTasks() {
-      const {data} = await this.get("personal-chain/tasks");
-      this.tasks = data;
+      const data = await this.get("personal-chain/tasks");
+      if(data){
+        this.tasks = data;
+      }
     },
   }
 };

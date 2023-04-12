@@ -11,12 +11,10 @@
         class="question-text mb-4 mt-4 text-center bold-text"
         v-html="question.text"
       ></div>
-      <!-- {{ question.image }} -->
 
       <template
         v-if="
-          (question.type === 'multi' &&
-            question.attributes.multiple_selectable) ||
+          question.type === 'multi' ||
           (question.type === 'dropdown' &&
             question.attributes.multiple_selectable)
         "
@@ -24,7 +22,7 @@
         <multiselect
           v-model="selectedValue"
           :options="question.choices"
-          :multiple="true"
+          :multiple="!!question.attributes.multiple_selectable"
           track-by="id"
           label="choice"
         ></multiselect>
@@ -128,12 +126,10 @@
 </template>
 
 <script>
-// import Multiselect from "vue-multiselect";
-// import StarRating from "vue-star-rating";
-// import { Datetime } from "vue-datetime";
-import { Settings } from "luxon";
+ import Multiselect from "vue-multiselect";
+ import StarRating from "vue-star-rating";
 
-// import "vue-datetime/dist/vue-datetime.css";
+import "vue-datetime/dist/vue-datetime.css";
 
 import VueSlider from "vue-slider-component";
 import "vue-slider-component/theme/antd.css";
@@ -147,8 +143,7 @@ export default {
   mixins: [api],
   name: "Question",
   components: {
-    // Multiselect,
-    // datetime: Datetime,
+    StarRating,
     [process.client && "VueSlider"]: () => import("vue-slider-component"),
     [process.client && "Multiselect"]: () => import("vue-multiselect"),
   },
@@ -236,10 +231,13 @@ export default {
         return null;
       }
       if (
-        this.question.type === "multi" ||
-        this.question.attributes.multiple_selectable
+        this.question.type === "multi"
       ) {
-        return this.selectedValue.map((answer) => answer.choice).join(",");
+        if(  this.question.attributes.multiple_selectable ) {
+          return this.selectedValue.map((answer) => answer.choice).join(",");
+        }else{
+          return this.selectedValue.choice;
+        }
       }
       return this.selectedValue;
     },

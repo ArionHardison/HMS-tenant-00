@@ -256,21 +256,13 @@ export default {
     },
     async inviteUser(userId, system = false, doctor=false) {
       const invite = await this.post(
-        "personal-chain/invite",
-        serialize(
-          {
-            invite_id: system ? null : userId,
-            user_id: system ? userId : null,
-            personal_chain_id: this.$route.query.id,
-            system,
-            doctor
-          },
-          {
-            booleansAsIntegers: true,
-            indices: true,
-            nullsAsUndefineds: true,
-          }
-        )
+        "personal-chain/invite", {
+          invite_id: system ? null : userId,
+          user_id: system ? userId : null,
+          personal_chain_id: this.$route.query.id,
+          system,
+          doctor
+        }
       )
       if (invite) {
         await this.continueProgram();

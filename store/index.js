@@ -114,7 +114,6 @@ const actions = {
       ? process.env.CORE_URL_DEV
       : "https://codify.solutions/api"
     const tenant = await this.$axios.$get(`${absoluteUrl}/tenant/initialize/${url}`);
-    console.log(`${absoluteUrl}/tenant/initialize/${url}`);
     commit("setTenant", tenant.data);
   }
 };
