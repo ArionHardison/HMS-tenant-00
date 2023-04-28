@@ -32,9 +32,7 @@
                       </p>
                     </div>
 
-                    <div class="title">
-                      <h2>{{ program.name }}</h2>
-                    </div>
+
 
                     <Description :desc="program.description"/>
 
@@ -64,7 +62,7 @@
                                           btn-block
                                           margin-zero
                                         "
-                                      >May 22, 2022</small
+                                      >{{formattedProgramDate(program.created_at)}}</small
                                       >
                                     </div>
                                   </div>
@@ -142,6 +140,7 @@ import Comments from "~/components/blocks/news-single-post/Comments";
 import Sidebar from "~/components/blocks/news/Sidebar";
 import AppAvatar from "../../components/ui/app-avatar.vue";
 import ImageContent from "@/components/blocks/ImageContent";
+import time from "@/mixins/time";
 
 export default {
   components: {
@@ -157,6 +156,7 @@ export default {
     Footer,
     AppAvatar,
   },
+  mixins: [time],
   computed: {
     accessToken() {
       return this.$store.state.authData.accessToken;
@@ -190,12 +190,12 @@ export default {
     titleTemplate: "%s",
   },
   async created() {
-    this.program = await this.get(`public/get-program/${this.$route.query.id}`);
+    this.program = await this.get(`public/get-program/${this.$getId(this.$route.params.id)}`);
   },
   methods: {
     async startProgram() {
       const program = await this.post(`program-sale/buy`, {
-        program_id: this.$route.query.id,
+        program_id: this.$getId(this.$route.params.id),
       });
       if (program) {
         if (this.program.access_type === 1) {

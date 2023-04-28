@@ -42,6 +42,7 @@ export default {
     Footer
   },
   mixins: [api],
+  middleware: "user",
   data() {
     return {
       currentTask: null,

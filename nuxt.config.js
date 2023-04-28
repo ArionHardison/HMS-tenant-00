@@ -56,6 +56,7 @@ export default {
     {src: '~/plugins/main.js', ssr: false},
     {src: '~/plugins/vue-agile.js', ssr: false},
     {src: '~/plugins/youtube.js', ssr: false},
+    {src: '~/plugins/helper.js'},
     {src: '~/plugins/root-mixins.js'},
     {src: '~/plugins/img-directive.js'},
     {src: '~/plugins/global-event.js', ssr: false},

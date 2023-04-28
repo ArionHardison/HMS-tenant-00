@@ -119,6 +119,7 @@ export default {
     Footer,
     GlobalModuleTasksListComponent
   },
+  middleware: "user",
   mounted: function () {
     if (process.client) {
       document.body.classList.add("blog");

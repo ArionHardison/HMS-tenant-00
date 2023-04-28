@@ -5,7 +5,7 @@
     <Header logoColor="dark"/>
 
     <main id="main" class="site-main">
-      <PageTitle/>
+      <PageTitle title="Search Results"/>
       <div id="page-content" class="spacer p-top-xl">
         <div class="wrapper">
           <div class="content">
@@ -19,7 +19,7 @@
                   <div class="card-top position-relative">
                     <nuxt-link
                       :title="program.name"
-                      :to="{ name: 'program', query: { id: program.id } }"
+                      :to="`/program/${$slug(program.id, program.name)}`"
                     >
                       <div class="img object-fit overflow-hidden">
                         <div class="object-fit-cover transform-scale-h">
@@ -34,7 +34,7 @@
                         <span
                         ><nuxt-link
                           class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto link-no-space"
-                          :to="{ name: 'program', query: { id: program.id } }"
+                          :to="`/program/${$slug(program.id, program.name)}`"
                         >{{ program.category }}</nuxt-link
                         ></span
                         >
@@ -43,14 +43,15 @@
 
                     <h4 class="card-title">
                       <nuxt-link
-                        title="Which Diagnostic Should I Choose?"
-                        :to="{ name: 'program', query: { id: program.id } }"
+                        class="capitalize-first over-hide"
+                        :title="program.name"
+                        :to="`/program/${$slug(program.id, program.name)}`"
                       >{{ program.name }}
                       </nuxt-link
                       >
                     </h4>
 
-                    <p class="card-text">{{ program.description }}</p>
+                    <p class="card-text over-hide" :title="program.description">{{ program.description }}</p>
                   </div>
                 </div>
               </div>
@@ -106,3 +107,18 @@ export default {
   },
 };
 </script>
+<style scoped>
+.capitalize-first {
+  text-transform: lowercase;
+}
+
+.capitalize-first::first-letter {
+  text-transform: uppercase;
+}
+
+.over-hide {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

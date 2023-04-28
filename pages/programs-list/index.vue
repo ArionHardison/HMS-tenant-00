@@ -5,8 +5,7 @@
     <Header logoColor="dark"/>
 
     <main id="main" class="site-main">
-      <PageTitle
-        :search-query="$route.query.tag ? $route.query.tag : $route.query.s"
+      <PageTitle title="All Programs"
       />
       <div id="page-content" class="spacer p-top-xl">
         <div class="wrapper">
@@ -21,10 +20,7 @@
                   <div class="card-top position-relative">
                     <nuxt-link
                       :title="program.name"
-                      :to="{
-                        name: 'program',
-                        query: { id: program.id },
-                      }"
+                      :to="`/program/${$slug(program.id, program.name)}`"
                     >
                       <div class="img object-fit overflow-hidden">
                         <div class="object-fit-cover transform-scale-h">
@@ -45,8 +41,8 @@
                               min-w-auto
                               link-no-space
                             "
-                          :to="{ name: 'program', query: { id: program.id } }"
-                        >{{ program.name }}</nuxt-link
+                          :to="`/program/${$slug(program.id, program.name)}`"
+                        >{{ program.category }}</nuxt-link
                         ></span
                         >
                       </p>
@@ -54,17 +50,14 @@
 
                     <h4 class="card-title">
                       <nuxt-link
-                        title="Which Diagnostic Should I Choose?"
-                        :to="{
-                          name: 'program',
-                          query: { id: program.program_id },
-                        }"
-                      >{{ program.program_name }}
+                        class="capitalize-first over-hide"
+                        :title="program.name"
+                        :to="`/program/${$slug(program.id, program.name)}`"
+                      >{{ program.name }}
                       </nuxt-link
                       >
                     </h4>
-
-                    <p class="card-text">{{ program.program_description }}</p>
+                    <p class="card-text over-hide" :title="program.description">{{ program.description }}</p>
                   </div>
                 </div>
               </div>
@@ -139,3 +132,17 @@ export default {
   },
 };
 </script>
+<style scoped>
+.capitalize-first {
+  text-transform: lowercase;
+}
+
+.capitalize-first::first-letter {
+  text-transform: uppercase;
+}
+.over-hide {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

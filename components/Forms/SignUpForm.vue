@@ -40,7 +40,7 @@
       type="text"
       v-model="registrationForm.phone"
       :mask="true"
-      mask-data="##########"
+      mask-data="+1-###-###-##-##"
       label="Phone"
     />
 
@@ -134,9 +134,11 @@ export default {
     async onSubmit() {
       const registration = cloneDeep(this.registrationForm);
       registration.phone = `+1${registration.phone}`
+      const regForm = cloneDeep(this.registrationForm);
+      regForm.phone = regForm.phone.replace(/\-/g, "");
       const response = await this.post(
         "public/auth/sign-up",
-        this.registrationForm
+        regForm
       );
       if (response) {
         if(this.invite){

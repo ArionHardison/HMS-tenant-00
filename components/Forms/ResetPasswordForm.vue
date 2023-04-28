@@ -19,7 +19,10 @@
     <template v-else>
       <form v-on:submit.prevent="sendResetLink" method="post" id="reset-form" class="comment-form">
         <InputField name="email" v-model="resetPasswordForm.email" type="email" label="Email"/>
-        <button class="btn btn-primary">Reset</button>
+
+        <div class="form-submit text-center mt-3">
+          <button name="submit" type="submit"  class="btn btn-primary">Reset</button>
+        </div>
       </form>
     </template>
   </div>

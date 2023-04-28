@@ -41,6 +41,7 @@
     "popper.js": "^1.14.7",
     "sass": "^1.54.3",
     "sass-loader": "10.2.0",
+    "slugify": "^1.6.6",
     "socket.io-client": "^2.3.0",
     "stream-audio-level": "0.0.5",
     "twilio-video": "^2.22.1",

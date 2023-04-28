@@ -1,25 +1,28 @@
 <template>
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 mt-3 mb-3">
       <hr />
-      <p type="warning"
-        >Important! Challenge contains <b>{{ challenge.tasks_count }}</b> tasks.
+
+      <b-alert variant="warning" show>
+        Important! Challenge contains <b>{{ challenge.tasks_count }}</b> tasks.
         And require
         {{ challengeTypes[challenge.challenge_type] }}
-      </p>
+      </b-alert>
+
+
       <template v-if="challenge.task_mandatory">
-        <p type="warning"
-          >Important! This challenge is required, in case if challenge will not
+        <b-alert variant="warning" show>
+          Important! This challenge is required, in case if challenge will not
           be finished - it will be <b>failed</b>
-        </p>
+        </b-alert>
       </template>
       <template v-if="challenge.time_limited">
-        <p type="warning"
-          >Important! This challenge is time limited, in case if challenge will
+        <b-alert variant="warning" show>
+          Important! This challenge is time limited, in case if challenge will
           not be finished in time (<b>{{ challenge.time_limit }} minutes</b>) -
           it will be <b>failed</b>. After start you will not be able to pause
           this challenge.
-        </p>
+        </b-alert>
       </template>
       <hr />
     </div>

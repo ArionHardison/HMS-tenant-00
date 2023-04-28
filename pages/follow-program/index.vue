@@ -4,6 +4,7 @@
 
     <Header logoColor="light"/>
     <main id="main" class="site-main">
+      <div class="container">
       <template v-if="currentStep">
 
         <template v-if="currentStep.error">
@@ -180,6 +181,7 @@
           </template>
         </template>
       </template>
+      </div>
     </main>
   </div>
 </template>
@@ -201,6 +203,7 @@ import time from "@/mixins/time";
 
 export default {
   mixins: [api, globalEvents, time],
+  middleware: "user",
   components: {
     Testimonial,
     Header,

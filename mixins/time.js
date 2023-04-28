@@ -8,8 +8,12 @@ export default {
     }
   },
   methods: {
+    formattedProgramDate(dateStr){
+      const date = DateTime.fromISO(dateStr);
+      return  date.toFormat('MMMM d, yyyy');
+    },
     now() {
-      return DateTime.now().setZone(this.timezone).setLocale("en-US");
+      return DateTime.now().setLocale("en-US");
     },
     getNowTime(minutes = 0) {
       return this.now().plus({minutes}).setLocale("fr-FR").toLocaleString(DateTime.TIME_SIMPLE);

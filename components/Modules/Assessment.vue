@@ -13,9 +13,10 @@
       >
 
         <client-only>
+
         <template v-for="question in assessment.questions">
           <template v-if="currentQuestion.id === question.id">
-            <Question
+          <Question
               :question="question"
               :attendee="assessment.attendee_id"
               :button-color="assessment.button_color"
@@ -24,7 +25,7 @@
               @nextQuestion="runNextQuestion"
             />
           </template>
-        </template>
+        </template> -->
         </client-only>
       </div>
     </template>
@@ -33,13 +34,14 @@
 
 <script>
 import api from "@/mixins/api";
-import Question from "@/components/Modules/assessment/Question";
+
 export default {
   mixins: [api],
   name: "Assessment",
 
   components: {
-    Question,
+    [process.client && "Question"]: () =>
+      import("@/components/Modules/assessment/Question"),
   },
   props: {
     recurring: {

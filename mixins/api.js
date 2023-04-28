@@ -18,7 +18,10 @@ export default {
             return this.$store.state.authData;
         },
     },
-    methods: {
+    beforeDestroy() {
+      this.$store.commit("resetValidation");
+    },
+  methods: {
 
         async post(url, formData, callBackFn = null) {
             this.$store.commit("resetValidation");
