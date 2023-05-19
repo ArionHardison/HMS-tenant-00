@@ -47,5 +47,6 @@ export default {
   metaInfo: {
     title: "Sign Up",
   },
+  middleware: "guest"
 };
 </script>

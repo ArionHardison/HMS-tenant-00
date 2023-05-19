@@ -14,9 +14,9 @@
                 <agile :options="sliderOptions" ref="programs">
                   <div class="program-slide slide"    v-for="program in programs.data" >
                      <nuxt-link
-                      title="Cardiology"
+                      :title="program.name"
                       class="slide services-item"
-                      :to="`/program?id=${program.id}`"
+                      :to="`/program/${program.id}`"
                     >
                       <div class="services-item-content">
                         <h3 class="services-item-t-head">{{ program.name }}</h3>

@@ -23,10 +23,16 @@
                   <div class="img-no-wrap-1">
                     <div class="img object-fit">
                       <div class="object-fit-cover">
-                          <img
-                            :src="`https://codify.solutions/public/files/lg/${homePage.lastContainer.videoOrImage}/${tenantId}`"
-                            alt="Medical Center"
-                          />
+                          <template v-if="homePage.lastContainer.videoOrImage.length===11">
+                            <YoutubeVideoComponent :video-id="homePage.lastContainer.videoOrImage"/>
+                          </template>
+                          <template v-else>
+                            <img
+                              :src="`https://codify.solutions/public/files/lg/${homePage.lastContainer.videoOrImage}/${tenantId}`"
+                              alt="Medical Center"
+                            />
+                          </template>
+
                       </div>
                     </div>
                     <div class="img-no-wrap-bg-color"></div>
@@ -52,6 +58,7 @@
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
+import YoutubeVideoComponent from "@/components/YoutubeVideoComponent.vue";
 
 import PageTitle from "~/components/blocks/index/PageTitle";
 import AboutUs from "~/components/blocks/about-us/Abouts-us";
@@ -74,6 +81,7 @@ export default {
     Services,
     Testimonials,
     OurDoctors,
+    YoutubeVideoComponent,
     News,
     Footer,
   },
@@ -105,3 +113,8 @@ export default {
 
 };
 </script>
+<style scoped>
+.img-no-wrap-1 {
+  overflow: hidden;
+}
+</style>

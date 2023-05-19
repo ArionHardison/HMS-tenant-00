@@ -38,7 +38,7 @@
                       :key="program.id"
                       class="col-xl-4 col-lg-4 col-md-4 col-sm-12"
                     >
-                      <div class="card card-post">
+                      <div class="card card-post mt-3">
                         <div class="card-top position-relative">
                           <nuxt-link
                             :title="program.name"

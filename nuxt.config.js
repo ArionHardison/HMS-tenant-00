@@ -1,4 +1,7 @@
 export default {
+  ssr: true,
+  mode: 'universal',
+  target: 'server',
   head: {
     title: 'nuxt',
     htmlAttrs: {
@@ -51,7 +54,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     {src: '~/plugins/axios'},
-    {src: '~/plugins/vuex-persistence.js', ssr: false},
+    {src: '~/plugins/vuex-persistence.js'},
     {src: '~plugins/vue-the-mask.js', ssr: false},
     {src: '~/plugins/main.js', ssr: false},
     {src: '~/plugins/vue-agile.js', ssr: false},

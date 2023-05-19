@@ -5,12 +5,14 @@
                 <div class="header-left align-self-center">
                     <div class="links">
                         <div class="links-items">
+                          <client-only>
                             <div class="links-item">
                                 <nuxt-link class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto" to="/programs-list">All Programs</nuxt-link>
                             </div>
                             <div class="links-item">
                               <SearchModalButton />
                             </div>
+                          </client-only>
                         </div>
                     </div>
                 </div>
@@ -22,7 +24,7 @@
                 <div class="header-right d-flex justify-content-end">
                     <div class="d-flex align-items-center">
 
-
+                      <client-only>
                         <template v-if="isGuest">
                           <SignInButton/>
                           <SignUpButton/>
@@ -31,6 +33,7 @@
                           <MyAccountButton/>
                           <SignOutButton/>
                         </template>
+                      </client-only>
                     </div>
                     <Actions />
                 </div>

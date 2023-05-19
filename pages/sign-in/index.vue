@@ -47,5 +47,9 @@ export default {
     metaInfo: {
         title: 'Sign In',
     },
+    middleware: "guest",
+    created() {
+      console.log(this.$store.state.authData.accessToken)
+    }
 };
 </script>

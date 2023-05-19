@@ -9,8 +9,9 @@ export default {
   name: 'SignOutButton',
   methods: {
     async signOut() {
+
+      await this.get(`user/sign-out`);
       this.$store.commit("signOut");
-      await this.get(`public/auth/sign-out`);
     },
   }
 };

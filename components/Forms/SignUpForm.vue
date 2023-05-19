@@ -1,16 +1,20 @@
 <template>
   <form
     @submit.prevent="onSubmit"
+    autocomplete="new-registration"
     method="post"
     id="sign-up-form"
     class="comment-form"
   >
 
+    <input style="display:none" type="text" name="username"/>
+    <input style="display:none" type="password" name="password"/>
 
     <input-field
       name="full_name"
       type="text"
       v-model="registrationForm.full_name"
+      :autocomplete="genAutocomplete()"
       label="Full Name"
     />
 
@@ -18,6 +22,7 @@
       name="username"
       type="text"
       v-model="registrationForm.username"
+      :autocomplete="genAutocomplete()"
       label="Username"
     />
 
@@ -25,6 +30,7 @@
       name="email"
       type="email"
       v-model="registrationForm.email"
+      :autocomplete="genAutocomplete()"
       label="Email"
     />
 
@@ -32,6 +38,7 @@
       name="gender"
       v-model="registrationForm.gender"
       label="Gender"
+      :autocomplete="genAutocomplete()"
       :options="genderOptions"
     />
 
@@ -41,6 +48,7 @@
       v-model="registrationForm.phone"
       :mask="true"
       mask-data="+1-###-###-##-##"
+      :autocomplete="genAutocomplete()"
       label="Phone"
     />
 
@@ -48,6 +56,7 @@
       name="password"
       type="password"
       v-model="registrationForm.password"
+      :autocomplete="genAutocomplete()"
       label="Password"
     />
 
@@ -55,6 +64,7 @@
       name="password_confirmation"
       type="password"
       v-model="registrationForm.password_confirmation"
+      :autocomplete="genAutocomplete()"
       label="Password Confirmation"
     />
 
@@ -115,6 +125,9 @@ export default {
     }
   },
   methods: {
+    genAutocomplete() {
+      return "new-"+Math.random().toString(36).substring(2, 12);
+    },
     async preloadDataByToken() {
       const baseUserData = await this.get(
         `public/protocol-chain/get-user-by-invite/${this.$route.query.token}`
