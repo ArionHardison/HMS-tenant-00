@@ -16,7 +16,7 @@
                      <nuxt-link
                       :title="program.name"
                       class="slide services-item"
-                      :to="`/program/${program.id}`"
+                      :to="`/program/${$slug(program.id, program.name)}`"
                     >
                       <div class="services-item-content">
                         <h3 class="services-item-t-head">{{ program.name }}</h3>

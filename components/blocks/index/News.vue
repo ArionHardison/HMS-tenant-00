@@ -154,6 +154,9 @@ export default {
 };
 </script>
 <style scoped>
+.card-title{
+  min-height: 80px;
+}
 .news-slide {
   padding: 20px;
 }
@@ -165,6 +168,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   padding-bottom: 5px;
+  min-height: 100px;
 }
 .next-btn, .prev-btn {
   border: 0;

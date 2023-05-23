@@ -1,5 +1,5 @@
 <template>
-  <div class="error mt-2">
+  <div class="error mt-2 lh">
     <slot></slot>
   </div>
 </template>
@@ -14,5 +14,8 @@ export default {
 .error {
   color: #fb6340;
   font-size: 12px;
+}
+.lh {
+  line-height: 1 !important;
 }
 </style>

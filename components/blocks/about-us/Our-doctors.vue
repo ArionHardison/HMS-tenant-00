@@ -166,6 +166,9 @@
     };
 </script>
 <style scoped>
+    .team-member-description {
+      min-height: 100px;
+    }
     .member-slide {
       padding: 20px;
     }
