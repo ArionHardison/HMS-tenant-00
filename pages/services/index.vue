@@ -39,7 +39,7 @@
                         <template v-else>
                           <img
                             :alt="serviceItem.serviceName"
-                            :src="'https://codify.solutions/public/files/xl/'+serviceItem.serviceImage+'.webp/'+tenantId"
+                            :src="'https://web.codifyhealthcare.com/public/files/xl/'+serviceItem.serviceImage+'.webp/'+tenantId"
                           />
                         </template>
 

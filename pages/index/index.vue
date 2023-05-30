@@ -12,7 +12,7 @@
                 <PageTitle
                   :title="homePage.pageTop.homeTitle"
                   :desc="homePage.pageTop.homePageDesc"
-                  :background="homePage.pageTop.imageOrVideo.length > 11 ? `https://codify.solutions/public/files/lg/${homePage.pageTop.imageOrVideo}/${tenantId}` : homePage.pageTop.imageOrVideo"
+                  :background="homePage.pageTop.imageOrVideo.length > 11 ? `https://web.codifyhealthcare.com/public/files/lg/${homePage.pageTop.imageOrVideo}/${tenantId}` : homePage.pageTop.imageOrVideo"
                 />
               </template>
               <template v-if="homePage.secondContainer">
@@ -28,7 +28,7 @@
                           </template>
                           <template v-else>
                             <img
-                              :src="`https://codify.solutions/public/files/lg/${homePage.lastContainer.videoOrImage}/${tenantId}`"
+                              :src="`https://web.codifyhealthcare.com/public/files/lg/${homePage.lastContainer.videoOrImage}/${tenantId}`"
                               alt="Medical Center"
                             />
                           </template>

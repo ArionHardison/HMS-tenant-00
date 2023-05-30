@@ -1,7 +1,7 @@
 export default {
   computed: {
     logo() {
-      return `https://codify.solutions/public/files/sm/${this.$store.state.layout.items.logo}/${this.$store.state.initializedId}`;
+      return `https://web.codifyhealthcare.com/public/files/sm/${this.$store.state.layout.items.logo}/${this.$store.state.initializedId}`;
     },
     primaryColor() {
       return this.$store.state.layout.items.primaryColor || '';

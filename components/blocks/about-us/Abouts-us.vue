@@ -13,7 +13,7 @@
 
           <div class="signature spacer m-top-lg">
             <div class="signature-img">
-              <object :data="`https://codify.solutions/public/files/tb/${aboutUs.sign}/${tenantId}`"
+              <object :data="`https://web.codifyhealthcare.com/public/files/tb/${aboutUs.sign}/${tenantId}`"
                       type="image/webp" class="sign-image">
                 <img src="~/assets/placeholder.jpg" class="sign-image" alt="Signature">
               </object>

@@ -87,7 +87,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: (process.env.NODE_ENV === "development"
-      ? process.env.CORE_URL_DEV : 'https://codify.solutions/api') + '/_cmt/',
+      ? process.env.CORE_URL_DEV : 'https://web.codifyhealthcare.com/api') + '/_cmt/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

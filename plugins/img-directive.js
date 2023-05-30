@@ -4,14 +4,14 @@ Vue.directive("src-tenant", (el, binding) => {
   const { name, size, type } = binding.value;
   const fullPath = `path=${size}/${name}.${type}`;
   el.src = binding.value
-    ? `https://codify.solutions/public/files?${fullPath}`
+    ? `https://web.codifyhealthcare.com/public/files?${fullPath}`
     : "img/default.png";
 });
 
 Vue.directive("href-tenant", (el, binding) => {
   const { name, size, type } = binding.value;
   const fullPath = `path=${size}/${name}.${type}`;
-  el.href = `https://codify.solutions/public/files?${fullPath}`;
+  el.href = `https://web.codifyhealthcare.com/public/files?${fullPath}`;
 });
 
 Vue.directive("bg-img-tenant", (el, binding) => {

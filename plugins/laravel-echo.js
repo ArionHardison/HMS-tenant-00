@@ -8,12 +8,12 @@ export default ({store}) => {
     host: `${
       process.env.NODE_ENV === "development"
         ? process.env.SOCKET_URL_DEV
-        : "https://app.codify.solutions"
+        : "https://app.codifyhealthcare.com"
     }`,
     authEndpoint: `${
       process.env.NODE_ENV === "development"
         ? process.env.CORE_URL_DEV
-        : "https://codify.solutions"
+        : "https://app.codifyhealthcare.com"
     }/broadcasting/tenant`,
     auth: {
       headers: {

@@ -17,7 +17,7 @@
                       <div class="img object-fit">
                         <div class="object-fit-cover">
                           <img
-                            :src="'https://codify.solutions/public/files?path='+tenantId+'/sm/'+serviceData.serviceImage+'.webp'"
+                            :src="'https://web.codifyhealthcare.com/public/files?path='+tenantId+'/sm/'+serviceData.serviceImage+'.webp'"
                             alt="Cardiology"
                           />
                         </div>
