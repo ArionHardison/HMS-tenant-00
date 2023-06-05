@@ -1,7 +1,19 @@
 FROM node:16.18.1
+
+
 WORKDIR /usr/src/app
+
+
 COPY package*.json ./
-RUN npm install || sh -l
+
+
+RUN npm install
+
+
 COPY . .
+
+
 EXPOSE 3000
-CMD [ "npm", "run", "dev" ]
+
+
+CMD [ "node_modules/.bin/nuxt", "dev" ]
