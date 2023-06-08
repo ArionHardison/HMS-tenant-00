@@ -109,12 +109,12 @@ const mutations = {
 }
 const actions = {
   async nuxtServerInit({commit}, {req}) {
-    const url = req.headers.host.split(":")[0];
+    const url = req.headers.host;
     const absoluteUrl =  process.env.NODE_ENV === "development"
-      ? process.env.CORE_URL_DEV
+      ? process.env.CORE_INIT_URL
       : "https://web.codifyhealthcare.com/api"
    const tenant = await this.$axios.$get(`${absoluteUrl}/tenant/initialize/${url}`);
-    commit("setTenant", tenant.data);
+    commit("setTenant", cloneDeep(tenant.data));
   }
 };
 const getters = {

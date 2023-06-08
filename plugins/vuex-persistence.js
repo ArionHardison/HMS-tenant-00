@@ -4,6 +4,7 @@ import cookie from "cookie";
 
 export default ({ store, req }) => {
   createPersistedState({
+    paths: ['authData'],
     storage: {
       getItem: (key) => {
         if (process.server) {

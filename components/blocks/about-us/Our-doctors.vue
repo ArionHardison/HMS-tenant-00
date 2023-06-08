@@ -26,7 +26,7 @@
                           <div class="team-member-top">
                               <div class="img object-fit">
                                   <div class="object-fit-cover">
-                                      <ImageContent :src="member.profile_cover" :alt="member.full_name" :tenant="true" size="md"/>
+                                      <ImageContent :src="member.homepage_preview" :alt="member.full_name" :tenant="true" size="sm"/>
                                   </div>
                               </div>
 

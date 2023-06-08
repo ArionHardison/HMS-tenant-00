@@ -1,5 +1,6 @@
 <template>
-  <section id="services" class="block spacer p-top-xl">
+  <section id="services" :class=" programs.data.length ? 'block spacer p-top-xl' : ''">
+    <template v-if="programs.data.length">
           <client-only>
             <b-overlay
               :show="slidesLoad"
@@ -48,6 +49,7 @@
             </div>
             </b-overlay>
           </client-only>
+    </template>
   </section>
 </template>
 

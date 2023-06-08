@@ -1,6 +1,6 @@
 <template>
   <picture>
-    <img :src="`https://web.codifyhealthcare.com/public/files/${this.size}/${this.src}/${this.tenant ? this.tenantId + '/' : ''}`">
+    <img :src="$imageUrl(this.src, this.size, true)">
   </picture>
 </template>
 
@@ -8,11 +8,6 @@
 export default {
   name: "ImageContent",
   props: ["src", 'size', "tenant"],
-  computed: {
-    tenantId() {
-      return this.$store.state.initializedId;
-    },
-  },
 }
 </script>
 

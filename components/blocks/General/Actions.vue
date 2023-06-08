@@ -1,11 +1,12 @@
 <template>
   <div class="actions">
-    <div class="actions-items">
-
-      <button class="actions-item" @click="getClinicLink">
-        <span>Clinic</span>
-      </button>
-    </div>
+    <template v-if="userId">
+      <div class="actions-items">
+        <button class="actions-item" @click="getClinicLink">
+          <span>Clinic</span>
+        </button>
+      </div>
+    </template>
   </div>
 </template>
 

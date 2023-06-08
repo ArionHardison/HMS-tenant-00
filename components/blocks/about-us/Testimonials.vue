@@ -1,5 +1,5 @@
 <template>
-    <div id="testimonials" class="block spacer p-top-xl">
+    <div id="testimonials" :class=" testimonialsItem ? 'block spacer p-top-xl' : ''">
       <template v-if="testimonialsItem">
         <div class="wrapper">
             <div class="title">
@@ -53,6 +53,7 @@
       async created() {
           const testimonials = await this.get("public/testimonials/get-random");
         this.testimonialsItem = [...testimonials].shift();
+        console.log(this.testimonialsItem);
       }
 
     };
