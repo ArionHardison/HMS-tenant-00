@@ -113,7 +113,7 @@ const actions = {
     const absoluteUrl =  process.env.NODE_ENV === "development"
       ? process.env.CORE_INIT_URL
       : "https://web.codifyhealthcare.com/api"
-   const tenant = await this.$axios.$get(`${absoluteUrl}/tenant/initialize/${url}`);
+    const tenant = await this.$axios.$get(`${absoluteUrl}/tenant/initialize/${url}`);
     commit("setTenant", cloneDeep(tenant.data));
   }
 };

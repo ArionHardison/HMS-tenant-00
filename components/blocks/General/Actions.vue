@@ -28,11 +28,12 @@ export default {
   methods: {
     async getClinicLink(){
       if (process.browser) {
+        const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
         if (this.userId) {
           const tokenData = await this.get("user/get-token");
-          window.location.href = `https://clinic.${window.location.hostname}?token=${tokenData.token}`;
+          window.location.href = `${protocol}://clinic.${window.location.hostname}?token=${tokenData.token}`;
         } else {
-          window.location.href = `https://clinic.${window.location.hostname}`;
+          window.location.href = `${protocol}://clinic.${window.location.hostname}`;
         }
       }
     }
