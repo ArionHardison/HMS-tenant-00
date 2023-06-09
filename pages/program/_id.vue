@@ -19,7 +19,7 @@
                     <div class="img object-fit">
                       <div class="object-fit-cover">
 
-                        <ImageContent :src="program.program_image" size="md"/>
+                        <ImageContent :src="program.program_image" size="md" :tenant="false"/>
 
                       </div>
                     </div>

@@ -1,13 +1,26 @@
 <template>
   <picture>
-    <img :src="$imageUrl(this.src, this.size, true)">
+    <img :src="$imageUrl(src, size, tenant)">
   </picture>
 </template>
 
 <script>
 export default {
   name: "ImageContent",
-  props: ["src", 'size', "tenant"],
+  props: {
+    tenant: {
+      type: Boolean,
+      default: true
+    },
+    size: {
+      type: String,
+      default: "sm"
+    },
+    src: {
+      type: String,
+      default: "",
+    },
+  }
 }
 </script>
 
