@@ -1,5 +1,5 @@
 <template>
-  <div id="google-maps" class="footer-no-border" ref="map"></div>
+  <div id="google-maps" class="footer-no-border" ref="map" :class="{'hideMap': containerData===null}"></div>
 </template>
 
 <script>
@@ -7,6 +7,12 @@ import MapStyles from "./googleMapsStyle.json";
 
 export default {
   name: "GoogleMaps",
+  props: {
+    containerData: {
+      type: Object,
+      default: {}
+    }
+  },
   data() {
     return {
       mapsStyle: MapStyles.mapsStyles,
@@ -14,68 +20,80 @@ export default {
   },
   methods: {
     checkAndAttachMapScript() {
-      if (window.google && window.google.maps) {
-        this.initMap();
-        return;
+      if (process.client) {
+        if (window.google && window.google.maps) {
+          this.initMap();
+          return;
+        }
+
+        var self = this;
+        var script = document.createElement("script");
+        script.onload = function () {
+          if (!window.google && !window.google.maps)
+            return console.error("no google maps script included");
+
+          self.initMap();
+        };
+
+        script.async = true;
+        script.defer = true;
+        script.src =
+          `https://maps.googleapis.com/maps/api/js?key=${this.containerData.jsApiKey}`;
+        document.getElementsByTagName("head")[0].appendChild(script);
       }
-
-      var self = this;
-      var script = document.createElement("script");
-      script.onload = function () {
-        if (!window.google && !window.google.maps)
-          return console.error("no google maps script included");
-
-        self.initMap();
-      };
-
-      script.async = true;
-      script.defer = true;
-      script.src =
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyD9TrJVxlYSCKv8WHGcR2fHTg-Ltx1beWU";
-      document.getElementsByTagName("head")[0].appendChild(script);
     },
     initMap() {
-      var address = ["189 Bedford Ave, Brooklyn, NY 11211, United States"];
-      var center_latlng = new google.maps.LatLng(40.7741156, -73.9603525);
+      if (process.client) {
+        let address = [this.containerData.placeName];
+        let center_latlng = new window.google.maps.LatLng(
+          this.containerData.placeLat,
+          this.containerData.placeLong
+        );
 
-      let map = new window.google.maps.Map(this.$refs.map, {
-        center: center_latlng,
-        zoom: 16,
-        zoomControl: false,
-        mapTypeControl: false,
-        scaleControl: false,
-        streetViewControl: false,
-        rotateControl: false,
-        fullscreenControl: false,
-        styles: this.mapsStyle,
-      });
-
-      let icon = {
-        url: "img/demo/16_img.png",
-        size: new window.google.maps.Size(112, 118),
-      };
-
-      let geocoder = new window.google.maps.Geocoder();
-
-      for (let i = 0; i < address.length; i++) {
-        geocoder.geocode({ address: address[i] }, function (results, status) {
-          if (status === "OK") {
-            let marker = new window.google.maps.Marker({
-              position: results[0].geometry.location,
-              icon: icon,
-            });
-
-            marker.setMap(map);
-            map.setCenter(results[0].geometry.location);
-          }
+        let map = new window.google.maps.Map(this.$refs.map, {
+          center: center_latlng,
+          zoom: 19,
+          zoomControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          rotateControl: false,
+          fullscreenControl: false,
+          styles: this.mapsStyle,
         });
+
+        let icon = {
+          url: "img/demo/20_img.png",
+          size: new window.google.maps.Size(112, 118),
+        };
+
+        let geocoder = new window.google.maps.Geocoder();
+
+        for (let i = 0; i < address.length; i++) {
+          geocoder.geocode({ address: address[i] }, function (results, status) {
+            if (status === "OK") {
+              let marker = new window.google.maps.Marker({
+                position: results[0].geometry.location,
+                icon: icon,
+              });
+
+              marker.setMap(map);
+              map.setCenter(results[0].geometry.location);
+            }
+          });
+        }
       }
     },
   },
   mounted() {
-    if (process.client) {
+    if(this.containerData) {
       this.checkAndAttachMapScript();
     }
   },
 };
 </script>
+<style scoped>
+.hideMap {
+  display: none;
+}
+</style>

@@ -5,6 +5,11 @@
         <div class="footer">
           <div class="d-flex flex-column">
             <div class="align-self-center">
+              <div class="mt-2 mb-2 text-center">
+                <template v-if="container">
+                  <nuxt-link to="/contacts">Contacts</nuxt-link>
+                </template>
+              </div>
               <div class="copyright">
                 <p>
                   © {{ new Date().getFullYear() }}
@@ -45,6 +50,7 @@ export default {
   data() {
     return {
       homePage: true,
+      container: null,
     };
   },
   methods: {
@@ -55,6 +61,14 @@ export default {
         this.homePage = false;
       }
     },
+  },
+  async beforeMount() {
+    const container = await this.get("public/get-container/contactFormHeader");
+    if(container) {
+      if(Object.keys(container).length){
+        this.container = container;
+      }
+    }
   },
   mounted() {
     this.selectModalMenu();

@@ -22,7 +22,8 @@
           :disabled="disabled"
           :prepend-icon="icon"
           :class="{
-          'form-control': label,
+          'form-control': label || lg,
+          'form-lg': lg,
           'is-invalid': errorFields.includes(name),
           [className]: className,
         }"
@@ -92,6 +93,10 @@ export default {
     className: String,
     maxlength: Number,
     required: Boolean,
+    lg: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

@@ -1,41 +1,23 @@
 <template>
-    <form v-on:submit.prevent="submitForm" method="post" action="form.php" id="cf-1" class="contact-form">
+    <form v-on:submit.prevent="submitForm" method="post" id="cf-1">
         <div class="form-group form-group-xs">
             <p class="input-group gutter-width-xs no-space">
                 <span class="gutter-width">
-                    <input v-model="form.name" name="cf-1-name-surename" type="text" id="cf-1-name-surename" class="form-control form-lg" placeholder="Your name and surename here *" required="required">
+                    <InputField v-model="form.authorName" name="authorName" type="text" placeholder="Your name and surename here" :lg="true" />
                 </span>
 
                 <span class="gutter-width">
-                    <select v-model="form.service" name="cf-1-services" id="cf-1-services" class="form-control form-lg">
-                        <option value="" disabled selected hidden>Choose a service *</option>
-                        <option value="Labaratory analysis">Labaratory analysis</option>
-                        <option value="cardiology">Cardiology</option>
-                        <option value="neurology">Neurology</option>
-                        <option value="dental-service">Dentatal service</option>
-                    </select>
+                  <InputField v-model="form.authorEmail" name="authorEmail" type="email" placeholder="Your email here" :lg="true"/>
                 </span>
             </p>
         </div>
 
         <div class="form-group form-group-xs">
-            <p class="input-group gutter-width-xs no-space">
-                <span class="gutter-width">
-                    <input v-model="form.phone" name="cf-1-name-phone" type="text" id="cf-1-phone" class="form-control form-lg" placeholder="Your phone number here *" required="required">
-                </span>
-
-                <span class="gutter-width">
-                    <input v-model="form.date" name="cf-1-date" type="text" id="cf-1-date" class="form-control form-lg" placeholder="Appointment date ( dd/mm/yyyy )" value="Appointment date ( dd/mm/yyyy )">
-                </span>
-            </p>
-        </div>
-
-        <div class="form-group form-group-xs">
-            <textarea v-model="form.message" name="cf-1-message" id="cf-1-message" class="form-control form-lg" placeholder="Your message here"></textarea>
+            <TextareaField v-model="form.authorComment" name="authorComment" placeholder="Your message here"/>
         </div>
 
         <div class="form-group form-group-xs mb-0">
-            <button type="submit" class="btn btn-primary">Book Now</button>
+            <button type="submit" class="btn btn-primary">Send</button>
         </div>
 
         <transition appear leave-active-class="animated fadeOut">
@@ -47,16 +29,20 @@
 </template>
 
 <script>
-
+  import InputField from "@/components/Forms/Fields/InputField.vue";
+  import TextareaField from "@/components/Forms/Fields/TextareaField.vue";
     export default {
         name: 'ContactsForm',
+        components: {
+          InputField,
+          TextareaField
+        },
         data() {
             return {
                 form: {
-                    name: '',
-                    service: '',
-                    phone: '',
-                    message: ''
+                  authorName: '',
+                  authorEmail: '',
+                  authorComment: ''
                 },
                 successMessage: "Sender's message was sent successfully",
                 warningMessage: 'Fill up the form, please!',
@@ -66,40 +52,21 @@
                 callAlert: false
             }
         },
-        methods: {
+        async beforeMount() {
+          const container = await  this.get("public/get-client-container/contactUs");
+          console.log(container);
+          //frontend-cms-field/get-container/contactUs/client
+        },
+      methods: {
             async submitForm() {
-                this.$axios.post( 'https://store.adveits.com/API/form.php', this.form, {
-                    headers: {
-                        'Access-Control-Allow-Origin': '*',
-                        'Content-Type': 'application/json; charset=UTF-8'
-                    },
-                }, ).then( response => {
-                    if ( response.data.status === 'success' ) {
-                        this.responseMessage = this.successMessage;
-                    }
-
-                    if ( response.data.status === 'warning' ) {
-                        this.responseMessage = this.warningMessage;
-                    }
-
-                    if ( response.data.status === 'error' ) {
-                        this.responseMessage = this.errorMessage;
-                    }
-                    this.alertClass = response.data.status;
-                    this.callAlert  = true;
-
-                    setTimeout( () => {
-                        this.callAlert = false;
-                    }, 2000 )
-                } ).catch( error => {
-                    this.responseMessage = this.errorMessage;
-                    this.alertClass      = 'danger';
-                    this.callAlert       = true;
-
-                    setTimeout( () => {
-                        this.callAlert = false;
-                    }, 2000 )
-                } );
+               const requestSent = await this.post("public/store-client-container/contactUs", this.form);
+               if(requestSent){
+                 this.form = {
+                   authorName: '',
+                   authorEmail: '',
+                   authorComment: ''
+                 }
+               }
             }
         }
     };

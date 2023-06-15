@@ -5,67 +5,27 @@
     <Header logoColor="dark" />
 
     <main id="main" class="site-main">
-      <PageTitle />
-
+      <template v-if="contactContainer">
+          <PageTitle :container="contactContainer"/>
+      </template>
       <div id="page-content" class="spacer p-top-xl">
         <div class="wrapper">
           <div class="content">
             <div class="clearfix">
-              <GoogleMaps />
-
+              <template v-if="gmapsContainer">
+                  <GoogleMaps :container-data="gmapsContainer"/>
+              </template>
               <div class="spacer p-top-xl">
                 <div class="title">
                   <h2>Let’s talk or book now</h2>
                 </div>
 
                 <div class="row gutter-width-sm with-pb-xl spacer p-top-lg">
-                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                    <div class="contacts">
-                      <div class="contacts-items">
-                        <div class="contacts-item">
-                          <div class="contacts-item-description">
-                            <p>
-                              <a href="mailto:company@domain.com"
-                                >company@domain.com</a
-                              >
-                            </p>
-                          </div>
-
-                          <div class="contacts-item-title">
-                            <h6>Email</h6>
-                          </div>
-                        </div>
-
-                        <div class="contacts-item">
-                          <div class="contacts-item-description">
-                            <p>36 M St, New York, 152, USA</p>
-                          </div>
-
-                          <div class="contacts-item-title">
-                            <h6>Address</h6>
-                          </div>
-                        </div>
-
-                        <div class="contacts-item">
-                          <div class="contacts-item-description">
-                            <p>
-                              <a href="tel:005053255350539"
-                                >0050 (5325) 535-0539</a
-                              >
-                            </p>
-                          </div>
-
-                          <div class="contacts-item-title">
-                            <h6>Phone</h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     <div class="contact-form-shortcode">
-                      <ContactsForm />
+                      <template v-if="contactContainer">
+                        <ContactsForm :container="contactContainer"/>
+                      </template>
                     </div>
                   </div>
                 </div>
@@ -101,6 +61,28 @@ export default {
   mounted: function () {
     if (process.client) {
       document.body.classList.add("page");
+    }
+  },
+  data(){
+    return {
+      contactContainer: null,
+      gmapsContainer: null,
+    }
+  },
+  async beforeMount() {
+    const container = await this.get("public/get-container/contactFormHeader");
+    const gmapsContainer = await this.get("public/get-container/gmaps");
+    if(gmapsContainer){
+      if(Object.keys(gmapsContainer).length){
+        this.gmapsContainer = gmapsContainer;
+      }
+    }
+    if(container) {
+      if(Object.keys(container).length){
+        this.contactContainer = container;
+      }else{
+        await this.$router.push("/");
+      }
     }
   },
   beforeDestroy() {
