@@ -1,7 +1,10 @@
 <template>
     <header id="header" class="site-header">
-        <div class="wrapper">
+      <MobileMenuComponent class="d-block d-lg-none d-xl-none"/>
+        <div class="wrapper d-none d-lg-block d-xl-block">
             <div class="header-content d-flex justify-content-between">
+
+
                 <div class="header-left align-self-center">
                     <div class="links">
                         <div class="links-items">
@@ -51,6 +54,7 @@
     import SignInButton from '~/components/Button/SignInButton';
     import MenuModalButton from '~/components/Button/MenuModalButton';
     import Actions from '../General/Actions';
+    import MobileMenuComponent from "@/components/ui/MobileMenuComponent.vue";
 
     export default {
         name: 'Header',
@@ -63,7 +67,8 @@
             SignUpButton,
             MyAccountButton,
             SignOutButton,
-            SignInButton
+            SignInButton,
+            MobileMenuComponent
         },
       computed: {
         isGuest() {

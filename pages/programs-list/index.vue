@@ -24,7 +24,7 @@
                     >
                       <div class="img object-fit overflow-hidden">
                         <div class="object-fit-cover transform-scale-h">
-                          <ImageContent :src="program.program_image" size="md" class="card-top-img"/>
+                          <ImageContent :src="program.program_image" size="md" :tenant="false" class="card-top-img"/>
                         </div>
                       </div>
                     </nuxt-link>

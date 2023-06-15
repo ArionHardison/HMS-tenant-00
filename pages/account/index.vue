@@ -20,7 +20,7 @@
                 </div>
                 <GlobalModuleTasksListComponent/>
 
-                <div class="col-3">
+                <div class="col-12 col-md-3 col-lg-3 col-xl-3">
                   <h4>Daily tasks</h4>
                   <template v-if="tasks.length">
                     <template v-for="task in tasks">
@@ -31,8 +31,9 @@
                     <p class="mt-3">No tasks</p>
                   </template>
                 </div>
-                <div class="col-9">
+                <div class="col-12 col-lg-9 col-md-9 col-xl-9">
                   <div class="row gutter-width-sm">
+                    <h4 class="text-center">Programs</h4>
                     <div
                       v-for="program in programs"
                       :key="program.id"
@@ -50,7 +51,7 @@
                             <div class="img object-fit overflow-hidden">
                               <div class="object-fit-cover transform-scale-h">
 
-                                <ImageContent :src="program.program_image" size="sm"/>
+                                <ImageContent :src="program.program_image" size="md" :tenant="false"/>
 
                               </div>
                             </div>
@@ -60,6 +61,7 @@
                           <h4 class="card-title text-center">
                             <nuxt-link
                               title="Follow Program"
+                              class="program-name"
                               :to="{
                             name: 'follow-program',
                             query: { id: program.id },
@@ -156,3 +158,12 @@ export default {
   }
 };
 </script>
+<style scoped>
+ .program-name {
+   display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   max-height: 66px;
+ }
+</style>

@@ -88,23 +88,25 @@
                             </button>
                           </template>
                           <template v-else>
-                            <h3>
-                              ${{ program.sale.amount / 100 }}
-                              <small>USD</small>
-                            </h3>
+                            <template v-if="program.sale">
+                              <h3>
+                                ${{ program.sale.amount / 100 }}
+                                <small>USD</small>
+                              </h3>
 
-                            <button
-                              :disabled="program.borken"
-                              class="
-                                btn btn-1 btn-primary btn-block
-                                mt-4
-                                text-white
-                              "
-                              type="button"
-                              @click="startProgram"
-                            >
-                              Buy Program
-                            </button>
+                              <button
+                                :disabled="program.borken"
+                                class="
+                                  btn btn-1 btn-primary btn-block
+                                  mt-4
+                                  text-white
+                                "
+                                type="button"
+                                @click="startProgram"
+                              >
+                                Buy Program
+                              </button>
+                            </template>
                           </template>
                         </template>
                         <template v-else>
