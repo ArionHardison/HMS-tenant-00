@@ -25,7 +25,7 @@
               @nextQuestion="runNextQuestion"
             />
           </template>
-        </template> -->
+        </template>
         </client-only>
       </div>
     </template>
