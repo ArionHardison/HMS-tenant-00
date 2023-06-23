@@ -46,6 +46,16 @@
                         <h3 class="mb-2 font-weight-bold text-break">
                           {{ program.name }}
                         </h3>
+
+                        <div class="text-center">
+                          <Avatar :src="program.author.profile_picture" width="50" height="50"/>
+                          <div class="col-12 mt-2 mb-2">
+                            <b class="mt-2 mb-2">{{program.author.full_name}}</b><br/>
+
+                            {{program.author.roles.toString()}}
+                          </div>
+                        </div>
+
                         <div class="card bg-transparent mb-4 border-0">
                           <div class="card-body p-0">
                             <div class="d-flex">
@@ -140,7 +150,7 @@ import Description from "~/components/blocks/news-single-post/Description";
 import Tags from "~/components/blocks/news-single-post/Tags";
 import Comments from "~/components/blocks/news-single-post/Comments";
 import Sidebar from "~/components/blocks/news/Sidebar";
-import AppAvatar from "../../components/ui/app-avatar.vue";
+import Avatar from "@/components/ui/Avatar.vue";
 import ImageContent from "@/components/blocks/ImageContent";
 import time from "@/mixins/time";
 
@@ -156,7 +166,7 @@ export default {
     Comments,
     Sidebar,
     Footer,
-    AppAvatar,
+    Avatar,
   },
   mixins: [time],
   computed: {
@@ -192,7 +202,13 @@ export default {
     titleTemplate: "%s",
   },
   async created() {
-    this.program = await this.get(`public/get-program/${this.$getId(this.$route.params.id)}`);
+    let program = await this.get(`public/get-program/${this.$getId(this.$route.params.id)}`);
+    if(program){
+      program.author.roles = program.author.roles.map((role)=>{
+        return role.name;
+      });
+      this.program = program;
+    }
   },
   methods: {
     async startProgram() {
