@@ -5,18 +5,16 @@
     <Header logoColor="dark"/>
 
     <main id="main" class="site-main">
-      <PageTitle name="Sign Up"/>
+      <PageTitle name="Payment status"/>
       <div id="page-content" class="spacer p-top-xl">
         <div class="wrapper">
           <div class="content">
             <div id="single">
               <div class="row gutter-width-sm">
                 <div
-                  class="offset-xl-4 col-xl-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 offset-sm-0 col-sm-12 single-content"
+                  class="col-12 single-content text-center"
                 >
-                  <div class="form-group form-group-xs">
-                    Payment successfully finished
-                  </div>
+                  Your payment is being processed, the program will be available soon.
                 </div>
               </div>
             </div>

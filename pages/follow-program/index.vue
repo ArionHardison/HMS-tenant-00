@@ -56,9 +56,26 @@
           <template v-else>
             <template v-if="currentStep.require_setup">
               <template v-if="currentStep.setup_started === null">
-                <h2>Please choose one of {{ currentStep.role }}'s</h2>
+                <h2>Please choose one of
+                  <template v-if="currentStep.required_role">
+                    {{currentStep.required_role.name}}
+                  </template>
+                  's</h2>
                 <p>
-                  The selected {{ currentStep.role }} will be invited to help you
+                  The selected
+                  <b>
+                    <template v-if="currentStep.required_role">
+                      {{currentStep.required_role.name}}
+                    </template>
+                  </b>
+                  <template v-if="currentStep.required_role">
+                    <template v-if="currentStep.required_role.tags">
+                      who professional in
+                      <b>{{currentStep.required_role.tags.toString()}}</b>
+                    </template>
+                  </template>
+                  will be invited to help
+                  you with <b>{{currentStep.program_name}}</b>
                 </p>
                 <div class="card-container">
                   <template v-for="user in currentStep.users.doctors">
@@ -148,7 +165,7 @@
                   {{ currentStep.invited }}
                 </h2>
 
-                Module Can't be used! Congratulations! You invited
+                Congratulations! You invited
                 {{ currentStep.name }}
                 to be your personal {{ currentStep.setup_started.role.name }}!
                 {{ currentStep.name }}
@@ -253,7 +270,7 @@ export default {
         this.currentStep.name = this.currentStep.setup_started
           ? this.currentStep.setup_started.invite
             ? this.currentStep.setup_started.invite.name
-            : this.currentStep.setup_started.invited_user.full_name
+            : this.currentStep.setup_started.invitedUser.full_name
           : null;
       }
     },
