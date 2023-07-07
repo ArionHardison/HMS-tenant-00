@@ -6,6 +6,30 @@
     <main id="main" class="site-main">
       <div class="container">
       <template v-if="currentStep">
+        <template v-if="!currentStep.started_at">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2>{{ currentStep.program_name }}</h2>
+              <template v-if="currentStep.auto_fail">
+                <BaseAlert type="warning protocol-error-msg">
+                  Warning! First step should be finished in
+                  <b
+                  >{{ currentStep.auto_fail.period }}
+                    {{ currentStep.auto_fail.in }}</b
+                  >! Otherwise program going to be <b>failed</b>.
+                </BaseAlert>
+              </template>
+              <p>
+                If you are ready to start program click - start program button
+              </p>
+              <button class="btn btn-primary text-white" @click="startProgram">
+                Start Program
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+
 
         <template v-if="currentStep.error">
 
@@ -197,6 +221,7 @@
             </template>
           </template>
         </template>
+       </template>
       </template>
       </div>
     </main>
@@ -211,15 +236,15 @@ import Challenge from "@/components/Modules/Challenge";
 import Testimonial from "@/components/Modules/Testimonial.vue";
 
 import globalEvents from "@/mixins/globalEvents";
+import serverEvents from "@/mixins/serverEvents";
 import api from "~/mixins/api";
 import CountDown from "@/components/Modules/followup/CountDown";
-import {serialize} from "object-to-formdata";
 import AppAvatar from "~/components/ui/app-avatar.vue";
 import Header from "@/components/blocks/header/Header";
 import time from "@/mixins/time";
 
 export default {
-  mixins: [api, globalEvents, time],
+  mixins: [api, globalEvents, time, serverEvents],
   middleware: "user",
   components: {
     Testimonial,
@@ -250,6 +275,21 @@ export default {
     });
   },
   methods: {
+    async startProgram() {
+      const startedProgram = await this.post(
+        `personal-chain/start-program/${this.$route.query.id}`,
+        {
+          id: this.$route.query.id,
+        });
+      if (startedProgram) {
+        this.currentStep = startedProgram;
+        this.currentStep.name = this.currentStep.setup_started
+          ? this.currentStep.setup_started.invite
+            ? this.currentStep.setup_started.invite.name
+            : this.currentStep.setup_started.invited_user.full_name
+          : null;
+      }
+    },
     async triggerProgramChanges() {
       await this.get(`personal-chain/${this.$route.query.id}`);
     },

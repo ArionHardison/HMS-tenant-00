@@ -37,7 +37,9 @@ export default {
       return time.toISO();
     },
     parse(time) {
-      return DateTime.fromSQL(time).setZone(this.timezone, {keepCalendarTime: true}).setLocale("en-US");
+      return DateTime.fromSQL(time, {zone: 'utc'})
+        .setZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
+        .setLocale("en-US");
     }
 
   }
