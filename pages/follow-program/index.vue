@@ -288,6 +288,7 @@ export default {
             ? this.currentStep.setup_started.invite.name
             : this.currentStep.setup_started.invited_user.full_name
           : null;
+        await this.continueProgram();
       }
     },
     async triggerProgramChanges() {
