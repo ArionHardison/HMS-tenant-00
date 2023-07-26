@@ -21,7 +21,6 @@
 
 <script>
 import time from "@/mixins/time";
-import { DateTime } from "luxon";
 
 export default {
   name: "CountUp",

@@ -25,7 +25,7 @@
 
 <script>
 import api from "@/mixins/api";
-import TextareaField from "../Forms/Fields/TextareaField";
+import TextareaField from "../../Forms/Fields/TextareaField.vue";
 export default {
   components: {
     TextareaField

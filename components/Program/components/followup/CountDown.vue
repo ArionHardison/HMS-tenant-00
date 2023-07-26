@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import time from "~/mixins/time";
+import time from "@/mixins/time";
 
 export default {
   mixins: [time],

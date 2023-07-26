@@ -108,7 +108,7 @@ import NewsBlog from "~/components/blocks/news/Blog";
 import Sidebar from "~/components/blocks/news/Sidebar";
 import AssignedTask from "@/components/AssignedTask";
 import ImageContent from "@/components/blocks/ImageContent";
-import GlobalModuleTasksListComponent from "@/components/Modules/GlobalModuleTasksListComponent.vue";
+import GlobalModuleTasksListComponent from "@/components/Program/components/GlobalModuleTasksListComponent.vue";
 export default {
   components: {
     ImageContent,

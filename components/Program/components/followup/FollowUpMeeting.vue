@@ -264,23 +264,23 @@
 </template>
 <script>
 import {connect, createLocalVideoTrack} from "twilio-video";
-import serverEvents from "@/mixins/serverEvents";
-import audioRecorder from "@/mixins/audioRecorder";
+import serverEvents from "@/components/Program/mixins/server-events";
+import audioRecorder from "@/components/Program/mixins/followup-audio-recorder";
 import time from "@/mixins/time";
 import api from "@/mixins/api";
 import VideoOutline from "vue-material-design-icons/VideoOutline.vue";
 import VideoOffOutline from "vue-material-design-icons/VideoOffOutline.vue";
 import MicrophoneOff from "vue-material-design-icons/MicrophoneOff.vue";
 import MicrophoneOutline from "vue-material-design-icons/MicrophoneOutline.vue";
-import globalEvents from "@/mixins/globalEvents";
-import ImageContent from "@/components/blocks/ImageContent";
+import globalEvents from "@/components/Program/mixins/global-events";
+import ImageContent from "@/components/Program/components/ImageContent.vue";
 
 export default {
   layout: "VideoCall",
   mixins: [time, serverEvents, audioRecorder, api, globalEvents],
   components: {
     [process.client && "TimelineComponent"]: () =>
-      import("@/components/Modules/followup/TimelineComponent"),
+      import("@/components/Program/components/followup/TimelineComponent.vue"),
     ImageContent,
     VideoOutline,
     VideoOffOutline,

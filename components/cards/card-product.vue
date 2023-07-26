@@ -11,20 +11,10 @@
 
       <div class="media">
         <span class="rounded-circle mr-3 position-relative">
-          <!-- <nuxt-link :to="`/${cardInfo.username}`" tag="a">
-            <img
-              v-src-main-tenant="cardInfo.program_image"
-              alt="Avatar"
-              class="rounded-circle avatarUser"
-              width="60"
-              height="60"
-            />
-          </nuxt-link> -->
 
-          <AppAvatar
-            :userInfo="cardInfo"
-            width="60px"
-            height="60px"
+          <Avatar
+            :userInfo="cardInfo.profile_picture"
+            :size="60"
             alt="Avatar"
           />
         </span>
@@ -87,27 +77,6 @@
         cursor-pointer
       "
     >
-      <span class="btn-block text-center mb-3">
-        <!-- <i class="feather ico-no-result border-0 text-white icon-lock"></i> -->
-        <!-- <Lock :size="64" class="feather ico-no-result border-0 icon-lock" /> -->
-      </span>
-
-      <!-- <a
-          data-toggle="modal"
-          data-target="#payPerViewForm"
-          data-mediaid="387"
-          data-price="$5.00"
-          data-subtotalprice="$5.00"
-          data-pricegross="5.00"
-          class="btn btn-primary w-100 text-white"
-        >
-          <LockOpenOutline :size="17" class="mr-1" />
-          Unlock post for $5.00
-        </a> -->
-
-      <!-- <ul class="list-inline mt-3">
-          <li class="list-inline-item"><i class="feather icon-image"></i> 1</li>
-        </ul> -->
     </nuxt-link>
     <!-- btn-block parent -->
 
@@ -140,7 +109,7 @@ import BookmarkOutline from "vue-material-design-icons/BookmarkOutline.vue";
 import Bookmark from "vue-material-design-icons/Bookmark.vue";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
-import AppAvatar from "../ui/app-avatar.vue";
+import Avatar from "../ui/Avatar";
 
 export default {
   props: {
@@ -160,7 +129,7 @@ export default {
     LockOpenOutline,
     BookmarkOutline,
     Bookmark,
-    AppAvatar,
+    Avatar,
   },
   methods: {
     rendTimeAgo(date) {
@@ -205,4 +174,4 @@ export default {
 .font-14 {
   font-size: 14px;
 }
-</style>   
+</style>

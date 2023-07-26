@@ -16,9 +16,8 @@
 </template>
 <script>
 import api from "@/mixins/api";
-import PictureUpload from "@/components/Modules/challenge/PictureUpload";
-import TaskChallenge from "@/components/Modules/challenge/TaskChallenge";
-import { serialize } from "object-to-formdata";
+import PictureUpload from "@/components/Program/components/challenge/PictureUpload.vue";
+import TaskChallenge from "@/components/Program/components/challenge/TaskChallenge.vue";
 
 export default {
   name: "RunningChallenge",
@@ -61,7 +60,7 @@ export default {
     getCurrentTask(tasks) {
       let currentTaskFound = false;
       return tasks.map((task) => {
-        if (task.result.task_finished || currentTaskFound) {
+        if (task.result || currentTaskFound) {
           task.isCurrent = false;
         } else {
           currentTaskFound = true;

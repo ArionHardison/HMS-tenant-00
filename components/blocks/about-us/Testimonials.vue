@@ -53,7 +53,6 @@
       async created() {
           const testimonials = await this.get("public/testimonials/get-random");
         this.testimonialsItem = [...testimonials].shift();
-        console.log(this.testimonialsItem);
       }
 
     };

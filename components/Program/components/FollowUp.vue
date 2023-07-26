@@ -36,10 +36,10 @@
 </template>
 
 <script>
-import CountDown from "./followup/CountDown";
-import FollowUpMeeting from "./followup/FollowUpMeeting";
+import CountDown from "./followup/CountDown.vue";
+import FollowUpMeeting from "./followup/FollowUpMeeting.vue";
 import time from "@/mixins/time";
-import serverEvents from "@/mixins/serverEvents";
+import serverEvents from "@/components/Program/mixins/server-events";
 import api from "@/mixins/api";
 
 export default {

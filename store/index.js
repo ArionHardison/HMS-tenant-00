@@ -83,11 +83,9 @@ const mutations = {
   },
   startAxiosCall(state) {
     state.axiosCalls++
-    console.log(state.axiosCalls);
   },
   stopAxiosCall(state) {
     state.axiosCalls--;
-    console.log(state.axiosCalls);
   },
   toggleMenuModal(state) {
     state.showMenuModal = !state.showMenuModal;

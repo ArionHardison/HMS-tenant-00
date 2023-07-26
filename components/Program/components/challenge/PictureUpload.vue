@@ -40,7 +40,7 @@
   </div>
 </template>
 <script>
-import task from "@/components/Modules/challenge/mixins/task";
+import task from "@/components/Program/mixins/challenge-task";
 export default {
   mixins: [task],
   name: "PictureUpload",

@@ -8,7 +8,7 @@
 
 <script>
 import api from "@/mixins/api";
-import GlobalModuleTask from "@/components/Modules/GlobalModuleTask.vue";
+import GlobalModuleTask from "@/components/Program/components/GlobalModuleTask.vue";
 export default {
   mixins: [api],
   name: "GlobalModuleTasksListComponent",

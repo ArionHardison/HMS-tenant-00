@@ -27,8 +27,8 @@
 
 <script>
 import api from "@/mixins/api";
-import Assessment from "~/components/Modules/Assessment";
-import Challenge from "~/components/Modules/Challenge";
+import Assessment from "@/components/Program/components/Assessment.vue";
+import Challenge from "@/components/Program/components/Challenge.vue";
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";

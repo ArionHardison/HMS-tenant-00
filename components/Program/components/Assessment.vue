@@ -41,7 +41,7 @@ export default {
 
   components: {
     [process.client && "Question"]: () =>
-      import("@/components/Modules/assessment/Question"),
+      import("@/components/Program/components/assessment/Question.vue"),
   },
   props: {
     recurring: {

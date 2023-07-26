@@ -136,7 +136,7 @@ import "vue-slider-component/theme/antd.css";
 
 import { validate, extend, localize } from "vee-validate";
 
-import api from "~/mixins/api";
+import api from "@/mixins/api";
 import * as rules from "vee-validate/dist/rules";
 
 export default {

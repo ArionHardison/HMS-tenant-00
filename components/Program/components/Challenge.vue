@@ -20,7 +20,7 @@
         >
           <template v-if="challengeData.runningChallenge">
             <RunningChallenge
-              :challenge="item"
+              :challenge="challengeData.runningChallenge.id"
               :recurring="recurring"
               :challenge-type="challengeData.challenge.challenge_type"
             />
@@ -61,10 +61,10 @@
 <script>
 import api from "@/mixins/api";
 import time from "@/mixins/time";
-import CountUp from "@/components/Modules/challenge/CountUp";
-import CountDown from "@/components/Modules/challenge/CountDown";
-import ChallengeRules from "@/components/Modules/challenge/ChallengeRules";
-import RunningChallenge from "@/components/Modules/challenge/RunningChallenge";
+import CountUp from "@/components/Program/components/challenge/CountUp.vue";
+import CountDown from "@/components/Program/components/challenge/CountDown.vue";
+import ChallengeRules from "@/components/Program/components/challenge/ChallengeRules.vue";
+import RunningChallenge from "@/components/Program/components/challenge/RunningChallenge.vue";
 
 export default {
   name: "Challenge",

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import CheckboxField from "@/components/Forms/Fields/CheckboxField";
+import CheckboxField from "@/components/Forms/Fields/CheckboxField.vue";
 
 export default {
   name: "TaskChallenge",
