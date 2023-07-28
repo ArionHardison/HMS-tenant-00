@@ -1,11 +1,11 @@
 <template>
-  <client-only>
-    <div class="mt-2 mb-2 text-center col-12 question quetion-container">
+  <div class="mt-2 mb-2 text-center col-12 question quetion-container">
+    <client-only>
       <template v-if="question.image">
-      <div
-        v-bg-img-tenant="$formatImg(question.image, 'lg')"
-        class="quetion-image"
-      ></div>
+        <div
+          :style="{backgroundImage: $imageUrl(question.image, 'lg', false)}"
+          class="quetion-image"
+        ></div>
       </template>
       <div
         class="question-text mb-4 mt-4 text-center bold-text"
@@ -14,7 +14,8 @@
 
       <template
         v-if="
-          question.type === 'multi' ||
+          (question.type === 'multi' &&
+            question.attributes.multiple_selectable) ||
           (question.type === 'dropdown' &&
             question.attributes.multiple_selectable)
         "
@@ -22,7 +23,7 @@
         <multiselect
           v-model="selectedValue"
           :options="question.choices"
-          :multiple="!!question.attributes.multiple_selectable"
+          :multiple="true"
           track-by="id"
           label="choice"
         ></multiselect>
@@ -50,13 +51,11 @@
         <input v-model="selectedValue" type="email" class="form-control" />
       </template>
       <template v-if="question.type === 'slider'">
-        <client-only>
-          <vue-slider
-            v-model="selectedValue"
-            :min="question.attributes.minimum_value"
-            :max="question.attributes.maximum_value"
-          />
-        </client-only>
+        <vue-slider
+          v-model="selectedValue"
+          :min="question.attributes.minimum_value"
+          :max="question.attributes.maximum_value"
+        />
       </template>
       <template
         v-if="question.type === 'shortText' || question.type === 'longText'"
@@ -78,7 +77,7 @@
               class="yes-or-no m-0"
               :class="{ 'yes-or-no-active': selectedValue === choice.choice }"
               :for="`input${index}`"
-              >{{ choice.choice }}</label
+            >{{ choice.choice }}</label
             >
             <input
               hidden
@@ -93,9 +92,9 @@
         </div>
       </template>
       <template v-if="question.type === 'rating'">
-        <client-only>
-          <star-rating v-model="selectedValue" :show-rating="false" />
-        </client-only>
+
+        <star-rating v-model="selectedValue" :show-rating="false" />
+
       </template>
       <template v-if="question.type === 'date'">
         <input type="date" format="yyyy-MM-dd" v-model="selectedValue" />
@@ -121,30 +120,22 @@
       >
         Next Question
       </button>
-    </div>
-  </client-only>
+    </client-only>
+  </div>
 </template>
 
 <script>
- import Multiselect from "vue-multiselect";
- import StarRating from "vue-star-rating";
 
-import "vue-datetime/dist/vue-datetime.css";
 
-import VueSlider from "vue-slider-component";
 import "vue-slider-component/theme/antd.css";
-
-import { validate, extend, localize } from "vee-validate";
-
-import api from "@/mixins/api";
-import * as rules from "vee-validate/dist/rules";
+import api from "~/mixins/api";
 
 export default {
   mixins: [api],
   name: "Question",
   components: {
-    StarRating,
     [process.client && "VueSlider"]: () => import("vue-slider-component"),
+    [process.client && "StarRating"]: () => import("vue-star-rating"),
     [process.client && "Multiselect"]: () => import("vue-multiselect"),
   },
   props: {
@@ -173,21 +164,6 @@ export default {
       multipartFormData: false,
     };
   },
-  created() {
-    const dictionary = {
-      en: {
-        messages: {
-          required: () => "Response for this question is required!",
-        },
-      },
-    };
-
-    localize("en", dictionary.en);
-
-    Object.keys(rules).forEach((rule) => {
-      extend(rule, rules[rule]);
-    });
-  },
   methods: {
     setFileValue(evt) {
       const uploadedFiles = evt.target.files;
@@ -198,19 +174,10 @@ export default {
     },
     async saveAnswer() {
       const answer = this.prepareAnswer();
-      validate(answer, this.getRules(), {
-        name: "Response",
-      }).then(async (result) => {
-        if (result.valid) {
-          const resp = await this.sendAnswer(answer);
-          if (resp) {
-            this.$emit("nextQuestion");
-          }
-          this.errors = [];
-        } else {
-          this.errors = result.errors;
-        }
-      });
+      const resp = await this.sendAnswer(answer);
+      if (resp) {
+        this.$emit("nextQuestion");
+      }
     },
     async sendAnswer(answer) {
       const resp = await this.post("response/store", {
@@ -231,13 +198,10 @@ export default {
         return null;
       }
       if (
-        this.question.type === "multi"
+        this.question.type === "multi" ||
+        this.question.attributes.multiple_selectable
       ) {
-        if(  this.question.attributes.multiple_selectable ) {
-          return this.selectedValue.map((answer) => answer.choice).join(",");
-        }else{
-          return this.selectedValue.choice;
-        }
+        return this.selectedValue.map((answer) => answer.choice).join(",");
       }
       return this.selectedValue;
     },

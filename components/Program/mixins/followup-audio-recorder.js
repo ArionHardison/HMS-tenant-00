@@ -1,6 +1,3 @@
-import MediaStreamRecorder from "msr";
-import hark from "hark";
-
 export default {
   computed: {
     requestsRunning() {
@@ -19,7 +16,17 @@ export default {
       finalized: false,
       finalizeTimeout: null,
       shouldStore: false,
+      MediaStreamRecorder: null,
+      hark: null
     };
+  },
+  async mounted(){
+    if (process.client) {
+      const MediaStreamRecorder = await import("msr");
+      const hark = await import("hark");
+      this.MediaStreamRecorder = MediaStreamRecorder.default;
+      this.hark = hark.default;
+    }
   },
   async beforeDestroy() {
     await this.finalizeSpeechOnceAllDataWasSent();
@@ -45,11 +52,11 @@ export default {
         this.audioLevelStream();
       }
       this.stream = stream;
-      this.mediaRecorder = new MediaStreamRecorder(this.stream);
+      this.mediaRecorder = new this.MediaStreamRecorder(this.stream);
       this.mediaRecorder.bufferSize = 0;
       this.mediaRecorder.mimeType = "audio/wav";
 
-      const speechEvents = hark(this.stream, {});
+      const speechEvents = this.hark(this.stream, {});
 
       speechEvents.on("speaking", () => {
         this.shouldStore = true;
