@@ -24,7 +24,7 @@
         name: 'Loading',
         computed: {
             requestRunning() {
-                return this.$store.state.api.axiosCalls > 0;
+                return this.$store.state.axiosCalls > 0;
             },
             showPreloader() {
                 return this.$store.state.showPreloaderOnRequest;

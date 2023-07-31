@@ -1,21 +1,21 @@
 export default ({$axios, store, app}) => {
   $axios.onRequest(request => {
     if (process.client) {
-      store.commit("api/startAxiosCall");
+      store.commit("startAxiosCall");
     }
     return request;
   })
 
   $axios.onResponse(response => {
     if (process.client) {
-      store.commit("api/stopAxiosCall")
+      store.commit("stopAxiosCall")
     }
     return response
   })
 
   $axios.onError(async error => {
     if (process.client) {
-      store.commit("api/stopAxiosCall")
+      store.commit("stopAxiosCall")
     }
     if (error.response?.status === 422) {
       store.commit("setErrors", error.response.data.errors);

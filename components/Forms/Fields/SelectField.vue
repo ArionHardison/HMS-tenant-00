@@ -95,7 +95,7 @@ export default {
         "input",
         this.content.id !== undefined ? this.content.id : this.content
       );
-      this.$store.commit("api/HIDE_ERROR", this.name ? this.name : null);
+      this.$store.commit("hideError", this.name ? this.name : null);
     },
   },
 };
