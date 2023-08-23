@@ -22,6 +22,7 @@ import Assessment from "@/components/Program/components/Assessment.vue";
 import FollowUp from "@/components/Program/components/FollowUp.vue";
 import Wait from "@/components/Program/components/Wait.vue";
 import Challenge from "@/components/Program/components/Challenge.vue";
+import Activity from "@/components/Program/components/Activity.vue";
 export default {
   name: "ProgramRunningComponent",
   components: {
@@ -29,6 +30,7 @@ export default {
     FollowUp,
     Challenge,
     Wait,
+    Activity
   },
   props: {
     currentStep: {
