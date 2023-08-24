@@ -2,80 +2,63 @@
   <div class="row">
     <div class="col-12">
       <h3 class="text-center">Items</h3>
-      <el-table
-          :data="items"
-          class="table-responsive align-items-center table-flush table-striped"
-          header-row-class-name="thead-light"
-      >
-        <el-table-column
-            prop="name"
-            label="Name"
-        >
-          <template #default="{ row }">
-            <div class="d-flex justify-content-center">
-              {{row.name}}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-            prop="amount"
-            label="Amount"
-        >
-          <template #default="{ row }">
-            <div class="d-flex justify-content-center">
-              {{row.amount}}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="IMAGE">
-          <template #default="{ row }">
-            <div class="d-flex justify-content-center align-items-center">
-              <template v-if="row.item_photo">
-                <img
-                    v-src-main-tenant="
-                    formatMainImg(row.item_photo, 'md')
-                  "
-                    class="img-fluid"
-                    style="height: 200px;"
-                />
-              </template>
-              <template v-else>
-                <img src="~/static/no-image.svg" style="height: 200px"/>
-              </template>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-            label="Have item"
-        >
-          <template #default="{ row }">
-            <div class="d-flex justify-content-center">
+      <!-- Bootstrap Table -->
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>IMAGE</th>
+              <th>Have item</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr v-for="item in items" :key="item.id">
+            <td >
+              {{ item.name }}
+            </td>
+            <td >
+              {{ item.amount }}
+            </td>
+            <td >
+              <img
+                v-if="item.item_photo"
+                :src="$imageUrl(item.item_photo, 'md', false)"
+                class="img-fluid"
+                style="height: 200px;"
+              />
+              <img
+                v-else
+                src="~/static/no-image.svg"
+                style="height: 200px"
+              />
+            </td>
+            <td >
               <CheckboxField
-                  :checked="insideResults(row.id)"
-                  :name="`collection-${collection}-item-${row.id}`"
-                  @input="haveItem(collection, row.id)"
-              >
-              </CheckboxField>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+                :checked="insideResults(item.id)"
+                :name="`collection-${collection}-item-${item.id}`"
+                @input="haveItem(collection, item.id)"
+              ></CheckboxField>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
 
-import {Table, TableColumn} from "element-ui";
-import CheckboxField from "~/components/forms/CheckboxField.vue";
+import CheckboxField from "@/components/Forms/Fields/CheckboxField.vue";
 import api from "@/mixins/api";
 
 export default {
   name: "OrderItemsComponent",
   mixins: [api],
   components: {
-    [Table.name]: Table,
-    [TableColumn.name]: TableColumn,
     CheckboxField
   },
   props: {

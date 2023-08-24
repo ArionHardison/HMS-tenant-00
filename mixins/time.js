@@ -40,7 +40,12 @@ export default {
       return DateTime.fromSQL(time, {zone: 'utc'})
         .setZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
         .setLocale("en-US");
-    }
+    },
+    parseFromString(time){
+      return DateTime.fromSQL(time, {zone: 'utc'})
+        .setZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
+        .setLocale("en-US").toLocaleString(DateTime.DATETIME_SHORT);
+    },
 
   }
 };

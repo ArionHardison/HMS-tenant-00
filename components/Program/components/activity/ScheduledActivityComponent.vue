@@ -3,13 +3,20 @@
     <div class="col-12">
       <h3 class="text-center">{{activity.activity.title}}</h3>
       <p>{{activity.activity.description}}</p>
+      <div class="col-12">
+        <ul>
+          <li>State: {{activity.activity.state}}</li>
+          <li>City: {{activity.activity.city}}</li>
+          <li>ZIP: {{activity.activity.zip}}</li>
+        </ul>
+      </div>
       <div class="row">
         <div class="col-12 text-center">
           <h3>Activity Provider</h3>
         </div>
         <template v-if="activity.activity.user">
-          <div class="col-12 d-flex justify-content-center">
-            <AppAvatar
+          <div class="col-12 d-flex justify-content-center mt-4 mb-2">
+            <ProgramAvatar
                 :userInfo="activity.activity.user"
                 width="65px"
                 height="65px"
@@ -18,29 +25,24 @@
                 imageSizeType="tb"
             />
           </div>
-          <div class="col-12 text-center">
-            <nuxt-link :to="`/u/${activity.activity.user.username}`" class="user-account-link"><strong>{{activity.activity.user.full_name}}</strong></nuxt-link>
+          <div class="col-12 text-center mt-3 mb-4">
+           <strong>{{activity.activity.user.full_name}}</strong>
           </div>
-          <ul>
-            <li>State: {{activity.activity.state}}</li>
-            <li>City: {{activity.activity.city}}</li>
-            <li>ZIP: {{activity.activity.zip}}</li>
-          </ul>
+
           <div class="col-12">
             <template v-if="activity.finished && !activity.approved">
-              <BaseAlert type="success" class="mt-2 mb-2">You marked the activity as finished and are now waiting for approval from the activity provider.</BaseAlert>
+              <p class="mt-2 mb-2 text-center">You marked the activity as finished and are now waiting for approval from the activity provider.</p>
             </template>
             <template v-else-if="activity.approved && !activity.finished">
-              <BaseAlert type="success" class="mt-2 mb-2">The service provider has marked the activity as finished. Please confirm that the activity was completed."</BaseAlert>
+              <p class="mt-2 mb-2 text-center">The service provider has marked the activity as finished. Please confirm that the activity was completed."</p>
             </template>
             <template v-else-if="activity.approved && activity.finished">
-              <BaseAlert type="success" class="mt-2 mb-2">Activity was successfully finished and approved</BaseAlert>
+              <p class="mt-2 mb-2 text-center">Activity was successfully finished and approved</p>
             </template>
 
             <template v-if="!activity.finished">
               <div class="col-12 mt-2 mt-3 text-center">
                 Activity booked to: <b>{{parseFromString(activity.scheduled_to)}}</b><br/>
-
                 <button class="btn btn-success mt-3 mb-3" type="button" @click="setFinished(activity.id)">Set Activity Finished</button>
               </div>
             </template>

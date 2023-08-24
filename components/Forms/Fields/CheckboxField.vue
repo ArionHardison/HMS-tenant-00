@@ -41,6 +41,11 @@ export default {
   mounted() {
     this.handleErrorMessage();
   },
+  created(){
+    if(this.checked){
+      this.content = true;
+    }
+  },
   watch: {
     content: {
       immediate: false,

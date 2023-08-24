@@ -23,6 +23,7 @@ import FollowUp from "@/components/Program/components/FollowUp.vue";
 import Wait from "@/components/Program/components/Wait.vue";
 import Challenge from "@/components/Program/components/Challenge.vue";
 import Activity from "@/components/Program/components/Activity.vue";
+import Order from "@/components/Program/components/Order.vue";
 export default {
   name: "ProgramRunningComponent",
   components: {
@@ -30,7 +31,8 @@ export default {
     FollowUp,
     Challenge,
     Wait,
-    Activity
+    Activity,
+    Order
   },
   props: {
     currentStep: {

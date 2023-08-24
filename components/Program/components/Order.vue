@@ -7,12 +7,12 @@
       </div>
       <template v-if="orderData.items.length">
         <div class="col-12">
-          <OrderItemsComponent :items="orderData.items" :checklist="orderData.checklist" :order="this.item" :task="parseInt($route.params.id)" :chain="parseInt($route.query.id)" />
+          <OrderItemsComponent :items="orderData.items" :checklist="orderData.checklist" :order="this.item" :task="$route.params.id ? parseInt($route.params.id) : null" :chain="$route.query.id ?  parseInt($route.query.id) : null" />
         </div>
       </template>
       <template v-if="orderData.collections.length">
         <div class="col-12">
-        <OrderCollectionsComponent :collections="orderData.collections" :checklist="orderData.checklist" :order="this.item" :task="parseInt($route.params.id)" :chain="parseInt($route.query.id)" />
+        <OrderCollectionsComponent :collections="orderData.collections" :checklist="orderData.checklist" :order="this.item" :task="$route.params.id ? parseInt($route.params.id) : null" :chain="$route.query.id ?  parseInt($route.query.id) : null" />
         </div>
       </template>
       <div class="text-center col-12">
