@@ -42,12 +42,12 @@
                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                     <!-- <Sidebar :protocol-id="program.protocol_id" /> -->
                     <div class="card rounded-large shadow-large card-border-0">
-                      <div class="card-body">
+                      <div class="card-body program-desc-card">
                         <h3 class="mb-2 font-weight-bold text-break">
                           {{ program.name }}
                         </h3>
 
-                        <div class="text-center">
+                        <div class="text-center mt-3 mb-3">
                           <Avatar :src="program.author.profile_picture" width="50" height="50"/>
                           <div class="col-12 mt-2 mb-2">
                             <b class="mt-2 mb-2">{{program.author.full_name}}</b><br/>
@@ -63,7 +63,7 @@
                                 <div class="d-flex">
 
 
-                                  <div class="d-block ml-2">
+                                  <div class="d-block">
                                     <div class="d-block">
                                       <small
                                         class="
@@ -228,3 +228,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+  .program-desc-card {
+    padding-top: 0 !important;
+  }
+</style>

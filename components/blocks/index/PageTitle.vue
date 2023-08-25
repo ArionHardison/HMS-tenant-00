@@ -14,6 +14,9 @@
                 <div class="description spacer p-top-lg">
                     <p>{{desc}}</p>
                 </div>
+
+                <div data-v-7a396f28="" class="spacer p-top-lg no-space"><a  href="#about-us" class="btn btn-primary">Learn More</a></div>
+
             </div>
         </div>
 

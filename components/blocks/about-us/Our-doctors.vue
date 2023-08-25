@@ -42,26 +42,32 @@
                                   <p>{{ member.description }}</p>
                               </div>
                           </div>
-
-                          <nav class="team-member-nav-items">
-                              <ul class="nav">
-                                  <li class="nav-item">
-                                      <a title="Facebook" :href="member.facebook_profile" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                                  </li>
-
-                                  <li class="nav-item">
-                                      <a title="LinkedIn" :href="member.linkedin_profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                                  </li>
-
-                                  <li class="nav-item">
-                                      <a title="Instagram" :href="member.instagram_profile" target="_blank"><i class="fab fa-instagram"></i></a>
-                                  </li>
-
-                                  <li class="nav-item">
-                                      <a title="Twitter" :href="member.twitter_profile" target="_blank"><i class="fab fa-twitter"></i></a>
-                                  </li>
-                              </ul>
-                          </nav>
+                          <template v-if="[member.facebook_profile, member.linkedin_profile, member.instagram_profile, member.twitter_profile].some(value => value !== null)">
+                            <nav class="team-member-nav-items">
+                                <ul class="nav">
+                                    <template v-if="member.facebook_profile">
+                                      <li class="nav-item">
+                                          <a title="Facebook" :href="member.facebook_profile" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                      </li>
+                                    </template>
+                                    <template v-if="member.linkedin_profile">
+                                      <li class="nav-item">
+                                          <a title="LinkedIn" :href="member.linkedin_profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                      </li>
+                                    </template>
+                                    <template v-if="member.instagram_profile">
+                                      <li class="nav-item">
+                                          <a title="Instagram" :href="member.instagram_profile" target="_blank"><i class="fab fa-instagram"></i></a>
+                                      </li>
+                                    </template>
+                                    <template v-if="member.twitter_profile">
+                                      <li class="nav-item">
+                                          <a title="Twitter" :href="member.twitter_profile" target="_blank"><i class="fab fa-twitter"></i></a>
+                                      </li>
+                                    </template>
+                                </ul>
+                            </nav>
+                          </template>
                       </div>
                   </div>
                 </template>

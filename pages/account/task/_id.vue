@@ -29,6 +29,8 @@
 import api from "@/mixins/api";
 import Assessment from "@/components/Program/components/Assessment.vue";
 import Challenge from "@/components/Program/components/Challenge.vue";
+import Order from "@/components/Program/components/Order.vue";
+import Activity from "@/components/Program/components/Activity.vue";
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
@@ -38,6 +40,8 @@ export default {
     Assessment,
     Challenge,
     Loading,
+    Order,
+    Activity,
     Header,
     Footer
   },

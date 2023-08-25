@@ -1,12 +1,20 @@
 <template>
   <div class="custom-avatar">
-    <template v-if="src">
-      <img :src="$imageUrl(src, 'sm', false)" :alt="alt" :style="avatarStyle" class="img" />
-    </template>
-    <template v-else>
-      <img src="@/assets/user.jpg" :alt="alt" :style="avatarStyle" class="img" />
-    </template>
-
+    <img
+      v-if="src"
+      :src="$imageUrl(src, 'sm', false)"
+      :alt="alt"
+      :style="avatarStyle"
+      class="img"
+      @error="onImageError"
+    />
+    <img
+      v-else
+      src="@/assets/user.jpg"
+      :alt="alt"
+      :style="avatarStyle"
+      class="img"
+    />
   </div>
 </template>
 
@@ -35,6 +43,11 @@ export default {
       };
     },
   },
+  methods: {
+    onImageError(e) {
+      e.target.src = require('@/assets/user.jpg'); // Use require for webpack to resolve the path correctly
+    }
+  }
 };
 </script>
 
