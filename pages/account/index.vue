@@ -19,7 +19,9 @@
                   </template>
                 </div>
                 <GlobalModuleTasksListComponent/>
-
+                <div class="offset-3 col-9">
+                  <h4 class="text-center">Programs</h4>
+                </div>
                 <div class="col-12 col-md-3 col-lg-3 col-xl-3">
                   <h4>Daily tasks</h4>
                   <template v-if="tasks.length">
@@ -33,13 +35,16 @@
                 </div>
                 <div class="col-12 col-lg-9 col-md-9 col-xl-9">
                   <div class="row gutter-width-sm">
-                    <h4 class="text-center">Programs</h4>
                     <div
                       v-for="program in programs"
                       :key="program.id"
                       class="col-xl-4 col-lg-4 col-md-4 col-sm-12"
                     >
-                      <div class="card card-post mt-3">
+                      <div class="card card-post mt-3" :class="{
+                                  'failed-program': program.status===2,
+                                  'finished-program': program.status===1,
+                                  'running-program': program.status===0,
+                                }">
                         <div class="card-top position-relative">
                           <nuxt-link
                             :title="program.name"
@@ -78,7 +83,15 @@
                           query: { id: program.id },
                         }"
                           >
-                            Follow Program
+                            <template v-if="program.status===2">
+                              Failed Program
+                            </template>
+                            <template v-else-if="program.status===1">
+                              Finished Program
+                            </template>
+                            <template v-else>
+                              Follow Program
+                            </template>
                           </nuxt-link>
                         </div>
                       </div>
@@ -165,5 +178,35 @@ export default {
    -webkit-box-orient: vertical;
    overflow: hidden;
    max-height: 66px;
+   font-size: 16px;
  }
+</style>
+<style>
+
+.running-program {
+  box-shadow: 0 0 0 0 rgb(100, 183, 70);
+  animation: pulse 2s infinite;
+}
+
+.failed-program {
+  box-shadow: 0 0 0 3px rgb(236, 11, 53);
+}
+
+.finished-program {
+  box-shadow: 0 0 0 3px #3B89C9;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(100, 183, 70, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(100, 183, 70, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(100, 183, 70, 0);
+  }
+}
 </style>

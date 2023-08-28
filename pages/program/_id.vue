@@ -100,7 +100,7 @@
                           <template v-else>
                             <template v-if="program.sale">
                               <h3>
-                                ${{ program.sale.amount / 100 }}
+                                {{ program.sale.amount / 100 }}
                                 <small>USD</small>
                               </h3>
 
