@@ -32,6 +32,7 @@
       </template>
       <div class="row">
         <div class="col-12 text-center">
+
           <template v-if="challengeData.runningChallenge">
             <template v-if="challengeData.challenge.time_limited">
               <CountDown
@@ -43,6 +44,13 @@
             <template v-else>
               <CountUp :end-date="challengeData.runningChallenge.created_at" />
             </template>
+            <InvalidFeedback
+              :state="errorFields.includes('attached')"
+              class="mt-2 mb-3"
+            >
+              {{ formErrors['attached'] ? [...formErrors['attached']].shift() : "" }}
+            </InvalidFeedback>
+
             <button class="btn btn-success" @click="finishChallenge">
               FINISH CHALLENGE
             </button>
@@ -65,10 +73,12 @@ import CountUp from "@/components/Program/components/challenge/CountUp.vue";
 import CountDown from "@/components/Program/components/challenge/CountDown.vue";
 import ChallengeRules from "@/components/Program/components/challenge/ChallengeRules.vue";
 import RunningChallenge from "@/components/Program/components/challenge/RunningChallenge.vue";
+import InvalidFeedback from "@/components/Forms/Fields/InvalidFeedback.vue";
 
 export default {
   name: "Challenge",
   components: {
+    InvalidFeedback,
     CountDown,
     RunningChallenge,
     ChallengeRules,
@@ -96,6 +106,14 @@ export default {
         runningChallenge: null,
       },
     };
+  },
+  computed: {
+    errorFields() {
+      return this.$store.state.errorFields;
+    },
+    formErrors() {
+      return this.$store.state.errors;
+    },
   },
   mounted() {
     this.getChallenge();

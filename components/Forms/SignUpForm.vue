@@ -68,6 +68,24 @@
       label="Password Confirmation"
     />
 
+    <div class="row my-4">
+      <div class="col-12">
+        <checkbox-field name="agree" :required="true">
+            <span class="text-muted"
+            >I agree with the
+              <router-link to="/privacy"
+              >Privacy Policy</router-link
+              >
+              and
+              <router-link to="/terms"
+              >Terms</router-link
+              >
+            </span
+            >
+        </checkbox-field>
+      </div>
+    </div>
+
     <div class="form-submit text-center mt-3">
       <button type="submit" class="btn btn-primary">Sign Up</button>
     </div>
@@ -77,13 +95,14 @@
 <script>
 import InputField from "./Fields/InputField";
 import SelectField from "./Fields/SelectField.vue";
+import CheckboxField from "@/components/Forms/Fields/CheckboxField.vue";
 import api from "~/mixins/api";
 import cloneDeep from 'lodash.clonedeep';
 
 export default {
   mixins: [api],
   name: "SignUpForm",
-  components: {InputField, SelectField},
+  components: {InputField, SelectField, CheckboxField},
   computed: {
     invite() {
       return this.$store.state.invite;

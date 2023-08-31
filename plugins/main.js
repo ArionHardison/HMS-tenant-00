@@ -9,7 +9,7 @@ Vue.use(VueEcho, {
   host: `${
     process.env.NODE_ENV === "development"
       ? process.env.SOCKET_URL_DEV
-      : "https://app.codify.solutions"
+      : "https://app.codifyhealthcare.com"
   }`,
   client: require("socket.io-client")
 });

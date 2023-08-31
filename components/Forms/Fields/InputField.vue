@@ -7,7 +7,7 @@
       <slot></slot>
 
       <template v-if="mask">
-        <the-mask class="form-control" masked :mask="maskData" v-model="content" @input="changeModelValue"/>
+        <the-mask class="form-control" masked :mask="maskData" v-model="content" @input="changeModelValue" :type="showPassword ? 'text' : type"/>
       </template>
       <template v-else>
         <input

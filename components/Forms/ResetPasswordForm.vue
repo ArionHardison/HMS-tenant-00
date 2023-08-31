@@ -1,7 +1,10 @@
 <template>
   <div>
     <template v-if="codeSent">
-      <button class="btn btn-primary" @click="reSend">Re-send</button>
+      <div class="col-12 text-center">
+        <p class="mt-2 mb-2"> Didn't get the code - click Re-send button.</p>
+      <button class="btn btn-primary btn-sm" @click="reSend">Re-send</button>
+      </div>
       <form v-on:submit.prevent="setNewPassword" method="post" id="new-password-form" class="comment-form">
         <template v-if="codeSent">
           <InputField name="code" v-model="setPasswordForm.code" :mask="true" mask-data="######" type="password"
