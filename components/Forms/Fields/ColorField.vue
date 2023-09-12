@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import InvalidFeedback from "@/components/forms/InvalidFeedback";
+import InvalidFeedback from "@/components/Forms/Fields/InvalidFeedback";
 import formField from "@/mixins/components/formField";
 
 
