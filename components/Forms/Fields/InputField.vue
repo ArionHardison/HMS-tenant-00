@@ -7,7 +7,7 @@
       <slot></slot>
 
       <template v-if="mask">
-        <the-mask class="form-control" masked :mask="maskData" v-model="content" @input="changeModelValue" :type="showPassword ? 'text' : type"/>
+        <the-mask class="form-control"  :type="showPassword ? 'text' : type" :class="{'form-control-lg': lg}" masked :mask="maskData" v-model="content" @input="changeModelValue"/>
       </template>
       <template v-else>
         <input
@@ -23,7 +23,7 @@
           :prepend-icon="icon"
           :class="{
           'form-control': label || lg,
-          'form-lg': lg,
+          'form-control-lg': lg,
           'is-invalid': errorFields.includes(name),
           [className]: className,
         }"
@@ -95,7 +95,7 @@ export default {
     required: Boolean,
     lg: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   data() {
@@ -125,6 +125,7 @@ label {
 .eye-block-container {
   position: absolute;
   right: 0;
+  height: 100%;
   z-index: 3;
 }
 
