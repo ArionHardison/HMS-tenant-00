@@ -1,9 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12 text-center">
-      Program was failed! Sorry but current program was failed, you should
-      start this program again!
-
+      Program was failed! To run the program again, you need to purchase it again on the "All Programs" page
       <nuxt-link to="/account">To Account</nuxt-link>
     </div>
   </div>
