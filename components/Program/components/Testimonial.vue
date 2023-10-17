@@ -5,7 +5,7 @@
         <template v-if="!testimonial.id">
           <form v-on:submit.prevent="sendTestimonial" method="post" id="sign-in-form" class="comment-form">
 
-            <TextareaField v-model="testimonialForm.testimonial"/>
+            <TextareaField show-counter :min="1" :max="200" v-model="testimonialForm.testimonial" label="We will be grateful for your feedback on the completed program"/>
 
             <div class="form-submit text-center mt-3">
               <input name="submit" type="submit" class="btn btn-primary" value="Send">

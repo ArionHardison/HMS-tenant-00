@@ -38,7 +38,7 @@
                     <div
                       v-for="program in programs"
                       :key="program.id"
-                      class="col-xl-4 col-lg-4 col-md-4 col-sm-12"
+                      class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-4 mt-1"
                     >
                       <div class="card card-post mt-3" :class="{
                                   'failed-program': program.status===2,

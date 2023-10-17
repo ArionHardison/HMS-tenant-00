@@ -118,6 +118,14 @@
                               </button>
                             </template>
                           </template>
+
+                          <client-only>
+                            <InvalidFeedback
+                              :state="errorFields.includes('program_id')"
+                            >
+                              {{ formErrors['program_id'] ? [...formErrors['program_id']].shift() : "" }}
+                            </InvalidFeedback>
+                          </client-only>
                         </template>
                         <template v-else>
                           You should have account to start program
@@ -153,9 +161,11 @@ import Sidebar from "~/components/blocks/news/Sidebar";
 import Avatar from "@/components/ui/Avatar.vue";
 import ImageContent from "@/components/blocks/ImageContent";
 import time from "@/mixins/time";
+import InvalidFeedback from "@/components/Forms/Fields/InvalidFeedback.vue";
 
 export default {
   components: {
+    InvalidFeedback,
     ImageContent,
     Loading,
     Header,
@@ -175,6 +185,12 @@ export default {
     },
     invite() {
       return this.$store.state.invite;
+    },
+    errorFields() {
+      return this.$store.state.errorFields;
+    },
+    formErrors() {
+      return this.$store.state.errors;
     },
   },
   mounted: function () {

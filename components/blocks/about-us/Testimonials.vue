@@ -5,7 +5,7 @@
             <div class="title">
                 <h2 class="hr">Testimonials</h2>
             </div>
-              <div class="adv-slider-reviews">
+          <div class="adv-slider-reviews" :class="{ 'fade-out': isFading }">
                   <div class="adv-slider-reviews-img">
                       <img src="img/demo/32_img.png" alt="Icon">
                   </div>
@@ -14,7 +14,7 @@
                       <div class="adv-swiper-wrapper reviews-text-items">
                           <div class="adv-swiper-slide reviews-text-item">
                               <div class="reviews-text-item-content">
-                                  <p>{{ testimonialsItem.testimonial }}</p>
+                                <p>{{ testimonials[currentTestimonialIndex].testimonial }}</p>
                               </div>
                           </div>
                       </div>
@@ -22,8 +22,8 @@
 
                   <div class="d-flex align-items-center thumbs">
                       <div class="reviews-results">
-                          <h6 class="reviews-name" id="reviews-name">{{ testimonialsItem.user.full_name }}</h6>
-                          <p class="reviews-positions" id="reviews-positions">{{  testimonialsItem.program.name }}</p>
+                        <h6 class="reviews-name" id="reviews-name">{{ testimonials[currentTestimonialIndex].user.full_name }}</h6>
+                        <p class="reviews-positions" id="reviews-positions">{{ testimonials[currentTestimonialIndex].program.name }}</p>
                       </div>
                   </div>
               </div>
@@ -33,27 +33,48 @@
 </template>
 
 <script>
-    import api from "@/mixins/api";
-    export default {
-        name: 'Testimonials',
-        mixins: ['api'],
-        data() {
-            return {
-                testimonialsItem: null,
-                backgroundClass: 'bg-gray-light p-bottom-xl',
-                name: 'Leon Melendez',
-                position: 'CEO at Company'
-            }
-        },
-        computed: {
-            currentPage() {
-                return this.$route.path;
-            }
-        },
-      async created() {
-          const testimonials = await this.get("public/testimonials/get-random");
-        this.testimonialsItem = [...testimonials].shift();
-      }
+import api from "@/mixins/api";
 
+export default {
+  name: 'Testimonials',
+  mixins: ['api'],
+  data() {
+    return {
+      testimonialsItem: null,
+      backgroundClass: 'bg-gray-light p-bottom-xl',
+      testimonials: [],
+      currentTestimonialIndex: 0,
+      isFading: false
     };
+  },
+  computed: {
+    currentPage() {
+      return this.$route.path;
+    }
+  },
+  async created() {
+    this.testimonials = await this.get("public/testimonials/get-random");
+    setInterval(() => {
+      this.isFading = true;
+      setTimeout(() => {
+        this.currentTestimonialIndex++;
+        if (this.currentTestimonialIndex >= this.testimonials.length) {
+          this.currentTestimonialIndex = 0;
+        }
+        this.isFading = false;
+      }, 1000);
+    }, 1000);
+  }
+};
 </script>
+
+<style scoped>
+.adv-slider-reviews {
+  transition: opacity 1s;
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+</style>
