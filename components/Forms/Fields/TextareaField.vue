@@ -16,7 +16,7 @@
     >{{ content }}</textarea
     >
     <template v-if="content && showCounter">
-      <i class="message-length small">
+      <i class="message-length">
         <span
             :class="{
             'characters-limit': content.length > max || content.length < min,

@@ -12,8 +12,8 @@
             </p>
         </div>
 
-        <div class="form-group form-group-xs">
-            <TextareaField v-model="form.authorComment" name="authorComment" placeholder="Your message here"/>
+        <div class="form-group-xs">
+            <TextareaField v-model="form.authorComment" :show-counter="true" :min="20" :max="200" name="authorComment" placeholder="Your message here"/>
         </div>
 
         <div class="form-group form-group-xs mb-0">

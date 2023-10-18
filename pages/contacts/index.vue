@@ -6,7 +6,7 @@
 
     <main id="main" class="site-main">
       <template v-if="contactContainer">
-          <PageTitle :container="contactContainer"/>
+          <PageTitle :container="{formTitle: 'Contacts'}"/>
       </template>
       <div id="page-content" class="spacer p-top-xl">
         <div class="wrapper">
@@ -18,6 +18,9 @@
               <div class="spacer p-top-xl">
                 <div class="title">
                   <h2>Let’s talk or book now</h2>
+                  <template v-if="contactContainer">
+                    <div v-html="contactContainer.formDescription"></div>
+                  </template>
                 </div>
 
                 <div class="row gutter-width-sm with-pb-xl spacer p-top-lg">

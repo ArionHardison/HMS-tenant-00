@@ -26,12 +26,23 @@
                           <div class="team-member-top">
                               <div class="img object-fit">
                                   <div class="object-fit-cover">
-                                      <ImageContent :src="member.homepage_preview" :alt="member.full_name" :tenant="true" size="sm"/>
+                                      <template v-if="member.homepage_preview">
+                                        <ImageContent :src="member.homepage_preview" :alt="member.full_name" :tenant="true" size="sm"/>
+                                      </template>
+                                      <template v-else>
+                                        <img src="~/static/no-image.svg" :alt="member.full_name"/>
+                                      </template>
+
                                   </div>
                               </div>
 
                               <div class="team-member-position">
-                                  <p>{{ member.roles[member.roles.length-1] }}</p>
+                                  <template v-if="member.roles.length">
+                                    <p>{{ member.roles[member.roles.length-1] }}</p>
+                                  </template>
+                                  <template v-else>
+                                    <p>Not Provided</p>
+                                  </template>
                               </div>
                           </div>
 
@@ -39,7 +50,12 @@
                               <h4 class="team-member-t-head">{{ member.full_name }}</h4>
 
                               <div class="team-member-description">
-                                  <p>{{ member.description }}</p>
+                                  <template v-if="member.description">
+                                    <p>{{ member.description }}</p>
+                                  </template>
+                                  <template v-else>
+                                    <p>Not provided</p>
+                                  </template>
                               </div>
                           </div>
                           <template v-if="[member.facebook_profile, member.linkedin_profile, member.instagram_profile, member.twitter_profile].some(value => value !== null)">

@@ -1,5 +1,5 @@
 <template>
-  <div id="google-maps" class="footer-no-border" ref="map" :class="{'hideMap': containerData===null}"></div>
+  <div id="google-maps" v-if="showMap" class="footer-no-border" ref="map" :class="{'hideMap': containerData===null}"></div>
 </template>
 
 <script>
@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       mapsStyle: MapStyles.mapsStyles,
+      showMap: true
     };
   },
   methods: {
@@ -41,6 +42,27 @@ export default {
           `https://maps.googleapis.com/maps/api/js?key=${this.containerData.jsApiKey}`;
         document.getElementsByTagName("head")[0].appendChild(script);
       }
+    },
+    isValidKey(key){
+      if(key){
+        const testUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=${this.containerData.jsApiKey}`;
+        fetch(testUrl)
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === "REQUEST_DENIED") {
+              console.error('Invalid Google Maps API key.');
+              this.showMap = false;
+            } else {
+              this.showMap = true;
+              this.checkAndAttachMapScript();
+            }
+          })
+          .catch(error => {
+            console.error('Error validating Google Maps API key:', error);
+            this.showMap = false;
+          });
+      }
+      return false;
     },
     initMap() {
       if (process.client) {
@@ -87,7 +109,10 @@ export default {
   },
   mounted() {
     if(this.containerData) {
-      this.checkAndAttachMapScript();
+      if(this.containerData.jsApiKey && this.isValidKey(this.containerData.jsApiKey)){
+        this.checkAndAttachMapScript();
+      }
+
     }
   },
 };
