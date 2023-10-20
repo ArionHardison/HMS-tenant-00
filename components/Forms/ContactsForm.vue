@@ -1,5 +1,9 @@
 <template>
     <form v-on:submit.prevent="submitForm" method="post" id="cf-1">
+        <transition name="fade" appear>
+          <b-alert :show="callAlert">{{successMessage}}</b-alert>
+        </transition>
+
         <div class="form-group form-group-xs">
             <p class="input-group gutter-width-xs no-space">
                 <span class="gutter-width">
@@ -19,12 +23,6 @@
         <div class="form-group form-group-xs mb-0">
             <button type="submit" class="btn btn-primary">Send</button>
         </div>
-
-        <transition appear leave-active-class="animated fadeOut">
-            <div v-if="callAlert" id="alert" :class="'animated fadeIn alert alert--shadow alert-' + alertClass">
-                {{ responseMessage }}
-            </div>
-        </transition>
     </form>
 </template>
 
@@ -45,17 +43,9 @@
                   authorComment: ''
                 },
                 successMessage: "Sender's message was sent successfully",
-                warningMessage: 'Fill up the form, please!',
-                errorMessage: 'Something go wrong. Try again later!',
-                responseMessage: '',
                 alertClass: '',
                 callAlert: false
             }
-        },
-        async beforeMount() {
-          const container = await  this.get("public/get-client-container/contactUs");
-          console.log(container);
-          //frontend-cms-field/get-container/contactUs/client
         },
       methods: {
             async submitForm() {
@@ -66,8 +56,21 @@
                    authorEmail: '',
                    authorComment: ''
                  }
+                 this.callAlert = true;
+
+                 setTimeout(() => {
+                   this.callAlert = false;
+                 }, 10000);
                }
             }
         }
     };
 </script>
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+</style>

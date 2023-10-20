@@ -189,7 +189,7 @@
 </script>
 <style scoped>
     .team-member-description {
-      min-height: 100px;
+      height: 100px !important;
     }
     .member-slide {
       padding: 20px;
