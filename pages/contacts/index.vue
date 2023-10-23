@@ -47,12 +47,13 @@
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
-
+import seoTitles from "@/mixins/seo-titles";
 import PageTitle from "~/components/blocks/contacts/PageTitle";
 import GoogleMaps from "~/components/blocks/contacts/GoogleMaps";
 import ContactsForm from "~/components/Forms/ContactsForm";
 
 export default {
+  mixins: [seoTitles],
   components: {
     Loading,
     Header,
@@ -61,6 +62,7 @@ export default {
     GoogleMaps,
     Footer,
   },
+
   mounted: function () {
     if (process.client) {
       document.body.classList.add("page");

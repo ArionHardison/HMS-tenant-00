@@ -19,10 +19,10 @@
 import api from "~/mixins/api";
 import CardProduct from "~/components/cards/card-product.vue";
 import ImageMultiple from "vue-material-design-icons/ImageMultiple.vue";
-
+import seoTitles from "@/mixins/seo-titles";
 export default {
   components: { CardProduct, ImageMultiple },
-  mixins: [api],
+  mixins: [api, seoTitles],
   data() {
     return {
       productList: [],

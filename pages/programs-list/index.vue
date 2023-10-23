@@ -86,12 +86,13 @@
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
-
+import seoTitles from "@/mixins/seo-titles";
 import PageTitle from "~/components/blocks/search-results/PageTitle";
 import Loadmore from "~/components/Loadmore/Loadmore";
 import ImageContent from "@/components/blocks/ImageContent";
 
 export default {
+  mixins: [seoTitles],
   data() {
     return {
       programs: [],

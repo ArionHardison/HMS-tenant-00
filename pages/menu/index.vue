@@ -58,8 +58,9 @@ import Sidebar from "~/components/blocks/news/Sidebar";
 import MenuItems from "~/components/blocks/sidebar/MenuItems";
 import MenuCategory from "~/components/blocks/menu/MenuCategory";
 import MenuListItem from "~/components/blocks/menu/MenuListItem";
-
+import seoTitles from "@/mixins/seo-titles";
 export default {
+  mixins: [seoTitles],
   components: {
     MenuListItem,
     MenuCategory,

@@ -115,7 +115,7 @@
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
-
+import seoTitles from "@/mixins/seo-titles";
 import PageTitle from "~/components/blocks/news/PageTitle";
 import NewsBlog from "~/components/blocks/news/Blog";
 import Sidebar from "~/components/blocks/news/Sidebar";
@@ -123,6 +123,7 @@ import AssignedTask from "@/components/AssignedTask";
 import ImageContent from "@/components/blocks/ImageContent";
 import GlobalModuleTasksListComponent from "@/components/Program/components/GlobalModuleTasksListComponent.vue";
 export default {
+  mixins: [seoTitles],
   components: {
     ImageContent,
     AssignedTask,

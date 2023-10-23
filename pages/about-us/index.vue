@@ -59,13 +59,14 @@
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
-
+import seoTitles from "@/mixins/seo-titles";
 import PageTitle from "~/components/blocks/about-us/PageTitle";
 import AboutUs from "~/components/blocks/about-us/Abouts-us";
 import OurDoctors from "~/components/blocks/about-us/Our-doctors";
 import Testimonials from "~/components/blocks/about-us/Testimonials";
 
 export default {
+  mixins: [seoTitles],
   components: {
     Loading,
     Header,

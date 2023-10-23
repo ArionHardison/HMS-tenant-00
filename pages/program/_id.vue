@@ -151,7 +151,7 @@
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
-
+import seoTitles from "@/mixins/seo-titles";
 import PageTitle from "~/components/blocks/news-single-post/PageTitle";
 import Meta from "~/components/blocks/news-single-post/Meta";
 import Description from "~/components/blocks/news-single-post/Description";
@@ -178,7 +178,7 @@ export default {
     Footer,
     Avatar,
   },
-  mixins: [time],
+  mixins: [time, seoTitles],
   computed: {
     accessToken() {
       return this.$store.state.authData.accessToken;

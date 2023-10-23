@@ -33,10 +33,11 @@ import Header from '~/components/blocks/header/Header';
 import Footer from '~/components/blocks/footer/Footer';
 import PageTitle from '~/components/blocks/news-single-post/PageTitle';
 import SignInForm from "~/components/Forms/SignInForm";
-
+import seoTitles from "@/mixins/seo-titles";
 
 
 export default {
+    mixins: [seoTitles],
     components: {
         SignInForm,
         Loading,

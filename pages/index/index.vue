@@ -64,8 +64,9 @@ import Services from "~/components/blocks/index/Services";
 import Testimonials from "~/components/blocks/about-us/Testimonials";
 import OurDoctors from "~/components/blocks/about-us/Our-doctors";
 import News from "~/components/blocks/index/News";
-
+import seoTitles from "@/mixins/seo-titles";
 export default {
+  mixins: [seoTitles],
   computed: {
     tenantId() {
       return this.$store.state.initializedId;

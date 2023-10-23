@@ -96,7 +96,7 @@
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
-
+import seoTitles from "@/mixins/seo-titles";
 import PageTitle from "~/components/blocks/service-inside/PageTitle";
 
 export default {
@@ -106,6 +106,7 @@ export default {
     PageTitle,
     Footer,
   },
+  mixins: [seoTitles],
   data() {
     return {
       serviceId: this.$route.query.id,

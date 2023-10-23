@@ -27,10 +27,10 @@
 <script>
 import api from "@/mixins/api";
 import InputField from "../../components/Forms/Fields/InputField";
-
+import seoTitles from "@/mixins/seo-titles";
 export default {
   components: {InputField},
-  mixins: [api],
+  mixins: [api, seoTitles],
   name: "verification",
   layout: "verification",
   data() {

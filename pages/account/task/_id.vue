@@ -34,6 +34,7 @@ import Activity from "@/components/Program/components/Activity.vue";
 import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
+import seoTitles from "@/mixins/seo-titles";
 export default {
   name: "GlobalTask",
   components: {
@@ -45,7 +46,7 @@ export default {
     Header,
     Footer
   },
-  mixins: [api],
+  mixins: [api, seoTitles],
   middleware: "user",
   data() {
     return {

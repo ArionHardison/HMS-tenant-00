@@ -65,8 +65,9 @@ import Loading from "~/components/Loading/Loading";
 import Header from "~/components/blocks/header/Header";
 import Footer from "~/components/blocks/footer/Footer";
 import PageTitle from "~/components/blocks/services/PageTitle";
-
+import seoTitles from "@/mixins/seo-titles";
 export default {
+  mixins: [seoTitles],
   components: {
     Loading,
     Header,

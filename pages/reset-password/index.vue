@@ -34,18 +34,16 @@ import Header from '~/components/blocks/header/Header';
 import Footer from '~/components/blocks/footer/Footer';
 import PageTitle from '~/components/blocks/news-single-post/PageTitle';
 import ResetPasswordForm from "~/components/Forms/ResetPasswordForm";
-
+import seoTitles from "@/mixins/seo-titles";
 
 export default {
+  mixins: [seoTitles],
   components: {
     ResetPasswordForm,
     Loading,
     Header,
     PageTitle,
     Footer
-  },
-  metaInfo: {
-    title: 'Sign In',
   },
 };
 </script>

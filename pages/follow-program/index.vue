@@ -10,13 +10,13 @@
 <script>
 import Header from "@/components/blocks/header/Header";
 import FollowProgramComponent from "@/components/Program/FollowProgramComponent.vue";
-
+import seoTitles from "@/mixins/seo-titles";
 export default {
   components: {
     Header,
     FollowProgramComponent
   },
-  mixins: [],
+  mixins: [seoTitles],
   middleware: "user",
   metaInfo: {
     title: "Follow Program",
