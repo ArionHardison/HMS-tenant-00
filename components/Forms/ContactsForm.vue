@@ -7,17 +7,17 @@
         <div class="form-group form-group-xs">
             <p class="input-group gutter-width-xs no-space">
                 <span class="gutter-width">
-                    <InputField v-model="form.authorName" name="authorName" type="text" placeholder="Your name and surename here" :lg="true" />
+                    <InputField v-model="form.authorName" name="authorName" type="text" label="Full name" placeholder="Your name and surename here" :lg="true" />
                 </span>
 
                 <span class="gutter-width">
-                  <InputField v-model="form.authorEmail" name="authorEmail" type="email" placeholder="Your email here" :lg="true"/>
+                  <InputField v-model="form.authorEmail" name="authorEmail" type="email" label="Email" placeholder="Your email here" :lg="true"/>
                 </span>
             </p>
         </div>
 
         <div class="form-group-xs">
-            <TextareaField v-model="form.authorComment" :show-counter="true" :min="20" :max="200" name="authorComment" placeholder="Your comment here"/>
+            <TextareaField v-model="form.authorComment" :show-counter="true" :min="20" :max="200" name="authorComment" label="Message text" placeholder="Your comment here"/>
         </div>
 
         <div class="form-group form-group-xs mb-0">

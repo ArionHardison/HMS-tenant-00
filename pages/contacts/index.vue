@@ -17,8 +17,8 @@
               </template>
               <div class="spacer p-top-xl">
                 <div class="title">
-                  <h2>Let’s talk or book now</h2>
                   <template v-if="contactContainer">
+                    <h2>{{contactContainer.formTitle}}</h2>
                     <div v-html="contactContainer.formDescription"></div>
                   </template>
                 </div>
