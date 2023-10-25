@@ -1,7 +1,6 @@
 <template>
     <header id="header" class="site-header">
-      <MobileMenuComponent class="d-block d-lg-none d-xl-none"/>
-        <div class="wrapper d-none d-lg-block d-xl-block">
+        <div class="wrapper d-block">
             <div class="header-content d-flex justify-content-between">
 
 
@@ -9,10 +8,10 @@
                     <div class="links">
                         <div class="links-items">
                           <client-only>
-                            <div class="links-item">
-                                <nuxt-link class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto" to="/programs-list">All Programs</nuxt-link>
+                            <div class="links-item d-none d-lg-inline d-xl-inline">
+                                <nuxt-link class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto " to="/programs-list">All Programs</nuxt-link>
                             </div>
-                            <div class="links-item">
+                            <div class="links-item d-none d-lg-inline d-xl-inline">
                               <SearchModalButton />
                             </div>
                           </client-only>
@@ -21,7 +20,7 @@
                 </div>
 
                 <div class="header-center align-self-center">
-                    <HeaderLogo :logoColor="logoColor"/>
+                    <HeaderLogo :logoColor="logoColor"  class="d-none d-lg-inline d-xl-inline"/>
                 </div>
 
                 <div class="header-right d-flex justify-content-end">
@@ -29,13 +28,14 @@
 
                       <client-only>
                         <template v-if="isGuest">
-                          <SignInButton/>
-                          <SignUpButton/>
+                          <SignInButton class="d-none d-lg-inline d-xl-inline"/>
+                          <SignUpButton class="d-none d-lg-inline d-xl-inline"/>
                         </template>
                         <template v-else>
-                          <MyAccountButton/>
-                          <SignOutButton/>
+                          <MyAccountButton  class="d-none d-lg-inline d-xl-inline"/>
+                          <SignOutButton  class="d-none d-lg-inline d-xl-inline"/>
                         </template>
+                        <MenuModalButton class="d-lg-none d-xl-none"/>
                       </client-only>
                     </div>
                     <Actions />
@@ -54,7 +54,6 @@
     import SignInButton from '~/components/Button/SignInButton';
     import MenuModalButton from '~/components/Button/MenuModalButton';
     import Actions from '../General/Actions';
-    import MobileMenuComponent from "@/components/ui/MobileMenuComponent.vue";
 
     export default {
         name: 'Header',
@@ -68,7 +67,6 @@
             MyAccountButton,
             SignOutButton,
             SignInButton,
-            MobileMenuComponent
         },
       computed: {
         isGuest() {

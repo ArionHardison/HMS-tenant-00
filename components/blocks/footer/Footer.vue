@@ -29,6 +29,9 @@
     </footer>
 
     <div id="modals">
+      <template v-if="copyRight">
+        <MenuModal :copy="copyRight"/>
+      </template>
       <SearchModal />
     </div>
   </fragment>
@@ -39,12 +42,14 @@ import { Fragment } from "vue-fragment";
 
 import FooterMenuSecondary from "./FooterMenuSecondary";
 import SearchModal from "~/components/Modal/SearchModal";
+import MenuModal from "~/components/Modal/MenuModal";
 
 export default {
   name: "Footer",
   components: {
     Fragment,
     SearchModal,
+    MenuModal,
     FooterMenuSecondary,
   },
   data() {
