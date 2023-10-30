@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="header-center align-self-center">
-                    <HeaderLogo :logoColor="logoColor"  class="d-none d-lg-inline d-xl-inline"/>
+                    <HeaderLogo :logoColor="logoColor"  class="d-inline"/>
                 </div>
 
                 <div class="header-right d-flex justify-content-end">

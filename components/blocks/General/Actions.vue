@@ -1,12 +1,10 @@
 <template>
   <div class="actions">
-    <template v-if="userId">
       <div class="actions-items">
         <button class="actions-item" @click="getClinicLink">
           <span>Clinic</span>
         </button>
       </div>
-    </template>
   </div>
 </template>
 
@@ -28,6 +26,9 @@ export default {
   methods: {
     async getClinicLink(){
       if (process.browser) {
+        if(!this.userId){
+          return this.$router.push("/sign-in")
+        }
         const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
         if (this.userId) {
           const tokenData = await this.get("user/get-token");

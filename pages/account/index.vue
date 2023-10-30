@@ -19,88 +19,41 @@
                   </template>
                 </div>
                 <GlobalModuleTasksListComponent/>
-                <div class="offset-3 col-9">
-                  <h4 class="text-center">Programs</h4>
-                </div>
-                <div class="col-12 col-md-3 col-lg-3 col-xl-3">
-                  <h4>Daily tasks</h4>
-                  <template v-if="tasks.length">
-                    <template v-for="task in tasks">
-                      <assigned-task :task="task"/>
-                    </template>
-                  </template>
-                  <template v-else>
-                    <p class="mt-3">No tasks</p>
-                  </template>
-                </div>
-                <div class="col-12 col-lg-9 col-md-9 col-xl-9">
-                  <div class="row gutter-width-sm">
-                    <div
-                      v-for="program in programs"
-                      :key="program.id"
-                      class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-4 mt-1"
-                    >
-                      <div class="card card-post mt-3" :class="{
-                                  'failed-program': program.status===2,
-                                  'finished-program': program.status===1,
-                                  'running-program': program.status===0,
-                                }">
-                        <div class="card-top position-relative">
-                          <nuxt-link
-                            :title="program.name"
-                            :to="{
-                          name: 'follow-program',
-                          query: { id: program.id },
-                        }"
-                          >
-                            <div class="img object-fit overflow-hidden">
-                              <div class="object-fit-cover transform-scale-h">
+                <div class="col-12">
+                  <b-card no-body>
+                    <b-tabs pills card vertical align="center" v-model="tabIndex" nav-wrapper-class="w-25" id="program-cards" @input="getPrograms">
+                      <b-tab title="Tasks" active>
+                        <b-card-text>
+                          <template v-if="tasks.length">
+                            <template v-for="task in tasks">
+                              <assigned-task :task="task"/>
+                            </template>
+                          </template>
+                          <template v-else>
+                            <p class="mt-3">No tasks</p>
+                          </template>
+                        </b-card-text>
+                      </b-tab>
+                      <b-tab title="Running Programs">
+                        <b-card-text>
+                          <AccountPrograms :programs="programs"/>
+                        </b-card-text>
+                      </b-tab>
+                      <b-tab title="Finished Programs">
+                        <b-card-text>
+                          <AccountPrograms :programs="finishedPrograms"/>
+                        </b-card-text>
+                      </b-tab>
+                      <b-tab title="Failed Programs">
+                        <b-card-text>
+                          <AccountPrograms :programs="failedPrograms"/>
+                        </b-card-text>
+                      </b-tab>
+                    </b-tabs>
+                  </b-card>
 
-                                <ImageContent :src="program.program_image" size="md" :tenant="false"/>
-
-                              </div>
-                            </div>
-                          </nuxt-link>
-                        </div>
-                        <div class="card-body text-center">
-                          <h4 class="card-title text-center">
-                            <nuxt-link
-                              title="Follow Program"
-                              class="program-name"
-                              :to="{
-                            name: 'follow-program',
-                            query: { id: program.id },
-                          }"
-                            >{{ program.name }}
-                            </nuxt-link
-                            >
-                          </h4>
-                          <nuxt-link
-                            class="btn btn-primary"
-                            title="Follow Program"
-                            :to="{
-                          name: 'follow-program',
-                          query: { id: program.id },
-                        }"
-                          >
-                            <template v-if="program.status===2">
-                              Failed Program
-                            </template>
-                            <template v-else-if="program.status===1">
-                              Finished Program
-                            </template>
-                            <template v-else>
-                              Follow Program
-                            </template>
-                          </nuxt-link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
@@ -120,12 +73,12 @@ import PageTitle from "~/components/blocks/news/PageTitle";
 import NewsBlog from "~/components/blocks/news/Blog";
 import Sidebar from "~/components/blocks/news/Sidebar";
 import AssignedTask from "@/components/AssignedTask";
-import ImageContent from "@/components/blocks/ImageContent";
 import GlobalModuleTasksListComponent from "@/components/Program/components/GlobalModuleTasksListComponent.vue";
+import AccountPrograms from "@/components/ui/AccountPrograms.vue";
 export default {
   mixins: [seoTitles],
   components: {
-    ImageContent,
+    AccountPrograms,
     AssignedTask,
     Loading,
     Header,
@@ -152,17 +105,31 @@ export default {
   },
   data() {
     return {
+      tabIndex: 0,
       programs: [],
+      failedPrograms: [],
+      finishedPrograms: [],
       userData: null,
       tasks: [],
     }
   },
   async created() {
-    this.programs = await this.get("personal-chain");
     this.userData = await this.get("user/get-data");
     await this.getTasks();
   },
   methods: {
+    async getPrograms(tab){
+      if(tab>=1){
+        const programs = await this.get(`personal-chain/programs/${tab-1}`)
+        if(tab===1){
+          this.programs = programs;
+        }else if (tab === 2){
+          this.finishedPrograms = programs;
+        }else{
+          this.failedPrograms = programs;
+        }
+      }
+    },
     async getTasks() {
       const data = await this.get("personal-chain/tasks");
       if(data){
@@ -172,42 +139,9 @@ export default {
   }
 };
 </script>
-<style scoped>
- .program-name {
-   display: -webkit-box;
-   -webkit-line-clamp: 2;
-   -webkit-box-orient: vertical;
-   overflow: hidden;
-   max-height: 66px;
-   font-size: 16px;
- }
-</style>
 <style>
-
-.running-program {
-  box-shadow: 0 0 0 0 rgb(100, 183, 70);
-  animation: pulse 2s infinite;
-}
-
-.failed-program {
-  box-shadow: 0 0 0 3px rgb(236, 11, 53);
-}
-
-.finished-program {
-  box-shadow: 0 0 0 3px #3B89C9;
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(100, 183, 70, 0.7);
-  }
-
-  70% {
-    box-shadow: 0 0 0 10px rgba(100, 183, 70, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(100, 183, 70, 0);
-  }
+#program-cards ul {
+  padding: 0 !important;
+  padding-top: 2.279rem  !important;
 }
 </style>

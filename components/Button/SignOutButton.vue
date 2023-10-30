@@ -12,6 +12,7 @@ export default {
 
       await this.get(`user/sign-out`);
       this.$store.commit("signOut");
+      await  this.$router.push("/");
     },
   }
 };

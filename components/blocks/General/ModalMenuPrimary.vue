@@ -16,6 +16,9 @@
         <li @click="closeOnSameRoute" :class="[currentPage.includes('sign-up') ? activeClass : '', 'nav-item']">
           <router-link title="Sign Up" to="/sign-up">Sign Up</router-link>
         </li>
+        <li @click="closeOnSameRoute" :class="[currentPage.includes('clinic') ? activeClass : '', 'nav-item']">
+          <router-link title="Clinic" to="/sign-in">Clinic</router-link>
+        </li>
       </template>
       <template v-else>
         <li @click="closeOnSameRoute" :class="[currentPage.includes('account') ? activeClass : '', 'nav-item']">
