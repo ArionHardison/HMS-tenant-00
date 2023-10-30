@@ -30,12 +30,6 @@ export default {
       default: {}
     }
   },
-  data() {
-    return {
-      currentQuestion: 0,
-      assessment: null,
-    };
-  },
   methods: {
     startProgram() {
       this.$emit("start");

@@ -6,13 +6,14 @@
 
         <div class="form-group form-group-xs">
             <p class="input-group gutter-width-xs no-space">
-                <span class="gutter-width">
+                <div class="row">
+                  <div class="col-xl-6  col-lg-6 col-md-6 col-12">
                     <InputField v-model="form.authorName" name="authorName" type="text" label="Full name" placeholder="Your name and surename here" :lg="true" />
-                </span>
-
-                <span class="gutter-width">
-                  <InputField v-model="form.authorEmail" name="authorEmail" type="email" label="Email" placeholder="Your email here" :lg="true"/>
-                </span>
+                  </div>
+                  <div class="col-xl-6  col-lg-6 col-md-6 col-12">
+                    <InputField v-model="form.authorEmail" name="authorEmail" type="email" label="Email" placeholder="Your email here" :lg="true"/>
+                  </div>
+                </div>
             </p>
         </div>
 
