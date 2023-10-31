@@ -47,7 +47,7 @@
                           </div>
 
                           <div class="team-member-content">
-                              <h4 class="team-member-t-head">{{ member.full_name }}</h4>
+                              <h4 class="team-member-t-head" :title="member.full_name">{{ member.full_name }}</h4>
 
                               <div class="team-member-description">
                                   <template v-if="member.description">
@@ -124,7 +124,7 @@
               slidesToShow: 3,
               responsive: [
                 {
-                  breakpoint: 200,
+                  breakpoint: 400,
                   settings: {
                     slidesToShow: 1,
                   }
@@ -157,7 +157,7 @@
             this.$store.commit("setPreloaderState", false);
             const currentSlide = this.$refs.members.currentSlide;
             const slidesLeft = this.$refs.members.countSlides - currentSlide;
-            if(slidesLeft===2){
+            if(slidesLeft===1){
               if(this.team.meta.current_page<this.team.meta.last_page){
                 this.slidesLoad = true;
                 const loadedPrograms = cloneDeep(this.team.data);
@@ -188,6 +188,12 @@
     };
 </script>
 <style scoped>
+    .team-member-t-head {
+      max-height: 39px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
     .team-member-description {
       height: 100px !important;
     }

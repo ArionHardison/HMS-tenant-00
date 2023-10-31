@@ -123,7 +123,7 @@ export default {
       this.$store.commit("setPreloaderState", false);
       const currentSlide = this.$refs.news.currentSlide;
       const slidesLeft = this.$refs.news.countSlides - currentSlide;
-      if(slidesLeft===2){
+      if(slidesLeft===1){
         if(this.news.meta.current_page<this.news.meta.last_page){
           this.slidesLoad = true;
           const loadedPrograms = cloneDeep(this.news.data);
