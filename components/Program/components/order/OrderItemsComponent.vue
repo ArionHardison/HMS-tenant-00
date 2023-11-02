@@ -1,9 +1,9 @@
 <template>
-  <div class="row">
+  <div class="row" id="order-module">
     <div class="col-12">
       <h3 class="text-center">Items</h3>
       <!-- Bootstrap Table -->
-      <div class="table-responsive">
+      <div class="table-responsive d-none d-md-block">
         <table class="table align-items-center table-flush table-striped">
           <thead class="thead-light">
             <tr>
@@ -44,6 +44,40 @@
           </tr>
           </tbody>
         </table>
+      </div>
+      <div class="d-block d-md-none">
+        <div v-for="item in items" :key="item.id" class="mb-4">
+          <div class="d-flex justify-content-between mb-2">
+            <strong>Name</strong>
+            <span>{{ item.name }}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <strong>Amount</strong>
+            <span>{{ item.amount }}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <strong>IMAGE</strong>
+            <img
+              v-if="item.item_photo"
+              :src="$imageUrl(item.item_photo, 'md', false)"
+              class="img-fluid"
+              style="height: 200px;"
+            />
+            <img
+              v-else
+              src="~/static/no-image.svg"
+              style="height: 200px"
+            />
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <strong>Have item</strong>
+            <CheckboxField
+              :checked="insideResults(item.id)"
+              :name="`collection-${collection}-item-${item.id}`"
+              @input="haveItem(collection, item.id)"
+            ></CheckboxField>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -106,5 +140,43 @@ export default {
   }
 };
 </script>
+<style scoped>
 
-<style scoped></style>
+#order-module .table-responsive {
+  overflow-x: auto;
+}
+
+#order-module .table {
+  border-collapse: collapse;
+}
+
+#order-module .table thead {
+  background-color: #f5f7fa;
+}
+
+#order-module .table th, #order-module  .table td {
+  padding: 12px 15px;
+  border: 1px solid #e4e7ea;
+}
+
+#order-module  .table td img {
+  max-width: 100%;
+  height: auto;
+}
+
+#order-module .d-flex {
+  align-items: center;
+  border-bottom: 1px solid #e4e7ea;
+  padding: 10px 0;
+}
+
+#order-module .d-flex:last-child {
+  border-bottom: none;
+}
+
+#order-module .d-flex strong {
+  font-weight: 600;
+  margin-right: 20px;
+}
+</style>
+

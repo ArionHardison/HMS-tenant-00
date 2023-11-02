@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ '--primary-color': primaryColor }" class="maintenance-page">
+  <div :style="{ '--primary-color': primaryColor }" class="maintenance-page" id="index">
     <div class="maintenance-content w-100">
       <img class="animated zoomIn maintenance-logo" :src="logo" alt="Logo"><br/>
         <div class="container w-100">

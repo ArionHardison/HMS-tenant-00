@@ -1,5 +1,5 @@
 <template>
-  <div id="404">
+  <div id="index">
     <Loading />
 
     <Header logoColor="dark" />

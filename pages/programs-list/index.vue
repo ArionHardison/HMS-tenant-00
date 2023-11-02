@@ -1,5 +1,5 @@
 <template>
-  <div id="search-results">
+  <div id="index">
     <Loading/>
 
     <Header logoColor="dark"/>

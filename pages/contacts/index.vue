@@ -1,5 +1,5 @@
 <template>
-  <div id="contacts">
+  <div id="index">
     <Loading />
 
     <Header logoColor="dark" />

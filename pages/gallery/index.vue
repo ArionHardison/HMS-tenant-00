@@ -1,5 +1,5 @@
 <template>
-  <div id="gallery">
+  <div id="index">
     <Loading />
 
     <Header logoColor="dark" />

@@ -4,6 +4,7 @@
     <main id="main" class="site-main">
       <FollowProgramComponent/>
     </main>
+    <Footer/>
   </div>
 </template>
 
@@ -11,8 +12,10 @@
 import Header from "@/components/blocks/header/Header";
 import FollowProgramComponent from "@/components/Program/FollowProgramComponent.vue";
 import seoTitles from "@/mixins/seo-titles";
+import Footer from "@/components/blocks/footer/Footer.vue";
 export default {
   components: {
+    Footer,
     Header,
     FollowProgramComponent
   },

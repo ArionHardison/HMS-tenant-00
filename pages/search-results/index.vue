@@ -1,5 +1,5 @@
 <template>
-  <div id="search-results">
+  <div id="index">
     <Loading/>
 
     <Header logoColor="dark"/>
@@ -23,7 +23,7 @@
                     >
                       <div class="img object-fit overflow-hidden">
                         <div class="object-fit-cover transform-scale-h">
-                          <ImageContent :src="program.program_image" size="lg" class="card-top-img"/>
+                          <ImageContent :src="program.program_image" size="md" :tenant="false" class="card-top-img"/>
                         </div>
                       </div>
                     </nuxt-link>

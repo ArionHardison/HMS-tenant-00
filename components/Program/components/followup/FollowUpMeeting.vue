@@ -274,11 +274,13 @@ import MicrophoneOff from "vue-material-design-icons/MicrophoneOff.vue";
 import MicrophoneOutline from "vue-material-design-icons/MicrophoneOutline.vue";
 import globalEvents from "@/components/Program/mixins/global-events";
 import ImageContent from "@/components/Program/components/ImageContent.vue";
+import TimelineComponent from "@/components/Program/components/followup/TimelineComponent.vue";
 
 export default {
   layout: "VideoCall",
   mixins: [time, serverEvents, audioRecorder, api, globalEvents],
   components: {
+    TimelineComponent,
     [process.client && "TimelineComponent"]: () =>
       import("@/components/Program/components/followup/TimelineComponent.vue"),
     ImageContent,

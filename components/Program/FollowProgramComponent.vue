@@ -120,14 +120,14 @@ export default {
           : null;
       }
     },
-    async inviteUser(userId, system = false, doctor=false) {
+    async inviteUser(inviteData) {
       const invite = await this.post(
         "personal-chain/invite", {
-          invite_id: system ? null : userId,
-          user_id: system ? userId : null,
+          invite_id: inviteData.system ? null : inviteData.userId,
+          user_id: inviteData.system ? inviteData.userId : null,
           personal_chain_id: this.$route.query.id,
-          system,
-          doctor
+          system: inviteData.system,
+          doctor: inviteData.doctor
         }
       )
       if (invite) {

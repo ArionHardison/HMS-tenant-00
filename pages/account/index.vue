@@ -1,5 +1,5 @@
 <template>
-  <div id="news">
+  <div id="index">
     <Loading/>
 
     <Header logoColor="dark"/>

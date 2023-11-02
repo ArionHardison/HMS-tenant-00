@@ -8,10 +8,11 @@
             <h3>Activity Provider</h3>
           </div>
           <template v-if="activity.user">
-            <div class="col-12 d-flex justify-content-center">
+            <div class="col-12 mt-4 mb-1 d-flex justify-content-center">
             <ProgramAvatar
                 :userInfo="activity.user"
                 width="65px"
+                :link="false"
                 height="65px"
                 size="24px"
                 alt="Avatar"
@@ -19,13 +20,13 @@
             />
             </div>
             <div class="col-12 text-center">
-              <nuxt-link :to="`/u/${activity.user.username}`" class="user-account-link"><strong>{{activity.user.full_name}}</strong></nuxt-link>
+              <strong>{{activity.user.full_name}}</strong>
             </div>
           </template>
         </div>
       </div>
       <div class="col-12">
-        <div class="col-12 text-center">
+        <div class="col-12 text-center mt-2">
           Activity request was successfully sent, please wait once {{activity.user.full_name}} will accept and schedule activity!
         </div>
       </div>

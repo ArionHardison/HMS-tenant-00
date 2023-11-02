@@ -3,8 +3,8 @@
     <div class="col-12">
         <h3 class="text-center">Collections</h3>
         <template v-for="collection in collections">
-          <h4 class="text-center">{{ collection.name }}</h4>
-          <p>{{collection.note}}</p>
+          <h4 class="text-center mt-2 mb-2">{{ collection.name }}</h4>
+          <p class="mb-2">{{collection.note}}</p>
           <template v-if="collection.items.length">
             <OrderItemsComponent :items="collection.items" :checklist="checklist" :collection="collection.id" :order="order" :task="task" :chain="chain" />
           </template>

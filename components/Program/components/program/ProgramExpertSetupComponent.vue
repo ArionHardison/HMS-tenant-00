@@ -127,8 +127,10 @@ export default {
     };
   },
   methods: {
-    inviteUser(userId) {
-      this.$emit("invite", userId);
+    inviteUser(userId, system = false, doctor = false) {
+      this.$emit("invite", {
+          userId, system, doctor
+      });
     },
   },
 };

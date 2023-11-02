@@ -23,6 +23,8 @@
 </template>
 <script>
 import api from "@/mixins/api";
+import serverEvents from "@/components/Program/mixins/server-events";
+import globalEvents from "@/components/Program/mixins/global-events";
 import ActivityDirectRequestComponent from "~/components/Program/components/activity/ActivityDirectRequestComponent";
 import ActivityNetworkRequestComponent from "~/components/Program/components/activity/ActivityNetworkRequestComponent.vue";
 import RunningActivityComponent from "~/components/Program/components/activity/RunningActivityComponent.vue";
@@ -32,7 +34,7 @@ export default {
   components: {
     ScheduledActivityComponent,
     RunningActivityComponent, ActivityNetworkRequestComponent, ActivityDirectRequestComponent},
-  mixins: [api],
+  mixins: [api, serverEvents, globalEvents],
   props: {
     item: {
       type: Number,
@@ -45,8 +47,16 @@ export default {
       runningActivity: {}
     }
   },
+  beforeDestroy() {
+    this.stopListening("activity-request");
+  },
   created(){
     this.getRunningActivity();
+
+    this.listenFor("activity-request", () => {
+      console.log("REQUEST Updated")
+        this.getRunningActivity();
+    });
   },
   methods: {
     async setFinished(activityId){

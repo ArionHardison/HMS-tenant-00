@@ -3,7 +3,7 @@
     <template v-if="orderData">
       <div class="col-12">
         <h1 class="text-center">{{orderData.title}}</h1>
-        <div class="text-center col-12">To continue program you should have/purchase the items below</div>
+        <div class="text-center col-12 mb-4 mt-3">To continue program you should have/purchase the items below</div>
       </div>
       <template v-if="orderData.items.length">
         <div class="col-12">

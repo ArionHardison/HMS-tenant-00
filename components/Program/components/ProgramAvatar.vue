@@ -1,6 +1,6 @@
 <template>
   <nuxt-link
-    :to="`/${userInfo.username}`"
+    :to="link ? `/${userInfo.username}` : $route.fullPath"
     :style="{
       width: width + ' !important',
       height: height + ' !important',
@@ -38,6 +38,10 @@ export default {
     userInfo: {
       required: true,
       type: Object,
+    },
+    link: {
+      type: Boolean,
+      default: true
     },
     width: {
       required: false,

@@ -19,7 +19,7 @@
             />
             </div>
             <div class="col-12 text-center">
-              <nuxt-link :to="`/u/${activity.user.username}`" class="user-account-link"><strong>{{activity.user.full_name}}</strong></nuxt-link>
+             <strong>{{activity.user.full_name}}</strong>
             </div>
           </template>
         </div>
