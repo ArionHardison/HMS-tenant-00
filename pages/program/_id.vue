@@ -245,7 +245,9 @@ export default {
 };
 </script>
 <style scoped>
-  .program-desc-card {
-    padding-top: 0 !important;
+  @media (min-width: 768px) {
+    .program-desc-card{
+      padding-top: 0 !important;
+    }
   }
 </style>

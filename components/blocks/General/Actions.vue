@@ -46,4 +46,9 @@ export default {
     border:0;
     outline: 0;
   }
+  @media (max-width: 991px) {
+    .actions-items {
+      display: none !important;
+    }
+  }
 </style>

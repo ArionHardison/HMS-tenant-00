@@ -7,6 +7,14 @@ export default {
         return null;
       }
     },
+    logoDark() {
+      if(this.$store.state.layout.items) {
+        if(this.$store.state.layout.items.logoDark) {
+          return this.$imageUrl(this.$store.state.layout.items.logoDark, 'sm', true);
+        }
+      }
+      return null;
+    },
     primaryColor() {
       return this.$store.state.layout.items ? this.$store.state.layout.items.primaryColor : '#ff0000';
     },

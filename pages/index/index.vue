@@ -43,6 +43,18 @@
               <Testimonials/>
               <OurDoctors/>
               <News/>
+              <template v-if="contacts">
+                <section id="contact-us" class="block spacer p-top-xl">
+                  <div class="bg-gray-light spacer p-top-xl-custom contact-us-border-no">
+                    <div class="wrapper text-center">
+                      <div class="title">
+                        <h2>{{contacts.formTitle}}</h2>
+                      </div>
+                      <nuxt-link to="/contacts" class="btn btn-primary">Contact Us</nuxt-link>
+                    </div>
+                  </div>
+                </section>
+              </template>
           </template>
 
       </div>
@@ -90,6 +102,7 @@ export default {
       document.body.classList.add("header-absolute-true");
     }
     this.homePage = await this.get("public/get-entity/home");
+    this.contacts = await this.get("public/get-container/contactFormHeader");
   },
   beforeDestroy() {
     if (process.client) {
@@ -105,6 +118,7 @@ export default {
   data() {
     return {
       homePage: null,
+      contacts: null,
       team: [],
     };
   },
@@ -115,5 +129,9 @@ export default {
 <style scoped>
 .img-no-wrap-1 {
   overflow: hidden;
+}
+.p-top-xl-custom {
+  padding-top: 7.8rem;
+  padding-bottom: 7.8rem;
 }
 </style>

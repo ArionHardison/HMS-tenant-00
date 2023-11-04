@@ -44,7 +44,7 @@
                   <span
                     ><span
                       class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto link-no-space"
-                      >{{ article.category.category_name }}</span
+                      >{{ article.category}}</span
                   ></span>
                 </p>
               </div>

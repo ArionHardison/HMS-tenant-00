@@ -10,7 +10,9 @@
           ></youtube>
         </template>
         <template v-if="challengeData.challenge.challenge_text">
-          <div v-html="challengeData.challenge.challenge_text"></div>
+          <div class="row">
+            <div class="col-12 mt-3 mb-3" v-html="challengeData.challenge.challenge_text"></div>
+          </div>
         </template>
         <template
           v-if="

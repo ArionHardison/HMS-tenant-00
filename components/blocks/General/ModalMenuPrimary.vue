@@ -2,35 +2,37 @@
   <nav class="menu-primary">
     <ul class="nav">
       <li @click="closeOnSameRoute" :class="[( currentPage === '/' ) ? activeClass : '', 'nav-item']">
-        <router-link title="Home" to="/">Home</router-link>
+        <nuxt-link title="Home" to="/">Home</nuxt-link>
       </li>
 
       <li @click="closeOnSameRoute" :class="[currentPage.includes('programs-list') ? activeClass : '', 'nav-item']">
-        <router-link title="Programs" to="/programs-list">Programs</router-link>
+        <nuxt-link title="Programs" to="/programs-list">Programs</nuxt-link>
       </li>
       <template v-if="isGuest">
         <li @click="closeOnSameRoute" :class="[currentPage.includes('sign-in') ? activeClass : '', 'nav-item']">
-          <router-link title="Sign In" to="/sign-in">Sign In</router-link>
+          <nuxt-link title="Sign In" to="/sign-in">Sign In</nuxt-link>
         </li>
 
         <li @click="closeOnSameRoute" :class="[currentPage.includes('sign-up') ? activeClass : '', 'nav-item']">
-          <router-link title="Sign Up" to="/sign-up">Sign Up</router-link>
+          <nuxt-link title="Sign Up" to="/sign-up">Sign Up</nuxt-link>
         </li>
         <li @click="closeOnSameRoute" :class="[currentPage.includes('clinic') ? activeClass : '', 'nav-item']">
-          <router-link title="Clinic" to="/sign-in">Clinic</router-link>
+          <nuxt-link title="Clinic" to="/sign-in">Clinic</nuxt-link>
         </li>
       </template>
       <template v-else>
         <li @click="closeOnSameRoute" :class="[currentPage.includes('account') ? activeClass : '', 'nav-item']">
-          <router-link title="Account" to="/account">Account</router-link>
+          <nuxt-link title="Account" to="/account">Account</nuxt-link>
         </li>
-
+        <li @click="getClinicLink" :class="[currentPage.includes('clinic') ? activeClass : '', 'nav-item']">
+          <nuxt-link title="Clinic" :to="$route.fullPath">Clinic</nuxt-link>
+        </li>
         <li @click="signOut" class="nav-item">
-          <router-link title="Programs" to="/">Sign Out</router-link>
+          <nuxt-link title="Programs" to="/">Sign Out</nuxt-link>
         </li>
       </template>
       <li @click="closeOnSameRoute" :class="[currentPage.includes('contacts') ? activeClass : '', 'nav-item']">
-        <router-link title="Contacts" to="/contacts">Contacts</router-link>
+        <nuxt-link title="Contacts" to="/contacts">Contacts</nuxt-link>
       </li>
     </ul>
   </nav>
@@ -45,6 +47,21 @@ export default {
     }
   },
   methods: {
+    async getClinicLink(event){
+      if (process.browser) {
+        this.closeOnSameRoute(event);
+        if(this.isGuest){
+          return this.$router.push("/sign-in")
+        }
+        const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+        if (!this.isGuest) {
+          const tokenData = await this.get("user/get-token");
+          window.location.href = `${protocol}://clinic.${window.location.hostname}?token=${tokenData.token}`;
+        } else {
+          window.location.href = `${protocol}://clinic.${window.location.hostname}`;
+        }
+      }
+    },
     async signOut(event){
         await this.get(`user/sign-out`);
         this.$store.commit("signOut");

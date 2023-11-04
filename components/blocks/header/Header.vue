@@ -25,7 +25,6 @@
 
                 <div class="header-right d-flex justify-content-end">
                     <div class="d-flex align-items-center">
-
                       <client-only>
                         <template v-if="isGuest">
                           <SignInButton class="d-none d-lg-inline d-xl-inline"/>

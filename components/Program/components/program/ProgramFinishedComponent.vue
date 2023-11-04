@@ -11,10 +11,10 @@
         >
       </template>
       <template v-else>
-        <div class="col-12 text-center">
-          <div>Congratulations! Program was successfully finished!</div>
+        <div class="col-12">
+          <h4 class="text-center">Congratulations! Program was successfully finished!</h4>
           <Testimonial :program="currentStep.program_id"/>
-          <nuxt-link to="/account" class="mt-4 btn btn-primary">Back to My Account</nuxt-link>
+              <nuxt-link to="/account" class="mt-4 btn btn-primary">Back to My Account</nuxt-link>
         </div>
       </template>
     </div>

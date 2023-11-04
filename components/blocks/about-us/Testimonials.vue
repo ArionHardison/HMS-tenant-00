@@ -1,6 +1,6 @@
 <template>
-    <div id="testimonials" :class=" testimonialsItem ? 'block spacer p-top-xl' : ''">
-      <template v-if="testimonialsItem">
+    <div id="testimonials" :class=" testimonials.length ? 'block spacer p-top-xl' : ''">
+      <template v-if="testimonials.length">
         <div class="wrapper">
             <div class="title">
                 <h2 class="hr">Testimonials</h2>

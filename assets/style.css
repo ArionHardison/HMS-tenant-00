@@ -6,10 +6,12 @@
 
 #index {
   position: relative;
-  padding-bottom: 213px;
+  padding-bottom: 150px;
   min-height: 100vh;
 }
-
+#menu-modal {
+  z-index: 9999999;
+}
 .notify-error {
   z-index: 1000;
 }
