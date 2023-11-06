@@ -139,7 +139,7 @@
 <template>
   <div class="call-page w-100">
     <!-- Page Content -->
-    <div class="content">
+
       <div class="container-fluid">
         <!-- Call Wrapper -->
         <div class="row">
@@ -149,7 +149,12 @@
               <h3>Timeline</h3>
             </div>
             <div class="col-6  text-left mb-3 mt-3">
-              <ImageContent :src="participant.profile_picture" class="followup-avatar" size="sm"/>
+              <template v-if="participant.profile_picture">
+                <ImageContent :src="participant.profile_picture" class="followup-avatar" size="sm"/>
+              </template>
+              <template v-else>
+                <BlankAvatar :size="40"/>
+              </template>
               {{ participant.full_name }}
             </div>
             <div class="col-3">
@@ -229,9 +234,16 @@
           <div class="col-3 text-center">
             <b-tabs content-class="mt-3">
               <b-tab active title="Profile">
+                <template #title>
+                  <Account/>
+                </template>
                 <template v-if="participant">
-
-                  <ImageContent :src="participant.profile_picture" class="profile-avatar" size="sm"/>
+                  <template v-if="participant.profile_picture">
+                    <ImageContent :src="participant.profile_picture" class="profile-avatar" size="sm"/>
+                  </template>
+                  <template v-else>
+                    <BlankAvatar :size="70"/>
+                  </template>
 
                   <h4 class="mt-2">{{ participant.full_name }}</h4>
 
@@ -247,9 +259,17 @@
                 </template>
               </b-tab>
               <b-tab title="Recommendations">
+                <template #title>
+                  <ChatAlertOutline/>
+                </template>
                 <div class="row">
-                  <template v-for="recommendation in readyRecommendations">
-                    <div class="col-12" v-html="recommendation"></div>
+                  <template v-if="readyRecommendations.length">
+                    <template v-for="recommendation in readyRecommendations">
+                      <div class="col-12" v-html="recommendation"></div>
+                    </template>
+                  </template>
+                  <template v-else>
+                    <div class="col-12">No recommendations yet.</div>
                   </template>
                 </div>
               </b-tab>
@@ -260,7 +280,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 import {connect, createLocalVideoTrack} from "twilio-video";
@@ -275,19 +294,24 @@ import MicrophoneOutline from "vue-material-design-icons/MicrophoneOutline.vue";
 import globalEvents from "@/components/Program/mixins/global-events";
 import ImageContent from "@/components/Program/components/ImageContent.vue";
 import TimelineComponent from "@/components/Program/components/followup/TimelineComponent.vue";
-
+import BlankAvatar from "@/components/ui/BlankAvatar.vue";
+import Account from "vue-material-design-icons/Account.vue";
+import ChatAlertOutline from "vue-material-design-icons/ChatAlertOutline.vue";
 export default {
   layout: "VideoCall",
   mixins: [time, serverEvents, audioRecorder, api, globalEvents],
   components: {
     TimelineComponent,
+    BlankAvatar,
     [process.client && "TimelineComponent"]: () =>
       import("@/components/Program/components/followup/TimelineComponent.vue"),
     ImageContent,
     VideoOutline,
     VideoOffOutline,
     MicrophoneOutline,
-    MicrophoneOff
+    MicrophoneOff,
+    Account,
+    ChatAlertOutline
   },
   data() {
     return {
@@ -407,6 +431,8 @@ export default {
       });
     },
     async finishFollowUp() {
+      return;
+      /*
       if (process.browser) {
         this.followUpFinished = true;
         await this.stop();
@@ -418,7 +444,7 @@ export default {
         }
         await this.get(`follow-up/finish/${this.followUp.id}`);
         this.$emit("followUpFinished");
-      }
+      }*/
     },
     async connectToTwilio() {
       {
@@ -499,4 +525,8 @@ export default {
   },
 };
 </script>
-
+<style scoped>
+  #remoteTrack {
+    min-height: 30vh;
+  }
+</style>

@@ -6,7 +6,7 @@
       height: height + ' !important',
     }"
     tag="a"
-    class="avatar-backgroun"
+    class="avatar-background"
   >
     <img
       v-if="avatar"
@@ -91,18 +91,19 @@ export default {
 </script>
 
 <style scoped>
-.avatar-backgroun:hover {
+.avatar-background:hover {
   color: #4d4d4d4d;
 }
-.avatar-backgroun {
-  background-color: #3d3d3d3d;
+.avatar-background {
+  background-color: var(--primary-color);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   border-radius: 50%;
-  font-size: 30px;
+  font-size: 28px;
+  width:30px;
   font-weight: 700;
   transition: all ease 0.3s;
   border: 2px solid white;

@@ -2,13 +2,13 @@
     <transition appear leave-active-class="animated slideOutRight">
         <div class="loading" ref="loading" v-show="showPreloader && requestRunning || showAtRender">
             <div class="wrapper h-100">
-                <template v-if="logo">
+                <template v-if="logoDark">
                     <div class="d-flex justify-content-center align-items-center h-100">
                         <div class="loading-content">
 
                                 <div class="logo logo-primary">
                                     <transition appear>
-                                        <img class="animated zoomIn" :src="logo" alt="Logo">
+                                        <img class="animated zoomIn" :src="logoDark" alt="Logo">
                                     </transition>
                                 </div>
                         </div>

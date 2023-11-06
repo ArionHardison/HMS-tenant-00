@@ -63,7 +63,7 @@ export default {
         }
         this.isFading = false;
       }, 1000);
-    }, 1000);
+    }, 10000);
   }
 };
 </script>

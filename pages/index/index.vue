@@ -18,20 +18,24 @@
               <template v-if="homePage.secondContainer">
                 <AboutUs :about-us="homePage.secondContainer"/>
               </template>
+              <Services/>
+              <Testimonials/>
+              <OurDoctors/>
+
               <template v-if="homePage.lastContainer">
                 <div id="img" class="block spacer p-top-xl">
                   <div class="img-no-wrap-1">
                     <div class="img object-fit">
                       <div class="object-fit-cover">
-                          <template v-if="homePage.lastContainer.videoOrImage.length===11">
-                            <YoutubeVideoComponent :video-id="homePage.lastContainer.videoOrImage"/>
-                          </template>
-                          <template v-else>
-                            <img
-                              :src="$imageUrl(homePage.lastContainer.videoOrImage, 'md', true)"
-                              alt="Medical Center"
-                            />
-                          </template>
+                        <template v-if="homePage.lastContainer.videoOrImage.length===11">
+                          <YoutubeVideoComponent :video-id="homePage.lastContainer.videoOrImage"/>
+                        </template>
+                        <template v-else>
+                          <img
+                            :src="$imageUrl(homePage.lastContainer.videoOrImage, 'md', true)"
+                            alt="Medical Center"
+                          />
+                        </template>
 
                       </div>
                     </div>
@@ -39,9 +43,7 @@
                   </div>
                 </div>
               </template>
-              <Services/>
-              <Testimonials/>
-              <OurDoctors/>
+
               <News/>
               <template v-if="contacts">
                 <section id="contact-us" class="block spacer p-top-xl">
