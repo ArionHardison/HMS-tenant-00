@@ -4,6 +4,9 @@
           <template v-if="!currentStep.started_at">
               <ProgramStartComponent :current-step="currentStep" @start="startProgram"/>
           </template>
+          <template v-else-if="currentStep.round_id">
+            <OnboardingRound :round="currentStep.round_id" @continue="continueProgram"/>
+          </template>
           <template v-else>
             <template v-if="currentStep.error">
               <ProgramErrorComponent/>
@@ -46,7 +49,7 @@ import ProgramFailedComponent from "@/components/Program/components/program/Prog
 import ProgramExpertSetupComponent from "@/components/Program/components/program/ProgramExpertSetupComponent";
 import ProgramExpertActiveInviteComponent from "@/components/Program/components/program/ProgramExpertActiveInviteComponent";
 import ProgramRunningComponent from "@/components/Program/components/program/ProgramRunningComponent";
-
+import OnboardingRound from "@/components/Program/components/onboarding/OnboardingRound.vue";
 
 import globalEvents from "@/components/Program/mixins/global-events";
 import serverEvents from "@/components/Program/mixins/server-events";
@@ -64,6 +67,7 @@ export default {
     ProgramExpertSetupComponent,
     ProgramExpertActiveInviteComponent,
     ProgramRunningComponent,
+    OnboardingRound
   },
   data() {
     return {
@@ -80,11 +84,12 @@ export default {
     });
   },
   methods: {
-    async startProgram() {
+    async startProgram(onboarding) {
       const startedProgram = await this.post(
         `personal-chain/start-program/${this.$route.query.id}`,
         {
           id: this.$route.query.id,
+          onboarding: onboarding
         });
       if (startedProgram) {
         this.currentStep = startedProgram;

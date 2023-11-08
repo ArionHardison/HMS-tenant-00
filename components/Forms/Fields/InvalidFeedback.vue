@@ -1,5 +1,5 @@
 <template>
-  <div class="error mt-2 lh">
+  <div class="error mt-2 lh mb-2">
     <slot></slot>
   </div>
 </template>

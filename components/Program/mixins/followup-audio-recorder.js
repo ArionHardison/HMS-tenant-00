@@ -1,7 +1,7 @@
 export default {
   computed: {
     requestsRunning() {
-      return this.$store.state.api.requestsRunning;
+      return this.$store.state.axiosCalls;
     },
   },
   data() {

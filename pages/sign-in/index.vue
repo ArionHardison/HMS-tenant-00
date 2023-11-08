@@ -49,8 +49,5 @@ export default {
         title: 'Sign In',
     },
     middleware: "guest",
-    created() {
-      console.log(this.$store.state.authData.accessToken)
-    }
 };
 </script>

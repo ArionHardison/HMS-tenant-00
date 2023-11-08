@@ -13,9 +13,11 @@
     <label :for="`${name}-checkbox`" class="custom-control-label">
       <slot></slot>
     </label>
-    <InvalidFeedback :state="errorFields.includes(name)">
-      {{ formErrors[name] ? [...formErrors[name]].shift() : "" }}
-    </InvalidFeedback>
+    <div class="checkbox-error">
+      <InvalidFeedback :state="errorFields.includes(name)">
+        {{ formErrors[name] ? [...formErrors[name]].shift() : "" }}
+      </InvalidFeedback>
+    </div>
   </div>
 </template>
 
@@ -58,7 +60,7 @@ export default {
     async handleErrorMessage() {
       if (process.browser) {
         const checkbox = await document.querySelector(
-          `input[name=${this.name}-checkbox]`
+          `input[name='${this.name}-checkbox']`
         );
         if (this.errorMessage && !this.content && checkbox) {
           checkbox.setCustomValidity(this.errorMessage);
@@ -71,4 +73,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.checkbox-error {
+  margin-top: 2rem;
+}
+</style>

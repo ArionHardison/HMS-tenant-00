@@ -115,7 +115,7 @@
       <hr />
       <button
         class="btn mt-2 mb-2 col-12"
-        :style="{ backgroundColor: '#1A2853', color: color }"
+        :style="{ backgroundColor: 'var(--primary-color)', color: color }"
         @click="saveAnswer"
       >
         Next Question
@@ -245,9 +245,10 @@ export default {
   margin-right: 2.5px;
   margin: 0 10px !important;
   box-shadow: 0 8px 30px rgb(0 0 0 / 5%) !important;
+  padding-top: 20px;
 }
 .yes-or-no-active {
-  background: #1a2853;
+  background: var(--primary-color);
   color: white;
 }
 .bold-text {

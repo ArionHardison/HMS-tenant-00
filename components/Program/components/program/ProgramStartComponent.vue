@@ -11,19 +11,18 @@
           >! Otherwise program going to be <b>failed</b>.
         </BaseAlert>
       </template>
-      <p>
-        If you are ready to start program click - start program button
-      </p>
-      <button class="btn btn-primary text-white" @click="startProgram">
-        Start Program
-      </button>
+      <Onboarding @start="startProgram"/>
     </div>
   </div>
 </template>
 
 <script>
+import Onboarding from "@/components/Program/components/Onboarding.vue";
 export default {
   name: "ProgramStartComponent",
+  components: {
+    Onboarding
+  },
   props: {
     currentStep: {
       type: Object,
@@ -31,8 +30,8 @@ export default {
     }
   },
   methods: {
-    startProgram() {
-      this.$emit("start");
+    startProgram(onboarding) {
+      this.$emit("start", onboarding);
     },
   },
 };

@@ -140,15 +140,11 @@
   <div class="call-page w-100">
     <!-- Page Content -->
 
-      <div class="container-fluid">
+      <div>
         <!-- Call Wrapper -->
         <div class="row">
           <template v-if="participant">
-
-            <div class="col-3">
-              <h3>Timeline</h3>
-            </div>
-            <div class="col-6  text-left mb-3 mt-3">
+            <div class="col-12  text-left mb-3 mt-3">
               <template v-if="participant.profile_picture">
                 <ImageContent :src="participant.profile_picture" class="followup-avatar" size="sm"/>
               </template>
@@ -157,17 +153,14 @@
               </template>
               {{ participant.full_name }}
             </div>
-            <div class="col-3">
-              <h3>Information</h3>
-            </div>
 
           </template>
-          <div class="col-3">
+          <div class="col-xl-3 col-md-4 d-none d-md-block">
             <client-only>
               <TimelineComponent :timeline="timeline"/>
             </client-only>
           </div>
-          <div class="col-6">
+          <div class="col-xl-6 col-md-8">
             <div class="row">
               <div class="col-12">
                 <div id="remoteTrack"
@@ -190,12 +183,12 @@
               </div>
               <div class="col-12 mt-3">
                 <div class="row">
-                  <div class="col-4 ln-50 text-left">
+                  <div class="col-12 col-md-4 ln-50 text-left">
                     {{ callDurationMinutes }}:{{
                       callDurationSeconds
                     }}
                   </div>
-                  <div class="col-4">
+                  <div class="col-12 col-md-4">
                     <button
                       :class="videoMuted ? 'muted-track' : ''"
                       class="call-btn"
@@ -218,8 +211,8 @@
                       <MicrophoneOutline :size="25"/>
                     </button>
                   </div>
-                  <div class="col-4 mt-2">
-                    <button class="end-call-btn float-right" @click="finishFollowUp">
+                  <div class="col-12 col-md-4 mt-2">
+                    <button class="end-call-btn float-right" @click="closeConnection">
                       <i class="material-icons">END CALL</i>
                     </button>
                   </div>
@@ -231,7 +224,7 @@
           </div>
 
 
-          <div class="col-3 text-center">
+          <div class="col-xl-3 col-12 text-center">
             <b-tabs content-class="mt-3">
               <b-tab active title="Profile">
                 <template #title>
@@ -274,7 +267,11 @@
                 </div>
               </b-tab>
             </b-tabs>
-
+          </div>
+          <div class="col-xl-3 col-md-4 d-block d-md-none mt-3">
+            <client-only>
+              <TimelineComponent :timeline="timeline"/>
+            </client-only>
           </div>
           <!-- /Call Wrapper -->
         </div>
@@ -431,8 +428,6 @@ export default {
       });
     },
     async finishFollowUp() {
-      return;
-      /*
       if (process.browser) {
         this.followUpFinished = true;
         await this.stop();
@@ -442,9 +437,12 @@ export default {
         } catch (e) {
           console.log(e);
         }
-        await this.get(`follow-up/finish/${this.followUp.id}`);
-        this.$emit("followUpFinished");
-      }*/
+      }
+    },
+    async closeConnection(){
+      await this.finishFollowUp();
+      await this.get(`follow-up/finish/${this.followUp.id}`);
+      this.$emit("followUpFinished");
     },
     async connectToTwilio() {
       {
