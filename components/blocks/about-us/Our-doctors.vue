@@ -124,7 +124,7 @@
               slidesToShow: 3,
               responsive: [
                 {
-                  breakpoint: 400,
+                  breakpoint: 200,
                   settings: {
                     slidesToShow: 1,
                   }
@@ -153,11 +153,21 @@
           this.team = await this.get("public/get-team");
         },
         methods: {
-          async nextSlide(){
-            this.$store.commit("setPreloaderState", false);
+          scrollIsAllowed(){
             const currentSlide = this.$refs.members.currentSlide;
             const slidesLeft = this.$refs.members.countSlides - currentSlide;
-            if(slidesLeft===1){
+            const breakpoint = this.$refs.members.getCurrentBreakpoint()
+            if(slidesLeft<3 && breakpoint>=600){
+              return false;
+            } else if(slidesLeft===1 && breakpoint<600){
+              return false;
+            }
+            return true;
+          },
+          async nextSlide(){
+            this.$store.commit("setPreloaderState", false);
+            if(!this.scrollIsAllowed()){
+              const currentSlide = this.$refs.members.currentSlide;
               if(this.team.meta.current_page<this.team.meta.last_page){
                 this.slidesLoad = true;
                 const loadedPrograms = cloneDeep(this.team.data);

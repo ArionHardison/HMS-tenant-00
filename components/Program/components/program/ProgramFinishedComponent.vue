@@ -5,8 +5,8 @@
 
         Congratulations! Daily task for program was successfully finished!
 
-        <nuxt-link :to="`/follow-program?id=${currentStep.is_attached_to}`"
-        >Back to Main Program
+        <nuxt-link to="/account"
+        >Back to My Account
         </nuxt-link
         >
       </template>

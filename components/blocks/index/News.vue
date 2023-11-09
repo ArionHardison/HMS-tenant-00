@@ -119,11 +119,21 @@ export default {
     this.news = await this.get("public/get-news");
   },
   methods: {
-    async nextSlide(){
-      this.$store.commit("setPreloaderState", false);
+    scrollIsAllowed(){
       const currentSlide = this.$refs.news.currentSlide;
       const slidesLeft = this.$refs.news.countSlides - currentSlide;
-      if(slidesLeft===1){
+      const breakpoint = this.$refs.news.getCurrentBreakpoint()
+      if(slidesLeft<3 && breakpoint>=600){
+        return false;
+      } else if(slidesLeft===1 && breakpoint<600){
+        return false;
+      }
+      return true;
+    },
+    async nextSlide(){
+      this.$store.commit("setPreloaderState", false);
+      if(!this.scrollIsAllowed()){
+        const currentSlide = this.$refs.news.currentSlide;
         if(this.news.meta.current_page<this.news.meta.last_page){
           this.slidesLoad = true;
           const loadedPrograms = cloneDeep(this.news.data);

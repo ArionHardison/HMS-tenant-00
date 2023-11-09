@@ -21,7 +21,7 @@
                 <GlobalModuleTasksListComponent/>
                 <div class="col-12">
                   <b-card no-body>
-                    <b-tabs pills card vertical align="center" v-model="tabIndex" nav-wrapper-class="w-25" id="program-cards" @input="getPrograms">
+                    <b-tabs pills card  align="center" v-model="tabIndex" nav-wrapper-class="w-100 w-25-md" id="program-cards" @input="getPrograms">
                       <b-tab title="Tasks" active>
                         <b-card-text>
                           <template v-if="tasks.length">
