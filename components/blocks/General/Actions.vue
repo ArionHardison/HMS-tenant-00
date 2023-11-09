@@ -32,8 +32,6 @@ export default {
         const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
         if (this.userId) {
           const tokenData = await this.get("user/get-token");
-          console.log(`${protocol}://clinic.${window.location.hostname}?token=${tokenData.token}`)
-          return;
           window.location.href = `${protocol}://clinic.${window.location.hostname}?token=${tokenData.token}`;
         }
       }
