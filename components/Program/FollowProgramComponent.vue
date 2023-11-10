@@ -1,7 +1,11 @@
 <template>
       <div class="container">
         <template v-if="currentStep">
-          <template v-if="!currentStep.started_at">
+
+          <template v-if="currentStep.paused">
+              <ProgramPausedComponent/>
+          </template>
+          <template v-else-if="!currentStep.started_at">
               <ProgramStartComponent :current-step="currentStep" @start="startProgram"/>
           </template>
           <template v-else-if="currentStep.round_id">
@@ -50,7 +54,7 @@ import ProgramExpertSetupComponent from "@/components/Program/components/program
 import ProgramExpertActiveInviteComponent from "@/components/Program/components/program/ProgramExpertActiveInviteComponent";
 import ProgramRunningComponent from "@/components/Program/components/program/ProgramRunningComponent";
 import OnboardingRound from "@/components/Program/components/onboarding/OnboardingRound.vue";
-
+import ProgramPausedComponent from "@/components/Program/components/program/ProgramPausedComponent";
 import globalEvents from "@/components/Program/mixins/global-events";
 import serverEvents from "@/components/Program/mixins/server-events";
 import api from "~/mixins/api";
@@ -65,6 +69,7 @@ export default {
     ProgramFinishedComponent,
     ProgramFailedComponent,
     ProgramExpertSetupComponent,
+    ProgramPausedComponent,
     ProgramExpertActiveInviteComponent,
     ProgramRunningComponent,
     OnboardingRound

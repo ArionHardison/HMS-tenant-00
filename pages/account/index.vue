@@ -18,7 +18,6 @@
                     Email: <b>{{ userData.email }}</b>
                   </template>
                 </div>
-                <GlobalModuleTasksListComponent/>
                 <div class="col-12">
                   <b-card no-body>
                     <b-tabs pills card  align="center" v-model="tabIndex" nav-wrapper-class="w-100 w-25-md" id="program-cards" @input="getPrograms">
@@ -26,8 +25,11 @@
                         <b-card-text>
                           <template v-if="tasks.length">
                             <template v-for="task in tasks">
-                              <assigned-task :task="task"/>
+                              <template v-if="!task.paused">
+                                <assigned-task :task="task"/>
+                              </template>
                             </template>
+                            <GlobalModuleTasksListComponent/>
                           </template>
                           <template v-else>
                             <p class="mt-3">No tasks</p>

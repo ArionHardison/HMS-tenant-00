@@ -26,8 +26,12 @@
 </template>
 
 <script>
+import CountDown from "@/components/Program/components/followup/CountDown.vue";
 export default {
   name: "AssignedTask",
+  components: {
+    CountDown
+  },
   props: ["task"],
   beforeMount() {
     if (this.target) {
