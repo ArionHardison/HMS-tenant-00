@@ -22,7 +22,11 @@ import InputField from "./Fields/InputField";
 export default {
   name: "SignInForm",
   components: {InputField},
-
+  computed: {
+    navTo() {
+      return this.$store.state.afterLoginNavigateTo;
+    },
+  },
   data() {
     return {
       signInForm: {
@@ -37,7 +41,12 @@ export default {
       if (signIn) {
         this.$store.commit("setAuthData", signIn);
         if(signIn.email_verified_at) {
-          await this.$router.push({name: "index"});
+          if(this.navTo) {
+            await this.$router.push(this.navTo);
+            this.$store.commit("setUrl", null);
+          }else{
+            await this.$router.push("/");
+          }
         }else{
           await this.$router.push({name: "verification"});
         }

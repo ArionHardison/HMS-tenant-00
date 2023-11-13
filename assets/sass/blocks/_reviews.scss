@@ -11,6 +11,9 @@
 /*=============================
 // Reviews slider
 =============================*/
+.reviews-results {
+  z-index: 1;
+}
 .adv-slider-reviews {
 	position: relative;
 	padding-left: 3.684rem;
@@ -97,7 +100,7 @@
 			@extend .style-default;
 
 			@media #{$media_md} {
-				margin-top: 1.053rem;
+				margin-top: 1.553rem;
 				text-align: center;
 			}
 

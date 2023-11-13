@@ -8,6 +8,7 @@ export default {
     data() {
         return {
             multipartFormData: false,
+            cacheRoutes: ['get-entity', 'get-entities', 'get-container', 'get-containers', 'get-client-container', 'testimonials/get-random', 'get-team', 'get-recent-programs', 'get-news'],
         }
     },
     computed: {
@@ -16,6 +17,9 @@ export default {
         },
         authData() {
             return this.$store.state.authData;
+        },
+        cachedContent() {
+          return this.$store.state.cachedContent;
         },
     },
     beforeDestroy() {
@@ -42,8 +46,26 @@ export default {
                 })
         },
         async get(url, callBackFn = null) {
+            let isShouldBeCached = false;
+            if(this.cacheRoutes.some(word => {
+              return url.includes(word);
+            })){
+              isShouldBeCached = true;
+              const content = this.cachedContent.find((page)=>page.url===url);
+              if(content){
+                return content.data;
+              }
+            }
+
             return this.$axios.get(url, this.getHeaders()).then(({ data }) => {
-                return callBackFn === null ? (data.links ? data : data.data) : callBackFn(data.data);
+                const responseData = (data.links ? data : data.data);
+                if(isShouldBeCached){
+                  this.$store.commit("addCachedContent", {
+                      data: responseData,
+                      url: url
+                  })
+                }
+                return callBackFn === null ? responseData : callBackFn(responseData);
             }).catch(async (e) => {
                 //SHOW ERR
             })

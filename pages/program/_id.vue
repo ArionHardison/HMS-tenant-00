@@ -81,7 +81,7 @@
                             </div>
                           </div>
                         </div>
-                        <template v-if="accessToken">
+
                           <template v-if="program.access_type === 1">
                             <h3>Free</h3>
                             <button
@@ -126,12 +126,7 @@
                               {{ formErrors['program_id'] ? [...formErrors['program_id']].shift() : "" }}
                             </InvalidFeedback>
                           </client-only>
-                        </template>
-                        <template v-else>
-                          You should have account to start program
-                          <nuxt-link to="/sign-up" class="btn btn-1 btn-primary btn-block mt-2 mb-2">Sign Up</nuxt-link>
-                          <nuxt-link to="/sign-in" class="btn btn-1 btn-primary btn-block mt-2 mb-2">Sign In</nuxt-link>
-                        </template>
+
                       </div>
                     </div>
                   </div>
@@ -228,6 +223,9 @@ export default {
   },
   methods: {
     async startProgram() {
+      if(!this.accessToken){
+        return this.$router.push('/sign-in');
+      }
       const program = await this.post(`program-sale/buy`, {
         program_id: this.$getId(this.$route.params.id),
       });

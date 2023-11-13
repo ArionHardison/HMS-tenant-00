@@ -5,7 +5,7 @@
     <Header logoColor="light"/>
 
     <main id="main" class="site-main content-no-spacing">
-      <div class="content mb-4">
+      <div class="content">
 
           <template v-if="homePage">
             <template v-if="homePage.pageTop">
@@ -98,13 +98,15 @@ export default {
     News,
     Footer,
   },
-  async mounted() {
+  async beforeMount() {
     if (process.client) {
       document.body.classList.add("home");
       document.body.classList.add("header-absolute-true");
     }
     this.homePage = await this.get("public/get-entity/home");
     this.contacts = await this.get("public/get-container/contactFormHeader");
+
+    this.scrollToFragment();
   },
   beforeDestroy() {
     if (process.client) {
@@ -124,8 +126,17 @@ export default {
       team: [],
     };
   },
-
-
+  methods: {
+    scrollToFragment() {
+      const fragment = window.location.hash;
+      if (fragment) {
+        const element = document.querySelector(fragment);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }
+  }
 };
 </script>
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
-  <section id="services" :class=" programs.data.length ? 'block spacer p-top-xl' : ''">
-    <template v-if="programs.data.length">
+  <section id="services" :class=" items.data.length ? 'block spacer p-top-xl' : ''">
+    <template v-if="items.data.length">
           <client-only>
             <b-overlay
               :show="slidesLoad"
@@ -11,9 +11,9 @@
               class="d-block"
             >
             <div class="slide-wraper services-items">
-              <template v-if="programs.data.length">
+              <template v-if="items.data.length">
                 <agile :options="sliderOptions" ref="programs">
-                  <div class="program-slide slide"    v-for="program in programs.data" >
+                  <div class="program-slide slide"    v-for="program in items.data" >
                      <nuxt-link
                       :title="program.name"
                       class="slide services-item"
@@ -55,85 +55,22 @@
 
 <script>
 import ImageContent from "@/components/blocks/ImageContent";
-import cloneDeep from "lodash.clonedeep";
+import homepageSlider from "@/mixins/homepage-slider";
+import api from "@/mixins/api";
 export default {
   name: "services",
+  mixins: [api, homepageSlider],
   components: {
     ImageContent,
   },
   data(){
     return {
-      slidesLoad: false,
-      sliderOptions: {
-        autoplay: false,
-        centerMode: true,
-        dots: false,
-        navButtons: false,
-        infinite: false,
-        initialSlide: 1,
-        slidesToShow: 3,
-        responsive: [
-          {
-            breakpoint: 200,
-            settings: {
-              slidesToShow: 1,
-            }
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 2,
-            }
-          },
-
-          {
-            breakpoint: 900,
-            settings: {
-              slidesToShow: 3,
-            }
-          }
-        ]
-      },
-      programs: {
-        data: []
-      },
+      sliderName: "programs",
     }
   },
   async mounted() {
-    this.programs = await this.get("public/get-recent-programs");
+    this.items = await this.get("public/get-recent-programs");
   },
-  methods: {
-   async nextSlide(){
-
-      this.$store.commit("setPreloaderState", false);
-      const currentSlide = this.$refs.programs.currentSlide;
-      const slidesLeft = this.$refs.programs.countSlides - currentSlide;
-      if(slidesLeft===2){
-        if(this.programs.meta.current_page<this.programs.meta.last_page){
-            this.slidesLoad = true;
-            const loadedPrograms = cloneDeep(this.programs.data);
-            this.programs.data = [];
-            const nextPage = this.programs.meta.current_page+1;
-            const newSlides = await this.get(`public/get-recent-programs?page=${nextPage}`);
-            this.sliderOptions.initialSlide = currentSlide+1;
-            this.programs.meta = newSlides.meta;
-            this.programs.data = loadedPrograms.concat(newSlides.data);
-            setTimeout(()=>{
-              this.slidesLoad = false;
-            }, 300)
-
-        }
-        this.$store.commit("setPreloaderState", true);
-      }else{
-        this.$refs.programs.goToNext()
-      }
-    },
-    prevSlide(){
-      if(this.$refs.programs.currentSlide!==1){
-        this.$refs.programs.goToPrev()
-      }
-    }
-  }
 };
 </script>
 <style scoped>

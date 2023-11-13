@@ -13,13 +13,13 @@
         class="d-block"
       >
       <div class="with-pb-lg">
-        <template v-if="news.data.length">
+        <template v-if="items.data.length">
         <button @click="prevSlide" class="prev-btn"> <ChevronLeft :size="40"/> </button>
         <button @click="nextSlide" class="next-btn"> <ChevronRight :size="40"/> </button>
 
         <agile :options="sliderOptions" ref="news">
         <div
-          v-for="article in news.data"
+          v-for="article in items.data"
           :key="article.id"
           class="news-slide"
         >
@@ -73,94 +73,21 @@
 import ImageContent from "@/components/blocks/ImageContent";
 import ChevronRight from 'vue-material-design-icons/ChevronRight.vue';
 import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue';
-import cloneDeep from "lodash.clonedeep";
+import homepageSlider from "@/mixins/homepage-slider";
+import api from "@/mixins/api";
 export default {
   name: "News",
+  mixins: [api, homepageSlider],
   components: {ImageContent, ChevronRight, ChevronLeft},
   data() {
     return {
-      slidesLoad: false,
-      sliderOptions: {
-        autoplay: false,
-        centerMode: true,
-        dots: false,
-        navButtons: false,
-        infinite: false,
-        initialSlide: 1,
-        slidesToShow: 3,
-        responsive: [
-          {
-            breakpoint: 200,
-            settings: {
-              slidesToShow: 1,
-            }
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 2,
-            }
-          },
-
-          {
-            breakpoint: 900,
-            settings: {
-              slidesToShow: 3,
-            }
-          }
-        ]
-      },
-      news: {
-        data: []
-      },
+      sliderName: "news",
     }
   },
   async mounted() {
-    this.news = await this.get("public/get-news");
+    this.items = await this.get("public/get-news");
   },
-  methods: {
-    scrollIsAllowed(){
-      const currentSlide = this.$refs.news.currentSlide;
-      const slidesLeft = this.$refs.news.countSlides - currentSlide;
-      const breakpoint = this.$refs.news.getCurrentBreakpoint()
-      if(slidesLeft<3 && breakpoint>=600){
-        return false;
-      } else if(slidesLeft===1 && breakpoint<600){
-        return false;
-      }
-      return true;
-    },
-    async nextSlide(){
-      this.$store.commit("setPreloaderState", false);
-      if(!this.scrollIsAllowed()){
-        const currentSlide = this.$refs.news.currentSlide;
-        if(this.news.meta.current_page<this.news.meta.last_page){
-          this.slidesLoad = true;
-          const loadedPrograms = cloneDeep(this.news.data);
-          this.news.data = [];
-          const nextPage = this.news.meta.current_page+1;
-          const newSlides = await this.get(`public/get-news?page=${nextPage}`);
-          this.sliderOptions.initialSlide = currentSlide+1;
-          this.news.meta = newSlides.meta;
-          this.news.data = loadedPrograms.concat(newSlides.data);
-          setTimeout(()=>{
-            this.slidesLoad = false;
-          }, 300)
-        }
-        this.$store.commit("setPreloaderState", true);
-      }else{
-        this.$refs.news.goToNext()
-      }
-    },
-    prevSlide(){
-      if(this.isSlideExists()){
-        this.$refs.news.goToPrev()
-      }
-    },
-    isSlideExists(){
-      return !(this.$refs.news.currentBreakpoint===900 && this.$refs.news.currentSlide===1);
-    },
-  }
+
 };
 </script>
 <style scoped>

@@ -3,8 +3,10 @@ import cloneDeep from "lodash.clonedeep";
 
 const initialState = () => ({
   showPreloaderOnRequest: true,
+  afterLoginNavigateTo: null,
   showMenuModal: false,
   showSearchModal: false,
+  cachedContent: [],
   showSwipeBox: false,
   swipeBoxIndex: 1,
   maintenance: true,
@@ -33,6 +35,12 @@ const initialState = () => ({
 const state = () => cloneDeep(initialState())
 
 const mutations = {
+  setUrl(state, from){
+    state.afterLoginNavigateTo = from;
+  },
+  addCachedContent(state, pageData){
+      state.cachedContent.push(pageData)
+  },
   hideError(state, name) {
     if (name) {
       for (let fieldName in state.errors) {

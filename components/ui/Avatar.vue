@@ -23,7 +23,7 @@ export default {
   name: "Avatar",
   props: {
     src: {
-      type: String,
+      type: String|null,
       required: true,
     },
     alt: {

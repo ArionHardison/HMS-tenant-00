@@ -8,19 +8,20 @@
       <PageTitle/>
 
       <div id="page-content" class="spacer p-top-xl">
-        <div class="wrapper">
           <div class="content">
             <div id="blog">
               <div class="row">
-                <div class="col-12 mt-3 mb-3">
-                  <template v-if="userData">
-                    User: <b>{{ userData.full_name }}</b><br>
-                    Email: <b>{{ userData.email }}</b>
-                  </template>
+                <div class="wrapper">
+                  <div class="col-12 mt-3 mb-3">
+                    <template v-if="userData">
+                      User: <b>{{ userData.full_name }}</b><br>
+                      Email: <b>{{ userData.email }}</b>
+                    </template>
+                  </div>
                 </div>
                 <div class="col-12">
                   <b-card no-body>
-                    <b-tabs pills card  align="center" v-model="tabIndex" nav-wrapper-class="w-100 w-25-md" id="program-cards" @input="getPrograms">
+                    <b-tabs pills card :vertical="isVertical" align="center" v-model="tabIndex" nav-wrapper-class="w-100 w-25-md text-center" id="program-cards" @input="getPrograms">
                       <b-tab title="Tasks" active>
                         <b-card-text>
                           <template v-if="tasks.length">
@@ -58,7 +59,6 @@
               </div>
             </div>
           </div>
-        </div>
       </div>
     </main>
 
@@ -93,12 +93,15 @@ export default {
   middleware: "user",
   mounted: function () {
     if (process.client) {
+      this.checkOrientation()
       document.body.classList.add("blog");
+      window.addEventListener("resize", this.checkOrientation);
     }
   },
   beforeDestroy() {
     if (process.client) {
       document.body.classList.remove("blog");
+      window.removeEventListener("resize", this.checkOrientation);
     }
   },
   metaInfo: {
@@ -107,6 +110,7 @@ export default {
   },
   data() {
     return {
+      isVertical: false,
       tabIndex: 0,
       programs: [],
       failedPrograms: [],
@@ -120,6 +124,13 @@ export default {
     await this.getTasks();
   },
   methods: {
+    async checkOrientation(){
+      if(window.innerWidth<700){
+        this.isVertical = true;
+      }else{
+        this.isVertical = false;
+      }
+    },
     async getPrograms(tab){
       if(tab>=1){
         const programs = await this.get(`personal-chain/programs/${tab-1}`)

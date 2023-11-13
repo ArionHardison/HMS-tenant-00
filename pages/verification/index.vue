@@ -41,6 +41,11 @@ export default {
       }
     }
   },
+  computed: {
+    navTo() {
+      return this.$store.state.afterLoginNavigateTo;
+    },
+  },
   methods: {
     async reSend() {
       const codeSent = await this.get("code/send-new");
@@ -54,13 +59,18 @@ export default {
       async signOut() {
         this.$store.commit("signOut");
         await this.get(`public/auth/sign-out`);
-        this.$router.push("/");
+        await this.$router.push("/");
       },
     async verifyAccount() {
       const accountVerified = await this.post("code/verify", this.verification);
       if (accountVerified) {
         this.$store.commit("setAccountVerified", accountVerified.email_verified_at);
-        this.$router.push("/");
+        if(this.navTo) {
+         await this.$router.push(this.navTo);
+         this.$store.commit("setUrl", null);
+        }else{
+          await this.$router.push("/");
+        }
       }
     }
   }

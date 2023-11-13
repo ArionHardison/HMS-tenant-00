@@ -80,10 +80,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-@media (max-width: 992px) {
-  #modals {
-    padding-bottom: 121px;
-  }
-}
-</style>
+

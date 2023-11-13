@@ -15,12 +15,12 @@
           >
             <div class="with-pb-md team-members">
               <div class="slide-wraper services-items">
-                <template v-if="team.data.length">
+                <template v-if="items.data.length">
               <button @click="prevSlide" class="prev-btn"> <ChevronLeft :size="40"/> </button>
               <button @click="nextSlide" class="next-btn"> <ChevronRight :size="40"/> </button>
 
               <agile :options="sliderOptions" ref="members">
-                <template v-for="member in team.data" >
+                <template v-for="member in items.data" >
                   <div  class="member-slide">
                       <div class="team-member">
                           <div class="team-member-top">
@@ -101,100 +101,23 @@
     import ImageContent from "@/components/blocks/ImageContent.vue";
     import ChevronRight from 'vue-material-design-icons/ChevronRight.vue';
     import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue';
-
-    import cloneDeep from "lodash.clonedeep";
+    import homepageSlider from "@/mixins/homepage-slider";
     export default {
         components: {
           ImageContent,
           ChevronRight,
           ChevronLeft
         },
-        mixins: [api],
+        mixins: [api, homepageSlider],
         name: 'OurDoctors',
         data(){
           return {
-            slidesLoad: false,
-            sliderOptions: {
-              autoplay: false,
-              centerMode: true,
-              dots: false,
-              navButtons: false,
-              infinite: false,
-              initialSlide: 1,
-              slidesToShow: 3,
-              responsive: [
-                {
-                  breakpoint: 200,
-                  settings: {
-                    slidesToShow: 1,
-                  }
-                },
-                {
-                  breakpoint: 600,
-                  settings: {
-                    slidesToShow: 2,
-                  }
-                },
-
-                {
-                  breakpoint: 900,
-                  settings: {
-                    slidesToShow: 3,
-                  }
-                }
-              ]
-            },
-            team: {
-              data: []
-            }
+            sliderName: "members",
           }
         },
         async created() {
-          this.team = await this.get("public/get-team");
+          this.items = await this.get("public/get-team");
         },
-        methods: {
-          scrollIsAllowed(){
-            const currentSlide = this.$refs.members.currentSlide;
-            const slidesLeft = this.$refs.members.countSlides - currentSlide;
-            const breakpoint = this.$refs.members.getCurrentBreakpoint()
-            if(slidesLeft<3 && breakpoint>=600){
-              return false;
-            } else if(slidesLeft===1 && breakpoint<600){
-              return false;
-            }
-            return true;
-          },
-          async nextSlide(){
-            this.$store.commit("setPreloaderState", false);
-            if(!this.scrollIsAllowed()){
-              const currentSlide = this.$refs.members.currentSlide;
-              if(this.team.meta.current_page<this.team.meta.last_page){
-                this.slidesLoad = true;
-                const loadedPrograms = cloneDeep(this.team.data);
-                this.team.data = [];
-                const nextPage = this.team.meta.current_page+1;
-                const newSlides = await this.get(`public/get-team?page=${nextPage}`);
-                this.sliderOptions.initialSlide = currentSlide+1;
-                this.team.meta = newSlides.meta;
-                this.team.data = loadedPrograms.concat(newSlides.data);
-                setTimeout(()=>{
-                  this.slidesLoad = false;
-                }, 300)
-              }
-              this.$store.commit("setPreloaderState", true);
-            }else{
-              this.$refs.members.goToNext()
-            }
-          },
-          prevSlide(){
-            if(this.isSlideExists()){
-              this.$refs.members.goToPrev()
-            }
-          },
-          isSlideExists(){
-            return !(this.$refs.members.currentBreakpoint===900 && this.$refs.members.currentSlide===1);
-          },
-        }
     };
 </script>
 <style scoped>
