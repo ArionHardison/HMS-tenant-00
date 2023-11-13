@@ -54,7 +54,6 @@ export default {
   },
   async created() {
     this.testimonials = await this.get("public/testimonials/get-random");
-    return;
     setInterval(() => {
       this.isFading = true;
       setTimeout(() => {
