@@ -1,5 +1,6 @@
 <template>
     <header id="header" class="site-header">
+        <CookieConsentModal/>
         <div class="wrapper d-block">
             <div class="header-content d-flex justify-content-between">
 
@@ -52,6 +53,7 @@
     import SignUpButton from '~/components/Button/SignUpButton';
     import SignInButton from '~/components/Button/SignInButton';
     import MenuModalButton from '~/components/Button/MenuModalButton';
+    import CookieConsentModal from "@/components/ui/CookieConsentModal.vue";
     import Actions from '../General/Actions';
 
     export default {
@@ -61,6 +63,7 @@
             HeaderLogo,
             SearchModalButton,
             MenuModalButton,
+            CookieConsentModal,
             Actions,
             SignUpButton,
             MyAccountButton,
