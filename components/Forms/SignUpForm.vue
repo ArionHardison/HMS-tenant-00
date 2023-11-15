@@ -44,10 +44,8 @@
 
     <input-field
       name="phone"
-      type="text"
+      type="number"
       v-model="registrationForm.phone"
-      :mask="true"
-      mask-data="+1-###-###-##-##"
       :autocomplete="genAutocomplete()"
       label="Phone"
     />
