@@ -1,10 +1,10 @@
 <template>
   <div class="row">
-    <div class="col-12">
       <template v-for="task in tasks">
-        <GlobalModuleTask :task="task"/>
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-2 mt-2">
+          <GlobalModuleTask :task="task"/>
+        </div>
       </template>
-    </div>
   </div>
 </template>
 

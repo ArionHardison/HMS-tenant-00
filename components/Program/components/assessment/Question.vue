@@ -3,9 +3,11 @@
     <client-only>
       <template v-if="question.image">
         <div
-          :style="{backgroundImage: $imageUrl(question.image, 'lg', false)}"
+          :style="{backgroundImage: `url(${$imageUrl(question.image, 'md', false)})`}"
           class="quetion-image"
-        ></div>
+        >
+
+        </div>
       </template>
       <div
         class="question-text mb-4 mt-4 text-center bold-text"
@@ -92,9 +94,11 @@
         </div>
       </template>
       <template v-if="question.type === 'rating'">
-
-        <star-rating v-model="selectedValue" :show-rating="false" />
-
+      <div class="row">
+        <div class="star-rating-wrapper mt-2 mb-2">
+          <star-rating v-model="selectedValue" :show-rating="false" />
+        </div>
+      </div>
       </template>
       <template v-if="question.type === 'date'">
         <input type="date" format="yyyy-MM-dd" v-model="selectedValue" />
@@ -103,6 +107,7 @@
         <b-form-file
           @change="setFileValue"
           placeholder="Choose a file or drop it here..."
+          accept="audio/*,video/*,image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation"
           drop-placeholder="Drop file here..."
         ></b-form-file>
       </template>
@@ -113,6 +118,13 @@
         {{ [...this.errors].shift() }}
       </div>
       <hr />
+
+      <InvalidFeedback
+        :state="errorFields.includes('response')"
+      >
+        {{ formErrors['response'] ? [...formErrors['response']].shift() : "" }}
+      </InvalidFeedback>
+
       <button
         class="btn mt-2 mb-2 col-12"
         :style="{ backgroundColor: 'var(--primary-color)', color: color }"
@@ -129,14 +141,24 @@
 
 import "vue-slider-component/theme/antd.css";
 import api from "~/mixins/api";
+import InvalidFeedback from "@/components/Forms/Fields/InvalidFeedback.vue";
 
 export default {
   mixins: [api],
   name: "Question",
   components: {
+    InvalidFeedback,
     [process.client && "VueSlider"]: () => import("vue-slider-component"),
     [process.client && "StarRating"]: () => import("vue-star-rating"),
     [process.client && "Multiselect"]: () => import("vue-multiselect"),
+  },
+  computed: {
+    errorFields() {
+      return this.$store.state.errorFields;
+    },
+    formErrors() {
+      return this.$store.state.errors;
+    },
   },
   props: {
     attendee: {
@@ -197,9 +219,15 @@ export default {
       if (this.selectedValue === "" || this.selectedValue === null) {
         return null;
       }
+
+      if(this.question.attributes){
+        if(this.question.attributes.multiple_selectable){
+          return this.selectedValue.map((answer) => answer.choice).join(",");
+        }
+      }
+
       if (
-        this.question.type === "multi" ||
-        this.question.attributes.multiple_selectable
+        this.question.type === "multi"
       ) {
         return this.selectedValue.map((answer) => answer.choice).join(",");
       }
@@ -232,6 +260,8 @@ export default {
   width: 100%;
   margin-bottom: 15px;
   border-radius: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .yes-or-no {
   padding: 10px 25px;
@@ -262,5 +292,12 @@ export default {
   border: 1px solid rgba(111, 111, 111, 0.125) !important;
   padding: 1.5rem;
   box-shadow: 0 8px 30px rgb(0 0 0 / 5%) !important;
+}
+.star-rating-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height: 100%;
 }
 </style>

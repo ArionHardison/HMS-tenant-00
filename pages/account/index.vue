@@ -24,17 +24,24 @@
                     <b-tabs pills card :vertical="isVertical" align="center" v-model="tabIndex" nav-wrapper-class="w-100 w-25-md text-center" id="program-cards" @input="getPrograms">
                       <b-tab title="Tasks" active>
                         <b-card-text>
-                          <template v-if="tasks.length">
-                            <template v-for="task in tasks">
-                              <template v-if="!task.paused">
-                                <assigned-task :task="task"/>
+                            <div class="row">
+                              <template v-if="tasks.length">
+                                  <template v-for="task in tasks">
+                                    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-2 mt-2">
+                                      <template v-if="!task.paused">
+                                        <assigned-task :task="task"/>
+                                      </template>
+                                      <hr/>
+                                    </div>
+                                  </template>
+                                <GlobalModuleTasksListComponent/>
                               </template>
-                            </template>
-                            <GlobalModuleTasksListComponent/>
-                          </template>
-                          <template v-else>
-                            <p class="mt-3">No tasks</p>
-                          </template>
+                              <template v-else>
+                                <div class="col-12 text-center">
+                                  <p class="mt-3">No tasks</p>
+                                </div>
+                              </template>
+                            </div>
                         </b-card-text>
                       </b-tab>
                       <b-tab title="Running Programs">

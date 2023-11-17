@@ -12,7 +12,7 @@
       </template>
       <template v-else>
         <div class="col-12">
-          <h4 class="text-center">Congratulations! Program was successfully finished!</h4>
+          <h4 class="text-center">Congratulations! {{currentStep.program_name}} was successfully finished!</h4>
           <Testimonial :program="currentStep.program_id"/>
               <nuxt-link to="/account" class="mt-4 btn btn-primary">Back to My Account</nuxt-link>
         </div>

@@ -1,5 +1,6 @@
 <template>
   <div class="row gutter-width-sm">
+    <template v-if="programs.length">
     <div
       v-for="program in programs"
       :key="program.id"
@@ -61,6 +62,12 @@
         </div>
       </div>
     </div>
+    </template>
+    <template v-else>
+      <div class="col-12 text-center">
+        <p class="mt-3">No programs</p>
+      </div>
+    </template>
   </div>
 </template>
 

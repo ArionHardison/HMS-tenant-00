@@ -13,7 +13,7 @@ export default {
 <style scoped>
 .error {
   color: #fb6340;
-  font-size: 12px;
+  font-size: 14px;
 }
 .lh {
   line-height: 1 !important;

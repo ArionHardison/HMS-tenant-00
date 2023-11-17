@@ -23,7 +23,7 @@
                 <ProgramFinishedComponent :current-step="currentStep"/>
               </template>
               <template v-else-if="currentStep.status === 2">
-                <ProgramFailedComponent/>
+                <ProgramFailedComponent :current-step="currentStep"/>
               </template>
               <template v-else>
                 <template v-if="currentStep.require_setup">
