@@ -1,6 +1,6 @@
 <template>
     <transition appear leave-active-class="animated slideOutRight">
-        <div class="loading" ref="loading" v-show="showPreloader && requestRunning || showAtRender">
+        <div class="loading" ref="loading" v-show="showPreloader && requestRunning || showAtRender || force">
             <div class="wrapper h-100">
                 <template v-if="logoDark">
                     <div class="d-flex justify-content-center align-items-center h-100">
@@ -22,6 +22,12 @@
 <script>
     export default {
         name: 'Loading',
+        props: {
+          force: {
+            type: Boolean,
+            default: false
+          }
+        },
         computed: {
             requestRunning() {
                 return this.$store.state.axiosCalls > 0;

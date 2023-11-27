@@ -69,7 +69,14 @@ export default {
     }
   },
   async mounted() {
-    this.items = await this.get("public/get-recent-programs");
+    const programs =  await this.get("public/get-recent-programs");
+    if(programs.data.length===1){
+      this.sliderOptions.initialSlide = 0;
+      for (const i in this.sliderOptions.responsive){
+        this.sliderOptions.responsive[i].settings.slidesToShow = 1;
+      }
+    }
+    this.items = programs;
   },
 };
 </script>

@@ -1,9 +1,9 @@
 <template>
     <section id="page-title" class="block with-img" :style="(background ? (background.length>11 ? {backgroundImage: `url(${background})`} : '') : '')">
         <template v-if="background.length===11">
-            <div class="video-container">
-                <iframe :src="`https://www.youtube.com/embed/${background}?autoplay=1&mute=1&loop=1&&rel=0controls=0&showinfo=0&playlist=${background}`"></iframe>
-            </div>
+          <div class="video-container">
+            <iframe :src="`https://www.youtube.com/embed/${background}?autoplay=1&mute=1&loop=1&rel=0&controls=0&showinfo=0&playlist=${background}`"></iframe>
+          </div>
         </template>
         <div class="wrapper text-center d-flex" :class="background.length===11 ? 'absolute-position' : ''">
             <div class="align-self-center w-100">

@@ -1,6 +1,6 @@
 <template>
   <div id="index">
-    <Loading />
+    <Loading :force="true"/>
   </div>
 </template>
 
