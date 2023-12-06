@@ -1,8 +1,10 @@
 <template>
       <div class="container">
         <template v-if="currentStep">
-
-          <template v-if="currentStep.paused">
+          <template v-if="currentStep.frozen">
+            <ProtocolFrozenMessageComponent :current-step="currentStep"/>
+          </template>
+          <template v-else-if="currentStep.paused">
               <ProgramPausedComponent/>
           </template>
           <template v-else-if="!currentStep.started_at">
@@ -46,6 +48,7 @@
 
 <script>
 import ProgramStartComponent from "@/components/Program/components/program/ProgramStartComponent";
+import ProtocolFrozenMessageComponent from "@/components/Program/components/program/ProtocolFrozenMessageComponent";
 import ProgramErrorComponent from "@/components/Program/components/program/ProgramErrorComponent";
 import ProgramWaitComponent from "@/components/Program/components/program/ProgramWaitComponent";
 import ProgramFinishedComponent from "@/components/Program/components/program/ProgramFinishedComponent";
@@ -66,6 +69,7 @@ export default {
     ProgramStartComponent,
     ProgramErrorComponent,
     ProgramWaitComponent,
+    ProtocolFrozenMessageComponent,
     ProgramFinishedComponent,
     ProgramFailedComponent,
     ProgramExpertSetupComponent,
