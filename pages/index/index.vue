@@ -10,20 +10,21 @@
           <template v-if="homePage">
             <template v-if="homePage.pageTop">
                 <PageTitle
+                  class="pageTop"
                   :title="homePage.pageTop.homeTitle"
                   :desc="homePage.pageTop.homePageDesc"
                   :background="homePage.pageTop.imageOrVideo.length > 11 ? $imageUrl(homePage.pageTop.imageOrVideo, 'md', true) : homePage.pageTop.imageOrVideo"
                 />
               </template>
               <template v-if="homePage.secondContainer">
-                <AboutUs :about-us="homePage.secondContainer"/>
+                <AboutUs :about-us="homePage.secondContainer" class="secondContainer"/>
               </template>
               <Services/>
               <Testimonials/>
               <OurDoctors/>
 
               <template v-if="homePage.lastContainer">
-                <div id="img" class="block spacer p-top-xl">
+                <div id="img" class="block spacer p-top-xl lastContainer">
                   <div class="img-no-wrap-1">
                     <div class="img object-fit">
                       <div class="object-fit-cover">
@@ -46,7 +47,7 @@
 
               <News/>
               <template v-if="contacts">
-                <section id="contact-us" class="block spacer p-top-xl">
+                <section id="contact-us" class="block spacer p-top-xl contactFormHeader">
                   <div class="bg-gray-light spacer p-top-xl-custom contact-us-border-no">
                     <div class="wrapper text-center">
                       <div class="title">

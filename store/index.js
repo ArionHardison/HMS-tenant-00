@@ -20,6 +20,7 @@ const initialState = () => ({
     id: 0
   },
   initializedId: null,
+  colors: [],
   layout: {
     items: {
       logo: null,
@@ -78,6 +79,7 @@ const mutations = {
   },
   setTenant(state, tenant) {
     state.layout = tenant.layout;
+    state.colors = tenant.colors;
     state.initializedId = tenant.id;
   },
   signOut(state) {

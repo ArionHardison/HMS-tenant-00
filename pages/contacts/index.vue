@@ -13,10 +13,10 @@
           <div class="content">
             <div class="clearfix">
               <template v-if="gmapsContainer">
-                  <GoogleMaps :container-data="gmapsContainer"/>
+                  <GoogleMaps :container-data="gmapsContainer" class="gmaps"/>
               </template>
               <div class="spacer p-top-xl">
-                <div class="title">
+                <div class="title contactFormHeader">
                   <template v-if="contactContainer">
                     <h2>{{contactContainer.formTitle}}</h2>
                     <div v-html="contactContainer.formDescription"></div>
