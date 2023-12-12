@@ -31,7 +31,7 @@ export default {
     addDynamicStyles() {
       const styles = this.colors
         .filter(c => c.container_color)
-        .map(c => `.${c.container_call} { color: ${c.container_color} !important; }`)
+        .map(c => `.${c.container_call} *:not(.btn)  { color: ${c.container_color} !important; }`)
         .join(' ');
 
       const styleSheet = document.createElement('style');
