@@ -38,7 +38,7 @@
       >
         <select v-model="selectedValue">
           <option
-            v-for="(option, index) in question.choices"
+            v-for="(option, index) in sortedChoices"
             :key="index"
             :value="option.choice"
           >
@@ -159,6 +159,22 @@ export default {
     formErrors() {
       return this.$store.state.errors;
     },
+    sortedChoices() {
+      if( this.question.type === 'dropdown' && !this.question.attributes.multiple_selectable) {
+        if (this.question.attributes.alphabetical_order) {
+          return [...this.question.choices].sort((a, b) => {
+            if (a.choice < b.choice) {
+              return -1;
+            }
+            if (a.choice > b.choice) {
+              return 1;
+            }
+            return 0;
+          });
+        }
+        return this.question.choices;
+      }
+    }
   },
   props: {
     attendee: {
