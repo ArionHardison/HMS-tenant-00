@@ -12,6 +12,8 @@
               You will get message to your email <b>{{ followUp.email }}</b>
             </p>
 
+            <nuxt-link to="/account" class="mb-4 mt-4 btn btn-primary">Back to My Account</nuxt-link>
+
         </template>
         <template v-else>
           <template v-if="followUp.follow_up_finished">
