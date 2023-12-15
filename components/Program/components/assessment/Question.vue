@@ -126,8 +126,8 @@
       </InvalidFeedback>
 
       <button
-        class="btn mt-2 mb-2 col-12"
-        :style="{ backgroundColor: 'var(--primary-color)', color: color }"
+        class="btn mt-2 mb-2 col-12 text-white"
+        :style="{ backgroundColor: 'var(--primary-color)'}"
         @click="saveAnswer"
       >
         Next Question
@@ -179,12 +179,6 @@ export default {
   props: {
     attendee: {
       type: Number,
-    },
-    buttonColor: {
-      type: String,
-    },
-    color: {
-      type: String,
     },
     question: {
       type: Object,

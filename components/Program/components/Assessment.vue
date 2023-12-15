@@ -9,7 +9,6 @@
       </div>
       <div
         class="col-12"
-        :style="{ backgroundColor: assessment.background_color }"
       >
 
         <client-only>
@@ -19,8 +18,6 @@
           <Question
               :question="question"
               :attendee="assessment.attendee_id"
-              :button-color="assessment.button_color"
-              :color="assessment.button_text_color"
               :key="`question_${question.id}`"
               @nextQuestion="runNextQuestion"
             />
