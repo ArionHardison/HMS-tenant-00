@@ -36,15 +36,14 @@
           !question.attributes.multiple_selectable
         "
       >
-        <select v-model="selectedValue">
-          <option
-            v-for="(option, index) in sortedChoices"
-            :key="index"
-            :value="option.choice"
-          >
-            {{ option.choice }}
-          </option>
-        </select>
+        <div class="dropdown-wrapper">
+          <select v-model="selectedValue" class="dropdown-question mt-3 mb-3">
+            <option selected disabled :value="null">Please select one</option>
+            <option v-for="(option, index) in sortedChoices" :key="index" :value="option.choice">
+              {{ option.choice }}
+            </option>
+          </select>
+        </div>
       </template>
       <template v-if="question.type === 'phone' || question.type === 'number'">
         <input v-model="selectedValue" type="number" class="form-control" />
@@ -53,11 +52,13 @@
         <input v-model="selectedValue" type="email" class="form-control" />
       </template>
       <template v-if="question.type === 'slider'">
-        <vue-slider
-          v-model="selectedValue"
-          :min="question.attributes.minimum_value"
-          :max="question.attributes.maximum_value"
-        />
+        <div class="col-12 mt-3 mb-3">
+          <vue-slider
+            v-model="selectedValue"
+            :min="question.attributes.minimum_value"
+            :max="question.attributes.maximum_value"
+          />
+        </div>
       </template>
       <template
         v-if="question.type === 'shortText' || question.type === 'longText'"
@@ -70,7 +71,7 @@
         ></textarea>
       </template>
       <template v-if="question.type === 'yesOrNo'">
-        <div>
+        <div class="mb-3 mt-3">
           <span
             v-for="(choice, index) in question.choices"
             :key="`label_${index}`"
@@ -126,7 +127,7 @@
       </InvalidFeedback>
 
       <button
-        class="btn mt-2 mb-2 col-12 text-white"
+        class="btn mt-2 mb-2 col-12 text-white next-question-btn"
         :style="{ backgroundColor: 'var(--primary-color)'}"
         @click="saveAnswer"
       >
@@ -273,9 +274,36 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
 }
+.dropdown-wrapper {
+  position: relative;
+}
+.next-question-btn {
+  color: #ffffff !important;
+}
+.dropdown-question {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><path d="M35 50 L70 100 L105 50 Z" /></svg>') no-repeat right 10px center;
+  background-size: 24px 24px;
+  border-radius: 20px;
+  border: 1px solid var(--primary-color);
+  padding-left: 10px;
+  padding-right: 20px;
+}
+
+.dropdown-question option {
+  background-color: white;
+  color: black;
+  padding: 5px 10px;
+  font-family: Arial, sans-serif;
+
+}
+
 .yes-or-no {
   padding: 10px 25px;
   border-radius: 20px;
+  border: 1px solid var(--primary-color);
   text-align: center;
   transition: all 200ms linear;
   text-decoration: none;

@@ -22,7 +22,7 @@
       </template>
       <template v-else>
         <li @click="closeOnSameRoute" :class="[currentPage.includes('account') ? activeClass : '', 'nav-item']">
-          <nuxt-link title="Account" to="/account">Account</nuxt-link>
+          <nuxt-link title="My Account" to="/account">My Account</nuxt-link>
         </li>
         <li @click="getClinicLink" :class="[currentPage.includes('clinic') ? activeClass : '', 'nav-item']">
           <nuxt-link title="Clinic" :to="$route.fullPath">Clinic</nuxt-link>

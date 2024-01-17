@@ -5,7 +5,7 @@
     <Header logoColor="dark"/>
 
     <main id="main" class="site-main">
-      <PageTitle title="All Programs"
+      <PageTitle title="Programs"
       />
       <div id="page-content" class="spacer p-top-xl">
         <div class="wrapper">

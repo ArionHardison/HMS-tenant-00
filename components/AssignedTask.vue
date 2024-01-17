@@ -1,7 +1,7 @@
 <template>
-  <div class="card p-3">
+  <div class="card p-3 task-card">
     <h6>{{ task.program }}</h6>
-    <p>1
+    <p :title="task.module_item ? task.module_item + ' - ' : '' + task.task_description">
       {{ task.module_item ? task.module_item + " - " : "" }}
       {{ task.task_description }}
     </p>
@@ -13,6 +13,7 @@
         Please select date and time comfortable for you
       </template>
     </template>
+
     <nuxt-link
       class="btn btn-success"
       :to="`follow-program?id=${task.id}`"
@@ -41,4 +42,28 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.task-card {
+  height: 270px;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-card h6 {
+  margin-bottom: 0.5em;
+}
+
+.task-card p {
+  flex-grow: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+.task-card .btn {
+  margin-top: auto;
+}
+
+</style>
