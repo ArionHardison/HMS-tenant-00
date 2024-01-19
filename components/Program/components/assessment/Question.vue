@@ -24,7 +24,7 @@
       >
         <multiselect
           v-model="selectedValue"
-          :options="question.choices"
+          :options="prepareChoices(question)"
           :multiple="true"
           track-by="id"
           label="choice"
@@ -39,14 +39,17 @@
         <div class="dropdown-wrapper">
           <select v-model="selectedValue" class="dropdown-question mt-3 mb-3">
             <option selected disabled :value="null">Please select one</option>
-            <option v-for="(option, index) in sortedChoices" :key="index" :value="option.choice">
+            <option v-for="(option, index) in prepareChices(question)" :key="index" :value="option.choice">
               {{ option.choice }}
             </option>
           </select>
         </div>
       </template>
-      <template v-if="question.type === 'phone' || question.type === 'number'">
-        <input v-model="selectedValue" type="number" class="form-control" />
+      <template v-if="question.type === 'phone'">
+        <input v-model="selectedValue" type="text" class="form-control" @input="formatPhone"/>
+      </template>
+      <template v-if="question.type === 'number'">
+        <input v-model="selectedValue" type="text" class="form-control" />
       </template>
       <template v-if="question.type === 'email'">
         <input v-model="selectedValue" type="email" class="form-control" />
@@ -160,22 +163,6 @@ export default {
     formErrors() {
       return this.$store.state.errors;
     },
-    sortedChoices() {
-      if( this.question.type === 'dropdown' && !this.question.attributes.multiple_selectable) {
-        if (this.question.attributes.alphabetical_order) {
-          return [...this.question.choices].sort((a, b) => {
-            if (a.choice < b.choice) {
-              return -1;
-            }
-            if (a.choice > b.choice) {
-              return 1;
-            }
-            return 0;
-          });
-        }
-        return this.question.choices;
-      }
-    }
   },
   props: {
     attendee: {
@@ -197,7 +184,57 @@ export default {
       multipartFormData: false,
     };
   },
+  watch: {
+    selectedValue(newValue, oldValue) {
+      if(this.question.type === 'phone'){
+          if(newValue.length>10){
+            this.selectedValue = oldValue
+          }
+      }
+      this.content = this.value;
+    },
+  },
   methods: {
+    formatPhone(){
+      if(this.selectedValue){
+        this.selectedValue = this.selectedValue.replace(/[^\d]/g, '')
+      }
+    },
+    prepareChoices(question) {
+      if(question.attributes.alphabetical_order){
+        return  this.alphabetical(question.choices);
+      }else if(question.attributes.randomize_choice){
+        return this.randomize(question.choices);
+      }else {
+        return  question.choices;
+      }
+    },
+    alphabetical(objArray) {
+      return objArray.slice().sort((a, b) => {
+        if (a.choice < b.choice) {
+          return -1;
+        }
+        if (a.choice > b.choice) {
+          return 1;
+        }
+        return 0;
+      });
+    },
+    randomize(array) {
+      array = array.slice();
+      let currentIndex = array.length,
+        randomIndex;
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex],
+          array[currentIndex],
+        ];
+      }
+
+      return array;
+    },
     setFileValue(evt) {
       const uploadedFiles = evt.target.files;
       if (uploadedFiles.length) {
