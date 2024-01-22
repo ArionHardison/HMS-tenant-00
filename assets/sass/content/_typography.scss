@@ -14,7 +14,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     font-weight: 700;
     line-height: 1.31;
     @include lhCrop-b(1.31, 0.80);
-    
+
     &:last-child {
         margin-bottom: 0;
         @include lhCrop-a(1.31, 0.75);
@@ -149,7 +149,7 @@ h6, .h6 {
 // Paragraph
 =============================*/
 p {
-    line-height: 1.79;
+    line-height: 2.79;
     font-size: 1rem;
     margin-bottom: 0;
     @include lhCrop-b(1.79, 0.80);
@@ -187,7 +187,7 @@ p {
     &.p-small {
         font-size: $f_size_df;
     }
-    
+
     &.p-large {
         font-size: $f_size_lg * 1.3;
     }
@@ -197,7 +197,7 @@ span {
     &.s-small {
         font-size: $f_size_df;
     }
-    
+
     &.s-large {
         font-size: $f_size_lg * 1.3;
     }
@@ -255,16 +255,16 @@ blockquote, .blockquote {
     padding-left: 1.474rem;
     line-height: 1.79;
     margin-bottom: $space_pc_secondary;
-    
+
     &:last-child {
         margin-bottom: 0;
     }
-    
+
     p {
         &:after, &:before {
             display: none;
         }
-        
+
         &:last-child {
             margin-bottom: 0;
 
@@ -303,7 +303,7 @@ ul {
             margin-left: -1.2rem;
         }
     }
-    
+
     ol, ul {
         margin-top: $space_pc_secondary - $li_font_mb;
     }
@@ -317,12 +317,12 @@ ol {
         line-height: 1.79;
         @include lhCrop-b(1.79, 0.80);
         margin-bottom: $space_pc_secondary - $li_font_mb;
-        
+
         &:last-child {
             @include lhCrop-a(1.79, 0.70);
             margin-bottom: 0;
         }
-        
+
         ul {
             > li {
                 &:before {
@@ -330,7 +330,7 @@ ol {
                 }
             }
         }
-        
+
         ol {
             > li {
                 &:before {
@@ -338,27 +338,27 @@ ol {
                 }
             }
         }
-        
+
         strong, p {
             line-height: 1.79;
         }
-        
+
         p {
             @include lhCrop-b(1.79, 0.80);
             margin-top: $space_pc_secondary - $li_font_mb;
             margin-bottom: $space_pc_secondary - $li_font_mb;
-            
+
             &:first-child {
                 margin-top: 0;
             }
-            
+
             &:last-child {
                 @include lhCrop-a(1.79, 0.70);
                 margin-bottom: 0;
             }
         }
     }
-    
+
     ol, ul {
         margin-top: $space_pc_secondary - $li_font_mb;
     }
@@ -367,10 +367,10 @@ ol {
 // List unstyled
 .list-unstyled {
     margin-left: 0;
-        
+
     li {
         @include lhCrop-a(1.79, 0.70);
-        
+
         &:before {
             content: "";
         }
@@ -391,7 +391,7 @@ ol {
 
 address, dl, ol, ul, pre {
     margin-bottom: $space_pc_secondary;
-                
+
     &:last-child {
         margin-bottom: 0;
     }
@@ -400,7 +400,7 @@ address, dl, ol, ul, pre {
 address, dl {
     line-height: 1.79;
     @include lhCrop-b(1.79, 0.80);
-    
+
     &:last-child {
         @include lhCrop-a(1.79, 0.70);
     }
@@ -465,7 +465,7 @@ a.text-secondary {
 hr {
     margin-top: 0;
     margin-bottom: $space_pc_secondary;
-                
+
     &:last-child {
         margin-bottom: 0;
     }
@@ -482,12 +482,12 @@ hr {
 [class*="pullquote"] {
     border-top: 2px solid;
     border-bottom: 2px solid;
-    
+
     .blockquote, blockquote {
         font-style: normal;
         border: 0;
         padding-left: 0;
-        
+
         cite {
             font-style: normal;
         }

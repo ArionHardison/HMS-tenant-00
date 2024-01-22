@@ -2,7 +2,9 @@
   <div class="mt-2">
     <label :for="`${name}-input`" class="form-control-label">{{ label }}</label>
     <textarea
+        ref="textareaInput"
         :id="`${name}-input`"
+        :style="{minHeight: autosize ? 'auto !important' : '200px', overflowY: autosize ? 'hidden' : 'auto' }"
         v-model="content"
         :class="errorFields.includes(name) ? 'is-invalid' : null"
         :error="formErrors[name] ? [...formErrors[name]].shift() : ''"
@@ -44,6 +46,10 @@ export default {
     name: String,
     placeholder: String,
     showCounter: Boolean,
+    autosize: {
+      type: Boolean,
+      default: false
+    },
     min: {
       type: Number,
       default: 100,
@@ -59,7 +65,7 @@ export default {
     },
     rows: {
       type: [Number, String],
-      default: 4,
+      default: 1,
     },
   },
   methods: {
@@ -70,10 +76,17 @@ export default {
       }
       this.sendCursorPosition(event);
       this.changeModelValue();
+      if(this.autosize){
+          this.adjustHeight()
+      }
     },
     sendCursorPosition(event){
       this.$emit('cursor', event);
-    }
+    },
+    adjustHeight() {
+      this.$refs.textareaInput.style.height = 'auto';
+      this.$refs.textareaInput.style.height = (this.$refs.textareaInput.scrollHeight) + 'px';
+    },
   },
 };
 </script>

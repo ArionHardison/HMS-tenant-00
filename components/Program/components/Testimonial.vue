@@ -4,8 +4,7 @@
       <template v-if="testimonial!==null">
         <template v-if="!testimonial.id">
           <form v-on:submit.prevent="sendTestimonial" method="post" id="sign-in-form" class="comment-form">
-
-            <TextareaField show-counter :min="1" :max="200" v-model="testimonialForm.testimonial" label="We will be grateful for your feedback on the completed program"/>
+            <TextareaField show-counter :min="1" :max="200" v-model="testimonialForm.testimonial" autosize label="We will be grateful for your feedback on the completed program"/>
 
             <div class="form-submit text-center mt-3">
               <input name="submit" type="submit" class="btn btn-primary" value="Send">
@@ -13,7 +12,7 @@
           </form>
         </template>
         <template v-else>
-          <h4 class="mt-3">Thank you, your testimonial was sent</h4>
+          <h6 class="mt-3">Thank you, your testimonial was sent</h6>
           <p class="testimonial-in-program">
           {{testimonial.testimonial}}
           </p>
