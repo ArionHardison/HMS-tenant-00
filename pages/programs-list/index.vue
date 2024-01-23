@@ -109,7 +109,7 @@ export default {
     Footer,
   },
   metaInfo: {
-    title: "All Programs",
+    title: "Programs",
     titleTemplate: "%s",
   },
   async created() {

@@ -10,7 +10,7 @@
                         <div class="links-items">
                           <client-only>
                             <div class="links-item d-none d-lg-inline d-xl-inline">
-                                <nuxt-link class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto " to="/programs-list">All Programs</nuxt-link>
+                                <nuxt-link class="btn btn-lg btn-before-horbar btn-link border-0 p-0 min-w-auto " to="/programs-list">Programs</nuxt-link>
                             </div>
                             <div class="links-item d-none d-lg-inline d-xl-inline">
                               <SearchModalButton />
