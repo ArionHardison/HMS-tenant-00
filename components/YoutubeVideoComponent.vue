@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     videoUrl() {
-      return `https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1&loop=1&rel=0controls=0&showinfo=0&playlist=${this.videoId}`;
+      return `https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1&loop=1&rel=0&controls=0&showinfo=0&playlist=${this.videoId}`;
     },
   },
 };
