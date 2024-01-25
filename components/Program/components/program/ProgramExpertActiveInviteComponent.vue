@@ -9,7 +9,7 @@
       {{ currentStep.name }}
       to be your personal {{ currentStep.setup_started.role.name }}!
       {{ currentStep.name }}
-      has 1 hour to accept your invite, in case if
+      has 1 day to accept your invite, in case if
       {{ currentStep.name }}
       will not accept it, you should choose someone else!
 
