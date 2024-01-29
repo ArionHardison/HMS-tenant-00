@@ -14,7 +14,7 @@
                 <p class="mt-2 mb-2"> Didn't get the code - click Re-send button.</p>
                 <button type="submit" class="btn btn-primary btn-sm mt-3" @click="reSend">Re-send</button>
               </template>
-              <input-field name="code" type="password" v-model="verification.code" :mask="true" mask-data="######" label="One time code"/>
+              <input-field name="code" type="password" v-model="verification.code"  label="One time code"/>
             </div>
           </div>
         </div>
